@@ -3,9 +3,9 @@ using System.Collections;
 
 public class TouchTests : MonoBehaviour {
 
-	GameObject Testcube;
+	public GameObject mainCamera;
 
-	Camera cam;
+	GameObject Testcube;
 
 	Vector2 last_touch_position;
 	Vector2 touch_position;
@@ -14,9 +14,8 @@ public class TouchTests : MonoBehaviour {
 
 
 	void Start () {
-		cam = Camera.main;
 		Testcube = GameObject.FindGameObjectWithTag ("Cube");
-		cube_position_3 = cam.WorldToScreenPoint (Testcube.transform.position);
+		cube_position_3 = mainCamera.GetComponent<Camera>().WorldToScreenPoint (Testcube.transform.position);
 		cube_position = new Vector2 (cube_position_3.x, cube_position_3.y);
 	}
 
@@ -29,7 +28,7 @@ public class TouchTests : MonoBehaviour {
 			} else {
 				touch_position = Input.GetTouch (0).position;
 				cube_position = cube_position + (touch_position - last_touch_position);
-				Testcube.transform.position = cam.ScreenToWorldPoint(new Vector3 (cube_position.x, cube_position.y, cube_position_3.z));
+				Testcube.transform.position = mainCamera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3 (cube_position.x, cube_position.y, cube_position_3.z));
 				last_touch_position = touch_position;
 			}
 		}

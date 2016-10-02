@@ -6,6 +6,7 @@ public class TimerController : MonoBehaviour {
 
 	private GameObject timer;
 	private GameObject timer_button;
+	private GameObject general_interface;
 	private Image timer_filler;
 	private Text timer_text;
 
@@ -13,9 +14,10 @@ public class TimerController : MonoBehaviour {
 	private bool isTimerOn;
 	private bool stopTimer;
 
+	private string letter;
+
 	public float timerReduction;
 
-	// Use this for initialization
 	void Start () {
 
 		timer = GameObject.FindGameObjectWithTag ("LetterTimer");
@@ -31,8 +33,7 @@ public class TimerController : MonoBehaviour {
 		timer_button.SetActive (true);
 
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 
 		if (isTimerOn) {
@@ -69,7 +70,16 @@ public class TimerController : MonoBehaviour {
 	}
 
 	private string generateLetter () {
-		return "A";
+		letter = "A";
+		return letter;
+	}
+
+	public string getLetter() {
+		return letter;
+	}
+
+	public void interruptTimer() {
+		stopTimer = true;
 	}
 
 	public void Play_onClick () {
