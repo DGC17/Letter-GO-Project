@@ -27,7 +27,7 @@ namespace Vuforia
         private int mFramesSinceLastOrientationReset;
         private int mFramesSinceLastJavaOrientationCheck;
 
-    // AndroidJava resources need to be #if'd in order to allow AoT compilation on iOS
+    // AndroidJava resources need to be #ifd in order to allow AoT compilation on iOS
     #if UNITY_ANDROID
         private AndroidJavaObject mCurrentActivity;
         private AndroidJavaClass mJavaOrientationUtility;

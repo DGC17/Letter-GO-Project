@@ -5,11 +5,18 @@ using System.Collections;
 // Class responsible of controlling the Timer.
 public class TimerController : MonoBehaviour {
 
+	// Declaration of the array to store all the letters. 
+	public static readonly string[] Letters = {	"A","B","C","D","E","F","G","H","I","J","K","L","M",
+												"N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+
 	// Wrapper for all the Timer elements.
 	private GameObject timer;
 
 	// Button: (Start Timer)
 	private GameObject timer_button;
+
+	// Button: Take Picture
+	private Button takePicture_button;
 
 	// Timer UI Elements. 
 	private Image timer_filler;
@@ -31,15 +38,17 @@ public class TimerController : MonoBehaviour {
 
 		// Assignations. 
 		timer = GameObject.FindGameObjectWithTag ("LetterTimer");
-		timer_button = GameObject.FindGameObjectWithTag ("Timer_Button");
 		timer_filler = GameObject.FindGameObjectWithTag ("Timer_Image").GetComponent<Image>();
 		timer_text = GameObject.FindGameObjectWithTag ("Timer_Text").GetComponent<Text>();
+		timer_button = GameObject.FindGameObjectWithTag ("Timer_Button");
+		takePicture_button = GameObject.FindGameObjectWithTag ("TakeScreenShot").GetComponent<Button>();
 
 		// Default Values.
 		startTimer = false;
 		isTimerOn = false;
 		stopTimer = false;
 		timer.SetActive (false);
+		takePicture_button.interactable = false;
 
 	}
 
@@ -53,7 +62,7 @@ public class TimerController : MonoBehaviour {
 			float aux = timer_filler.fillAmount;
 			aux -= timerReduction;
 
-			// If there isn't more time... 
+			// If there isn"t more time... 
 			if (aux <= 0) {
 				// Launch Event 3.
 				stopTimer = true;
@@ -72,12 +81,13 @@ public class TimerController : MonoBehaviour {
 			timer_filler.fillAmount = 1.0f;
 			timer_text.text = generateLetter ();
 
+			takePicture_button.interactable = true;
+
 			// Finishing Event 2. 
 			startTimer = false;
 
 			// Launch Event 1.
 			isTimerOn = true;
-
 		}
 
 		// Event 3: When the Timer is stoped. 
@@ -89,6 +99,8 @@ public class TimerController : MonoBehaviour {
 			timer_filler.fillAmount = 0.0f;
 			timer_text.text = "";
 
+			takePicture_button.interactable = false;
+
 			//Finishing Events 1 & 3.
 			stopTimer = false;
 			isTimerOn = false;
@@ -98,10 +110,11 @@ public class TimerController : MonoBehaviour {
 	}
 
 	// Generates the Letter.
-	// TODO: Random generation of the letter.
 	// Called on the Event 2. 
 	private string generateLetter () {
-		letter = "A";
+		float num = Random.Range (0.0f, 26.0f);
+		int n = (int)num;
+		letter = Letters [n].ToString();
 		return letter;
 	}
 
@@ -112,9 +125,16 @@ public class TimerController : MonoBehaviour {
 	}
 
 	// Forces the Timer Interruption. 
-	// Called when the users takes a picture (See Camera Controller). 
-	public void interruptTimer() {
-		stopTimer = true;
+	// Called when the user takes a picture (See Camera Controller). 
+	public void interruptTimer(bool isStop) {
+		isTimerOn = false;
+		stopTimer = isStop;
+	}
+
+	// Forces the Timer Reanudation. 
+	// Called when the user clicks on the button "Return". 
+	public void reanudateTimer() {
+		isTimerOn = true;
 	}
 
 	// Starts the Timer (Launch Event 2).

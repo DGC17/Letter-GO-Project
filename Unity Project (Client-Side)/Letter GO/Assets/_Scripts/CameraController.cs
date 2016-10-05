@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
 
 	//External References.
 	private TimerController timerController;
+	private ImageController imageController;
 	public GameObject mainCamera;
 	public GameObject ARCamera;
 
@@ -32,6 +33,7 @@ public class CameraController : MonoBehaviour {
 
 		// Assignations.
 		timerController = GameObject.FindGameObjectWithTag ("TimerController").GetComponent<TimerController>();
+		imageController = GameObject.FindGameObjectWithTag ("ImageController").GetComponent<ImageController>();
 		takeScreenShotButton = GameObject.FindGameObjectWithTag ("TakeScreenShot");
 		cross = GameObject.FindGameObjectWithTag ("Cross");
 		imageInterface = GameObject.FindGameObjectWithTag ("ImageInterface");
@@ -62,7 +64,7 @@ public class CameraController : MonoBehaviour {
 			generalInterface.SetActive (false);
 
 			// Interruptin the timer because we already captured the Letter. 
-			timerController.interruptTimer ();
+			timerController.interruptTimer (false);
 
 			// Changing from AR Camera to Main Camera. 
 			mainCamera.SetActive (true);
@@ -70,6 +72,7 @@ public class CameraController : MonoBehaviour {
 
 			// Finishing Event 1. 
 			changeInterface = false;
+			imageController.managingImage = true;
 		}
 	}
 

@@ -199,7 +199,7 @@ namespace Vuforia.EditorClasses
             var lines = File.ReadAllLines(pbxprojFilename);
 
 
-            // Work out which of the resfiles exist and remove them if they don't, this
+            // Work out which of the resfiles exist and remove them if they dont, this
             // There may not be a qcar resource folder if no targets are used
             var newResFiles = new List<ResFile>();
             foreach (var rf in resFiles)
@@ -213,7 +213,7 @@ namespace Vuforia.EditorClasses
             // file copying the original file and inserting anything extra we need
             var pbxproj = File.CreateText(pbxprojFilename);
 
-            // As we iterate through the list we'll record which section of the
+            // As we iterate through the list well record which section of the
             // project.pbxproj we are currently in
             var section = "";
 
@@ -258,7 +258,7 @@ namespace Vuforia.EditorClasses
                 // /* Begin PBXBuildFile section */"
                 if (line.Length > 3 && line.Substring(3).StartsWith("Begin"))
                 {
-                    section = line.Split(' ')[2];
+                    section = line.Split( )[2];
                     if (section == "PBXBuildFile")
                     {
                         foreach (var framework in frameworks)
@@ -310,7 +310,7 @@ namespace Vuforia.EditorClasses
                 if (section == "PBXGroup")
                 {
                     if (line.Trim().StartsWith("children") &&
-                        (lines[i - 2].Trim().Split(' ')[2] == "CustomTemplate"))
+                        (lines[i - 2].Trim().Split( )[2] == "CustomTemplate"))
                     {
                         foreach (var resfile in resFiles)
                             AddGroup(pbxproj, resfile);

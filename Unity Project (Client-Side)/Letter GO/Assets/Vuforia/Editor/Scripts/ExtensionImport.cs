@@ -41,7 +41,7 @@ namespace Vuforia.EditorClasses
                     pluginPath.EndsWith("QCARWrapper.bundle") || pluginPath.EndsWith("VuforiaWrapper.bundle");
                 if (isVuforiaWrapperPlugin && imp.GetCompatibleWithAnyPlatform())
                 {
-                    Debug.Log("Setting platform to 'Editor' for plugin: " + pluginPath);
+                    Debug.Log("Setting platform to Editor for plugin: " + pluginPath);
                     imp.SetCompatibleWithAnyPlatform(false);
                     imp.SetCompatibleWithEditor(true);
                 }

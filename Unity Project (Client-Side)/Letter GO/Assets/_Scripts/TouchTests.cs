@@ -29,7 +29,7 @@ public class TouchTests : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//If there's a touch detected on the screen. 
+		//If theres a touch detected on the screen. 
 		if (Input.touchCount > 0) {
 
 			//If the touch is beggining, we assign this touch postion as the last touch position. 

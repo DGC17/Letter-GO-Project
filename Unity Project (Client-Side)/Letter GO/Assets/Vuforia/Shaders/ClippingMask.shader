@@ -6,13 +6,13 @@ Shader "ClippingMask" {
        
         Tags {"Queue" = "Overlay-10" }
        
-        // Turn off lighting, because it's expensive and the thing is supposed to be
+        // Turn off lighting, because its expensive and the thing is supposed to be
         // invisible anyway.
        
         Lighting Off
 
         // Draw into the depth buffer in the usual way.  This is probably the default,
-        // but it doesn't hurt to be explicit.
+        // but it doesnt hurt to be explicit.
 
         ZTest Always
         ZWrite On
