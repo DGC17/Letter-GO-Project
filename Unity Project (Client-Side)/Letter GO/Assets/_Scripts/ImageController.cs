@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.IO;
 
-// Class responsible of controlling the interface events in the Image Interface. 
 public class ImageController : MonoBehaviour {
 
 	// External References.
 	private TimerController timerController;
 	private GameObject generalInterface;
 	private GameObject imageInterface;
+	private GameObject resultInterface;
 	public GameObject mainCamera;
 	public GameObject ARCamera;
 
@@ -18,41 +19,65 @@ public class ImageController : MonoBehaviour {
 	// Button: Select.
 	private Button selectButton;
 
-	// Buttons: (+ and -)
-	private Button increaseButton;
-	private Button decreaseButton;
-
 	// Image: Selector.
 	private Image selector;
 
 	// Image: Background Image. 
-	public Image background;
+	private Image background;
 
-	// Controls if we are managing 
+	// Image: Result Image.
+	private Image resultImage;
+
+	// Controls the size of the selector.
+	private Scrollbar sizeControl;
+
+	// Controls if we are managing.
 	public bool managingImage;
+	public bool changeInterface;
 
 	// Functions executed on the intilization of the application. 
 	void Start () {
 
 		// Assignations. 
-		timerController = GameObject.FindGameObjectWithTag("TimerController").GetComponent<TimerController>();
-		imageInterface = GameObject.FindGameObjectWithTag ("ImageInterface");
-		generalInterface = GameObject.FindGameObjectWithTag ("GeneralInterface");
-		recognizeButton = GameObject.FindGameObjectWithTag ("Recognize").GetComponent<Button> ();
-		selectButton = GameObject.FindGameObjectWithTag ("Select").GetComponent<Button> ();
-		decreaseButton = GameObject.FindGameObjectWithTag ("Increase").GetComponent<Button> ();
-		increaseButton = GameObject.FindGameObjectWithTag ("Decrease").GetComponent<Button> ();
-		selector = GameObject.FindGameObjectWithTag("Selector").GetComponent<Image>();
+		timerController = GameObject.Find ("TimerController").GetComponent<TimerController>();
+
+		imageInterface = GameObject.Find ("ImageInterface");
+		generalInterface = GameObject.Find ("GeneralInterface");
+		resultInterface = GameObject.Find ("ResultInterface");
+
+		recognizeButton = GameObject.Find ("II.Recognize").GetComponent<Button> ();
+		selectButton = GameObject.Find ("II.Select").GetComponent<Button> ();
+		selector = GameObject.Find ("II.Image.Selector").GetComponent<Image>();
+		background = GameObject.Find ("II.Background").GetComponent<Image>();
+		sizeControl = GameObject.Find ("II.ControlSize").GetComponent<Scrollbar> ();
+
+		resultImage = GameObject.Find ("RI.Image").GetComponent<Image>();
 
 		// Default Values.
 		recognizeButton.interactable = false;
+		resultInterface.SetActive (false);
 
+		// Variables to Control Events.
 		managingImage = false;
+		changeInterface = false;
 	}
 
 	// Update is called once per frame.
 	void Update () {
+
+		// Event 1: When we want to change to the Result Interface.
+		if (changeInterface) {
+
+			imageInterface.SetActive (false);
+			resultInterface.SetActive (true);
+
+			changeInterface = false;
+		}
+			
 		if (managingImage) {
+			// Sets the size of the Selector.
+			setSelectorSize ();
+
 			// If theres a touch detected on the screen. 
 			if (Input.touchCount == 1) {
 				Vector2 touch_position = Input.GetTouch (0).position;
@@ -78,6 +103,9 @@ public class ImageController : MonoBehaviour {
 	// Called when the user clicks on the button "Return". 
 	public void returnPrevious () {
 
+		// Default values for some options...
+		setDefaultValues();
+
 		// Changing from Main Camera to AR Camera. 
 		ARCamera.SetActive (true);
 		mainCamera.SetActive (false);
@@ -88,29 +116,22 @@ public class ImageController : MonoBehaviour {
 
 		// Reanudating the Timer... 
 		timerController.reanudateTimer();
-
-		managingImage = false;
-		selectButton.interactable = true;
-		recognizeButton.interactable = false;
-		increaseButton.interactable = true;
-		decreaseButton.interactable = true;
 	}
 
+	// Fixes the selected part of the image. 
 	public void setSelector () {
 		if (managingImage) {
 			managingImage = false;
 			selector.color = Color.green;
 			selectButton.GetComponentInChildren<Text> ().text = "Unselect";
 			recognizeButton.interactable = true; 
-			increaseButton.interactable = false;
-			decreaseButton.interactable = false;
+			sizeControl.interactable = false;
 		} else {
 			managingImage = true;
 			selector.color = Color.red;
 			selectButton.GetComponentInChildren<Text>().text = "Select";
 			recognizeButton.interactable = false; 
-			increaseButton.interactable = true;
-			decreaseButton.interactable = true;
+			sizeControl.interactable = true;
 		}
 	}
 
@@ -118,6 +139,55 @@ public class ImageController : MonoBehaviour {
 	// TODO: Not Implemented.
 	// Called when the user clicks on the button "Recognize". 
 	public void recognizeLetter () {
-		returnPrevious ();
+
+		byte[] image = getImageSelected ();
+
+		Texture2D texture = new Texture2D (
+			(int)(selector.rectTransform.rect.width*0.85f), 
+			(int)(selector.rectTransform.rect.height*0.85f));
+		texture.LoadImage (image);
+		texture.Apply ();
+
+		resultImage.material.mainTexture = texture;
+		changeInterface = true;
+	}
+
+	// Gets the Image Selected.
+	private byte[] getImageSelected() {
+
+		float w = selector.rectTransform.rect.width*0.85f;
+		float h = selector.rectTransform.rect.height*0.85f;
+		Vector2 pos = selector.rectTransform.position;
+
+		Rect rect = new Rect();
+		rect.xMin = (pos.x - w / 2); 
+		rect.xMax = (pos.x + w / 2);
+		rect.yMin = (pos.y - w / 2);
+		rect.yMax = (pos.y + w / 2);
+		Texture2D texture = new Texture2D((int)w, (int)h, TextureFormat.RGB24, false);
+		texture.ReadPixels(rect, 0, 0);
+		texture.Apply();
+		byte[] bytes = texture.EncodeToPNG();
+		Destroy (texture);
+
+		// Just for debug purposes... 
+		File.WriteAllBytes (Application.persistentDataPath + "/screen.png", bytes);
+
+		return bytes;
+	}
+
+	// Sets the size of the Selector.
+	private void setSelectorSize () {
+		float size = (500.0f*sizeControl.value + 100.0f);
+		selector.rectTransform.sizeDelta = new Vector2 (size, size);
+	}
+
+	// Sets the defaults values. 
+	public void setDefaultValues () {
+		managingImage = false;
+		setSelector ();
+		managingImage = false;
+		recognizeButton.interactable = false;
+		sizeControl.interactable = true;
 	}
 }

@@ -2,25 +2,24 @@
 using UnityEngine.UI;
 using System.Collections;
 
-// Class responsible of controlling the Timer.
 public class TimerController : MonoBehaviour {
 
 	// Declaration of the array to store all the letters. 
-	public static readonly string[] Letters = {	"A","B","C","D","E","F","G","H","I","J","K","L","M",
+	public static readonly string[] letters = {	"A","B","C","D","E","F","G","H","I","J","K","L","M",
 												"N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 
 	// Wrapper for all the Timer elements.
 	private GameObject timer;
 
 	// Button: (Start Timer)
-	private GameObject timer_button;
+	private GameObject timerButton;
 
 	// Button: Take Picture
-	private Button takePicture_button;
+	private Button takePictureButton;
 
 	// Timer UI Elements. 
-	private Image timer_filler;
-	private Text timer_text;
+	private Image timerFiller;
+	private Text timerText;
 
 	// Variables to Control Events. 
 	private bool startTimer;
@@ -37,18 +36,18 @@ public class TimerController : MonoBehaviour {
 	void Start () {
 
 		// Assignations. 
-		timer = GameObject.FindGameObjectWithTag ("LetterTimer");
-		timer_filler = GameObject.FindGameObjectWithTag ("Timer_Image").GetComponent<Image>();
-		timer_text = GameObject.FindGameObjectWithTag ("Timer_Text").GetComponent<Text>();
-		timer_button = GameObject.FindGameObjectWithTag ("Timer_Button");
-		takePicture_button = GameObject.FindGameObjectWithTag ("TakeScreenShot").GetComponent<Button>();
+		timer = GameObject.Find ("GI.LT.LetterTimer");
+		timerFiller = GameObject.Find ("GI.LT.LetterTimer.Image").GetComponent<Image>();
+		timerText = GameObject.Find ("GI.LT.LetterTimer.Text").GetComponent<Text>();
+		timerButton = GameObject.Find ("GI.LT.Button");
+		takePictureButton = GameObject.Find ("GI.TakePicture").GetComponent<Button>();
 
 		// Default Values.
 		startTimer = false;
 		isTimerOn = false;
 		stopTimer = false;
 		timer.SetActive (false);
-		takePicture_button.interactable = false;
+		takePictureButton.interactable = false;
 
 	}
 
@@ -59,7 +58,7 @@ public class TimerController : MonoBehaviour {
 		if (isTimerOn) {
 
 			// Access and Reduce remaining time. 
-			float aux = timer_filler.fillAmount;
+			float aux = timerFiller.fillAmount;
 			aux -= timerReduction;
 
 			// If there isn"t more time... 
@@ -68,7 +67,7 @@ public class TimerController : MonoBehaviour {
 				stopTimer = true;
 			} else {
 				// Assign remaining time. 
-				timer_filler.fillAmount = aux;
+				timerFiller.fillAmount = aux;
 			}
 		}
 
@@ -77,11 +76,11 @@ public class TimerController : MonoBehaviour {
 			
 			// Initialicing start Timer parameters.
 			timer.SetActive (true);
-			timer_button.SetActive (false);
-			timer_filler.fillAmount = 1.0f;
-			timer_text.text = generateLetter ();
+			timerButton.SetActive (false);
+			timerFiller.fillAmount = 1.0f;
+			timerText.text = generateLetter ();
 
-			takePicture_button.interactable = true;
+			takePictureButton.interactable = true;
 
 			// Finishing Event 2. 
 			startTimer = false;
@@ -95,11 +94,11 @@ public class TimerController : MonoBehaviour {
 
 			//Resetting default Timer parameters. 
 			timer.SetActive (false);
-			timer_button.SetActive (true);
-			timer_filler.fillAmount = 0.0f;
-			timer_text.text = "";
+			timerButton.SetActive (true);
+			timerFiller.fillAmount = 0.0f;
+			timerText.text = "";
 
-			takePicture_button.interactable = false;
+			takePictureButton.interactable = false;
 
 			//Finishing Events 1 & 3.
 			stopTimer = false;
@@ -114,7 +113,7 @@ public class TimerController : MonoBehaviour {
 	private string generateLetter () {
 		float num = Random.Range (0.0f, 26.0f);
 		int n = (int)num;
-		letter = Letters [n].ToString();
+		letter = letters [n].ToString();
 		return letter;
 	}
 

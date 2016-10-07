@@ -30,7 +30,7 @@ namespace Vuforia
 		void Start() {
 
 			// Assignations. 
-			cameraController = GameObject.FindGameObjectWithTag ("CameraController").GetComponent<CameraController>();
+			cameraController = GameObject.Find ("CameraController").GetComponent<CameraController>();
 		}
 
 		// Update is called once per frame

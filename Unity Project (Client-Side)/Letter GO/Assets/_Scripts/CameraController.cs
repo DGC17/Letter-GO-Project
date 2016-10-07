@@ -12,13 +12,13 @@ public class CameraController : MonoBehaviour {
 	public GameObject ARCamera;
 
 	// Button: Take Picture. 
-	private GameObject takeScreenShotButton;
+	private GameObject takePictureButton;
 
 	// UI Elements. 
 	private GameObject cross;
 	private GameObject generalInterface;
 	private GameObject imageInterface;
-	public Image image;
+	private Image image;
 
 	// Variables to Control Events.
 	private bool ARCameraActive;
@@ -32,19 +32,22 @@ public class CameraController : MonoBehaviour {
 	void Start () {
 
 		// Assignations.
-		timerController = GameObject.FindGameObjectWithTag ("TimerController").GetComponent<TimerController>();
-		imageController = GameObject.FindGameObjectWithTag ("ImageController").GetComponent<ImageController>();
-		takeScreenShotButton = GameObject.FindGameObjectWithTag ("TakeScreenShot");
-		cross = GameObject.FindGameObjectWithTag ("Cross");
-		imageInterface = GameObject.FindGameObjectWithTag ("ImageInterface");
-		generalInterface = GameObject.FindGameObjectWithTag ("GeneralInterface");
+		timerController = GameObject.Find ("TimerController").GetComponent<TimerController>();
+		imageController = GameObject.Find ("ImageController").GetComponent<ImageController>();
+
+		imageInterface = GameObject.Find ("ImageInterface");
+		generalInterface = GameObject.Find ("GeneralInterface");
+
+		takePictureButton = GameObject.Find ("GI.TakePicture");
+		image = GameObject.Find ("II.Image").GetComponent<Image>();
+		cross = GameObject.Find ("GI.EnableCamera.Cross");
 
 		// Default Values.
 		ARCameraActive = false;
 		changeInterface = false;
 		ARCamera.SetActive (false);
 		cross.SetActive (false);
-		takeScreenShotButton.SetActive (false);
+		takePictureButton.SetActive (false);
 		imageInterface.SetActive (false);
 	}
 
@@ -57,6 +60,7 @@ public class CameraController : MonoBehaviour {
 			// We create the texture for the Image using the bit-stream of the captured picture. 
 			Texture2D texture = new Texture2D (Screen.width, Screen.height);
 			texture.LoadImage (pictureCaptured);
+			texture.Apply ();
 			image.material.mainTexture = texture;
 
 			// Changing Interfaces. 
@@ -83,12 +87,12 @@ public class CameraController : MonoBehaviour {
 			mainCamera.SetActive (true);
 			ARCamera.SetActive (false);
 			cross.SetActive (false);
-			takeScreenShotButton.SetActive (false);
+			takePictureButton.SetActive (false);
 		} else {
 			ARCamera.SetActive (true);
 			mainCamera.SetActive (false);
 			cross.SetActive (true);
-			takeScreenShotButton.SetActive (true);
+			takePictureButton.SetActive (true);
 		}
 
 		ARCameraActive = !ARCameraActive;
