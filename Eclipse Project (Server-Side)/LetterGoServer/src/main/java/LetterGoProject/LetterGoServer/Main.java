@@ -14,20 +14,32 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import com.wordnik.swagger.jaxrs.config.BeanConfig;
 
+import LetterGoProject.LetterGoData.GameData;
+
 /**
  * Class that defines the configuration and deploying
  * of the API service.
  * 
  * @author David Garcia Centelles
  */
-public class Main {
+public final class Main {
 
     /**
      * URI of the Server. 
      */
     private static final URI BASE_URI
             = URI.create("http://localhost:8080/lettergo/");
-	
+    
+    /**
+     * Path to the DB Directory.
+     */
+   	public static String DBPATH;
+    
+    /**
+     * Acts as a DB. 
+     */
+    public static GameData GD;
+    
     /**
      * Void Constructor. 
      */
@@ -48,14 +60,32 @@ public class Main {
             beanConfig.setDescription("Letter GO Client API");
             beanConfig.setTitle("Letter GO Client API");
             
+            //TODO: Use args. 
+            DBPATH = "DB";
+            
+            GD = new GameData();
+            System.out.println(String.format(
+            		"Loading game data..."));
+            boolean exists = GD.loadDataFromFile();
+            if (!exists) {
+            	System.out.println(String.format(
+            			"Using default data..."));
+            }
+            
             final HttpServer server
                     = GrizzlyHttpServerFactory.createHttpServer(
-                            BASE_URI, createApp());
-
+                            BASE_URI, createApp());           
+            
             System.out.println(
                     String.format(
                             "Application started.%nHit enter to stop it..."));
             System.in.read();
+            
+            System.out.println(
+                    String.format(
+                            "Saving game data..."));
+            GD.saveDataOnFile();
+            
             server.shutdownNow();
             System.exit(0);
         } catch (IOException ex) {

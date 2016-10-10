@@ -1,0 +1,59 @@
+package LetterGoProject.LetterGoData;
+
+import java.io.Serializable;
+
+/**
+ * Class that represents an user of the application.
+ * 
+ * @author David Garcia Centelles
+ */
+public class User  implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Username of the user.
+	 */
+	private String username;
+	
+	/**
+	 * Password of the user.
+	 */
+	private String password;
+	
+	/**
+	 * Points (Score) of the user.
+	 */
+	private double points;
+	
+	/**
+	 * Constructor.
+	 * @param username Username.
+	 * @param password Password.
+	 */
+	public User(final String _username, final String _password) {
+		super();
+		this.username = _username;
+		this.password = _password;
+		this.points = 0;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public double getPoints() {
+		return points;
+	}
+	public void setPoints(double points) {
+		this.points = points;
+	}
+}

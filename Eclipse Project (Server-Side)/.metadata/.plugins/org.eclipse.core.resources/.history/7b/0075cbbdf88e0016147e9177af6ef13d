@@ -1,0 +1,37 @@
+package LetterGoProject.LetterGoData;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class GameData {
+
+	private static final String[] letters = {	
+			"A","B","C","D","E","F","G","H","I","J","K","L","M",
+			"N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+	
+	private ArrayList<User> users;
+	private HashMap<String, Double> letterCount;
+	
+	
+	
+	public ArrayList<User> getUsers() {
+		return users;
+	}
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
+	}
+	public HashMap<String, Double> getLetterCount() {
+		return letterCount;
+	}
+	public void setLetterCount(HashMap<String, Double> letterCount) {
+		this.letterCount = letterCount;
+	}
+	
+	private void initiliazeLetterCount() {
+		for (String letter : letters) {
+			letterCount.put(letter, 0d);
+		}
+	}
+	
+	
+}

@@ -1,0 +1,5 @@
+package LetterGoProject.LetterGOResponses;
+
+public class NotRegistered {
+
+}
