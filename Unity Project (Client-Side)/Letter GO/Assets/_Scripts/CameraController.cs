@@ -6,6 +6,7 @@ using System.IO;
 public class CameraController : MonoBehaviour {
 
 	//External References.
+	private sharedVariables sharedVariables;
 	private TimerController timerController;
 	private ImageController imageController;
 	public GameObject mainCamera;
@@ -19,6 +20,8 @@ public class CameraController : MonoBehaviour {
 	private GameObject generalInterface;
 	private GameObject imageInterface;
 	private Image image;
+	private Text userName;
+	private Text userScore;
 
 	// Variables to Control Events.
 	private bool ARCameraActive;
@@ -32,8 +35,9 @@ public class CameraController : MonoBehaviour {
 	void Start () {
 
 		// Assignations.
-		timerController = GameObject.Find ("TimerController").GetComponent<TimerController>();
-		imageController = GameObject.Find ("ImageController").GetComponent<ImageController>();
+		timerController = GameObject.Find ("TimerController").GetComponent<TimerController> ();
+		imageController = GameObject.Find ("ImageController").GetComponent<ImageController> ();
+		sharedVariables = GameObject.Find ("sharedVariables").GetComponent<sharedVariables> (); 
 
 		imageInterface = GameObject.Find ("ImageInterface");
 		generalInterface = GameObject.Find ("GeneralInterface");
@@ -41,6 +45,8 @@ public class CameraController : MonoBehaviour {
 		takePictureButton = GameObject.Find ("GI.TakePicture");
 		image = GameObject.Find ("II.Image").GetComponent<Image>();
 		cross = GameObject.Find ("GI.EnableCamera.Cross");
+		userName = GameObject.Find ("GI.UserName").GetComponent<Text>();
+		userScore = GameObject.Find ("GI.UserScore").GetComponent<Text>();
 
 		// Default Values.
 		ARCameraActive = false;
@@ -49,6 +55,9 @@ public class CameraController : MonoBehaviour {
 		cross.SetActive (false);
 		takePictureButton.SetActive (false);
 		imageInterface.SetActive (false);
+
+		userName.text = "Welcome " + sharedVariables.getUsername ();
+		userScore.text = "Score: " + sharedVariables.getScore ();
 	}
 
 	// Update is called once per frame.

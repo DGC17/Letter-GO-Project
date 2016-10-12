@@ -211,5 +211,12 @@ public final class GameData {
 		return exists;
 	}
 
+	/**
+	 * Gets the array of letters defined in this class.
+	 * @return Array of letters. 
+	 */
+	public static String[] getLetters() {
+		return LETTERS;
+	}
 	
 }

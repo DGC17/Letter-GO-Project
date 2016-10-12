@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.IO;
+using System;
 
 public class ImageController : MonoBehaviour {
 
@@ -141,6 +142,8 @@ public class ImageController : MonoBehaviour {
 	public void recognizeLetter () {
 
 		byte[] image = getImageSelected ();
+		string letter = timerController.getLetter ();
+		string imageb64 = Convert.ToBase64String (image);
 
 		Texture2D texture = new Texture2D (
 			(int)(selector.rectTransform.rect.width*0.85f), 

@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="java.io.StringReader"/>
 <fullyQualifiedTypeName name="javax.ws.rs.POST"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageWriter"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="java.io.ByteArrayInputStream"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
@@ -18,4 +17,8 @@
 <fullyQualifiedTypeName name="LetterGoProject.LetterGOResponses.Invalid"/>
 <fullyQualifiedTypeName name="LetterGoProject.LetterGOResponses.NotRegistered"/>
 <fullyQualifiedTypeName name="LetterGoProject.LetterGoServer.Main"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="org.eclipse.persistence.tools.file.FileUtil"/>
+<fullyQualifiedTypeName name="javax.ws.rs.GET"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
 </qualifiedTypeNameHistroy>

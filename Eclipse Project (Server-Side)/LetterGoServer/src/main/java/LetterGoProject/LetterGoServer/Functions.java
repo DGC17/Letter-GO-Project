@@ -8,6 +8,7 @@ import com.wordnik.swagger.annotations.ApiResponses;
 import LetterGoProject.LetterGOResponses.Invalid;
 import LetterGoProject.LetterGOResponses.NotRegistered;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,7 +26,10 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.imageio.ImageIO;
 
-	import java.util.Base64;
+import java.util.Base64;
+import java.util.Random;
+
+import LetterGoProject.LetterGoData.GameData;
 
 /**
  * Class that define the functions of the API.
@@ -56,6 +60,31 @@ public final class Functions {
      * Temporal Fix Score. 
      */
     private static final double FIXSCORE = 100d;
+    
+    /**
+     * Generate Letter (GET). 
+     * @return Response.
+     * Testing...
+     * {"username":"Test","password":"1234"}
+     */
+    @GET
+    @Path("/generateLetter")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "generates a new letter for the user")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response generateLetter() { 
+ 	
+    	String[] letters = GameData.getLetters();
+    	Random index = new Random();
+    	int n = index.nextInt(letters.length);
+    	
+    	JsonObject response = Json.createObjectBuilder()
+	  	           .add("letter", letters[n])
+	  	           .build();
+	  	
+	   return Response.status(R200).entity(response).build();
+    }
     
     /**
      * Add User (POST). 
