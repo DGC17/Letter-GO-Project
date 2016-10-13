@@ -8,6 +8,8 @@ public class ImageController : MonoBehaviour {
 
 	// External References.
 	private TimerController timerController;
+	private ResultController resultController;
+	private APIController apiController;
 	private GameObject generalInterface;
 	private GameObject imageInterface;
 	private GameObject resultInterface;
@@ -40,7 +42,9 @@ public class ImageController : MonoBehaviour {
 	void Start () {
 
 		// Assignations. 
-		timerController = GameObject.Find ("TimerController").GetComponent<TimerController>();
+		timerController = GameObject.Find ("TimerController").GetComponent<TimerController> ();
+		resultController = GameObject.Find ("ResultController").GetComponent<ResultController> ();
+		apiController = GameObject.Find ("APIController").GetComponent<APIController> ();
 
 		imageInterface = GameObject.Find ("ImageInterface");
 		generalInterface = GameObject.Find ("GeneralInterface");
@@ -56,7 +60,6 @@ public class ImageController : MonoBehaviour {
 
 		// Default Values.
 		recognizeButton.interactable = false;
-		resultInterface.SetActive (false);
 
 		// Variables to Control Events.
 		managingImage = false;
@@ -137,13 +140,17 @@ public class ImageController : MonoBehaviour {
 	}
 
 	// Recognizes the letter selected by the user. 
-	// TODO: Not Implemented.
 	// Called when the user clicks on the button "Recognize". 
 	public void recognizeLetter () {
-
+		
 		byte[] image = getImageSelected ();
+
 		string letter = timerController.getLetter ();
 		string imageb64 = Convert.ToBase64String (image);
+
+		double score = apiController.sendResults (letter, imageb64);
+
+		resultController.setTextandScore (letter, score);
 
 		Texture2D texture = new Texture2D (
 			(int)(selector.rectTransform.rect.width*0.85f), 

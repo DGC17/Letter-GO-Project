@@ -21,4 +21,7 @@
 <fullyQualifiedTypeName name="org.eclipse.persistence.tools.file.FileUtil"/>
 <fullyQualifiedTypeName name="javax.ws.rs.GET"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="scala.util.parsing.json.JSONObject"/>
+<fullyQualifiedTypeName name="java.net.URLEncoder"/>
+<fullyQualifiedTypeName name="java.net.URLDecoder"/>
 </qualifiedTypeNameHistroy>

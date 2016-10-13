@@ -18,17 +18,34 @@ public class APIController : MonoBehaviour {
 	}
 
 	public bool login(string username, string password) {
-		sharedVariables.setScore (100d);
-		return true;
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "loginUser";
+		WWWForm form = new WWWForm ();
+		form.AddField ("username", username);
+		form.AddField ("password", password);
+		WWW www = new WWW (url, form);
+		while (!www.isDone) {}
+		if (www.error == null) {
+			ScoreItem item = JsonUtility.FromJson<ScoreItem> (www.text);
+			sharedVariables.setScore (item.score);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public bool register(string username, string password) { 
-		return true;
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "addUser";
+		WWWForm form = new WWWForm ();
+		form.AddField ("username", username);
+		form.AddField ("password", password);
+		WWW www = new WWW (url, form);
+		while (!www.isDone) {}
+		return (www.error == null);
 	}
 
 	public string generateLetter() {
 		string url = sharedVariables.getIPPort() + COMMON_PATH + "generateLetter";
-		string response = "{'letter':'A'}";
+		string response = "";
 		WWW www = new WWW(url);
 		while (!www.isDone) {}
 		if (www.error == null) {
@@ -39,7 +56,19 @@ public class APIController : MonoBehaviour {
 	}
 
 	public double sendResults(string letter, string image) {
-		return 100d;
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "sendResults";
+		WWWForm form = new WWWForm ();
+		form.AddField ("username", sharedVariables.getUsername());
+		form.AddField ("letter", letter);
+		form.AddField ("image", image);
+		WWW www = new WWW (url, form);
+		while (!www.isDone) {}
+		if (www.error == null) {
+			ScoreItem item = JsonUtility.FromJson<ScoreItem> (www.text);
+			return item.score;
+		} else {
+			return 100d;
+		}
 	}
 
 	//AUXILIAR CLASSES
@@ -47,5 +76,10 @@ public class APIController : MonoBehaviour {
 	public class LetterItem
 	{
 		public string letter;
+	}
+
+	public class ScoreItem
+	{
+		public double score;
 	}
 }

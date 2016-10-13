@@ -62,7 +62,7 @@ public class UserController : MonoBehaviour {
 		sharedVariables.setUsername (username);
 		sharedVariables.setIPPort (getIPPort ());
 		
-		if (newUser.isOn) {
+		if (!newUser.isOn) {
 			isOk = apiController.login (username, password);
 			if (!isOk) {
 				errorDialog.SetActive (true);

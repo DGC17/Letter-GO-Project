@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ResultController : MonoBehaviour {
@@ -6,10 +7,15 @@ public class ResultController : MonoBehaviour {
 	//External References.
 	private TimerController timerController;
 	private ImageController imageController;
+	private sharedVariables sharedVariables;
 	public GameObject resultInterface;
 	public GameObject generalInterface;
 	public GameObject mainCamera;
 	public GameObject ARCamera;
+
+	private Text textLetter;
+	private Text textAchievedScore;
+	private Text textActualScore;
 
 	// Variables to Control Events.
 	private bool returnPrev = false;
@@ -18,9 +24,15 @@ public class ResultController : MonoBehaviour {
 	void Start () {
 
 		// Assignations. 
-		timerController = GameObject.Find ("TimerController").GetComponent<TimerController>();
-		imageController = GameObject.Find ("ImageController").GetComponent<ImageController>();
+		timerController = GameObject.Find ("TimerController").GetComponent<TimerController> ();
+		imageController = GameObject.Find ("ImageController").GetComponent<ImageController> ();
+		sharedVariables = GameObject.Find ("sharedVariables").GetComponent<sharedVariables> ();
 
+		textLetter = GameObject.Find ("RI.Text.Letter").GetComponent<Text> ();
+		textAchievedScore = GameObject.Find ("RI.Text.AchievedScore").GetComponent<Text> ();
+		textActualScore = GameObject.Find ("RI.Text.ActualScore").GetComponent<Text> ();
+
+		resultInterface.SetActive (false);
 		returnPrev = false;
 	}
 	
@@ -44,5 +56,14 @@ public class ResultController : MonoBehaviour {
 
 	public void returnGeneral() {
 		returnPrev = true;
+	}
+
+	public void setTextandScore(string letter, double score) {
+		double newScore = (sharedVariables.getScore () + score);
+		sharedVariables.setScore (newScore);
+
+		textLetter.text = ("Letter: " + letter);
+		textAchievedScore.text = ("Score: " + score);
+		textActualScore.text = ("Total Score: " + newScore);
 	}
 }

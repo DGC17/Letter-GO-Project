@@ -19,11 +19,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.imageio.ImageIO;
 
 import java.util.Base64;
@@ -102,14 +100,9 @@ public final class Functions {
         @ApiResponse(code = R400, 
         	message = "This username is already registered")})
     public Response addUser(final String request) { 
-    	
-        //Interpreting the received string as a JSON. 
-        JsonReader jsonReader = Json.createReader(new StringReader(request));
-        JsonObject obj = jsonReader.readObject();
-        jsonReader.close();
-
-    	String username = obj.getString("username");
-    	String password = obj.getString("password");
+ 	
+    	String username = request.split("&")[0].split("=")[1];
+    	String password = request.split("&")[1].split("=")[1];
     	
     	if (Main.GD.isUsernameRegistered(username)) {
     		throw new Invalid("This username is already registered").except();
@@ -136,13 +129,8 @@ public final class Functions {
         @ApiResponse(code = R400, message = "User or Password are incorrect")})
     public Response loginUser(final String request) { 
     	
-        //Interpreting the received string as a JSON. 
-        JsonReader jsonReader = Json.createReader(new StringReader(request));
-        JsonObject obj = jsonReader.readObject();
-        jsonReader.close();
-
-    	String username = obj.getString("username");
-    	String password = obj.getString("password");
+    	String username = request.split("&")[0].split("=")[1];
+    	String password = request.split("&")[1].split("=")[1];
     	
     	if (Main.GD.isUsernameRegistered(username)) {
     		int i = Main.GD.getUserIndexWithName(username);
@@ -179,15 +167,10 @@ public final class Functions {
         @ApiResponse(code = R400, message = "This isn't a valid letter"),
         @ApiResponse(code = R406, message = "This username doesn't exists")})
     public Response sendResults(final String request) { 
-    	
-        //Interpreting the received string as a JSON. 
-        JsonReader jsonReader = Json.createReader(new StringReader(request));
-        JsonObject obj = jsonReader.readObject();
-        jsonReader.close();
 
-    	String username = obj.getString("username");
-    	String letter = obj.getString("letter");
-    	String picture = obj.getString("picture");
+    	String username = request.split("&")[0].split("=")[1];
+    	String letter = request.split("&")[1].split("=")[1];
+    	String picture = request.split("&")[2].split("=")[1];
     	
     	if (!Main.GD.isUsernameRegistered(username)) {
     		throw new NotRegistered("This username doesn't exists").except();

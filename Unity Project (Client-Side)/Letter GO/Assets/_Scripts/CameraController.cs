@@ -57,11 +57,13 @@ public class CameraController : MonoBehaviour {
 		imageInterface.SetActive (false);
 
 		userName.text = "Welcome " + sharedVariables.getUsername ();
-		userScore.text = "Score: " + sharedVariables.getScore ();
+		userScore.text = "Score: " + sharedVariables.getScore().ToString();
 	}
 
 	// Update is called once per frame.
 	void Update () {
+
+		userScore.text = "Score: " + sharedVariables.getScore().ToString();
 
 		// Event 1: When we want to change to the Image Interface. 
 		if (changeInterface) {
