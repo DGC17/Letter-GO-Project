@@ -11,3 +11,15 @@
 1476261864213	Delete element
 1476263412935	Delete element
 1476377185583	Delete element
+1476451619585	Rename package 'LetterGoProject.LetterGoData'
+1476451696574	Rename package 'LetterGoProject.LetterGOResponses'
+1476451749764	Rename package 'LetterGoProject.LetterGoServer'
+1476451855782	Rename package 'letterGoServer'
+1476451904551	Rename package 'letterGOData'
+1476451957893	Rename package 'letterGOResponses'
+1476452005471	Rename field 'BASE_URI'
+1476452017557	Rename field 'DBPATH'
+1476452058130	Rename field 'GD'
+1476452584809	Copy compilation unit
+1476452586515	Copy compilation unit
+1476454365858	Delete element

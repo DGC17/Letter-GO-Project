@@ -2,9 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
+// Class to control the timer. 
 public class TimerController : MonoBehaviour {
 
-	//External References.
+	// External References.
 	private APIController apiController;
 
 	// Wrapper for all the Timer elements.

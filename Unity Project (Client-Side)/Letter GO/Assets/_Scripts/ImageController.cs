@@ -142,23 +142,31 @@ public class ImageController : MonoBehaviour {
 	// Recognizes the letter selected by the user. 
 	// Called when the user clicks on the button "Recognize". 
 	public void recognizeLetter () {
-		
+
+		// Gets the image from the camara. 
 		byte[] image = getImageSelected ();
 
+		// Gets the letter. 
 		string letter = timerController.getLetter ();
+
+		// We convert the image to Base64, so we can send it through a JSON.
 		string imageb64 = Convert.ToBase64String (image);
 
+		// We call the API method to send the results. 
 		double score = apiController.sendResults (letter, imageb64);
 
+		// When we have the results, we set them. 
 		resultController.setTextandScore (letter, score);
 
+		// We create a new texture to load our image in the Result Interface. 
 		Texture2D texture = new Texture2D (
 			(int)(selector.rectTransform.rect.width*0.85f), 
 			(int)(selector.rectTransform.rect.height*0.85f));
 		texture.LoadImage (image);
 		texture.Apply ();
-
 		resultImage.material.mainTexture = texture;
+
+		// Change of interface. 
 		changeInterface = true;
 	}
 
