@@ -6,7 +6,6 @@ public class ResultController : MonoBehaviour {
 
 	//External References.
 	private TimerController timerController;
-	private ImageController imageController;
 	private sharedVariables sharedVariables;
 	public GameObject resultInterface;
 	public GameObject generalInterface;
@@ -25,14 +24,12 @@ public class ResultController : MonoBehaviour {
 
 		// Assignations. 
 		timerController = GameObject.Find ("TimerController").GetComponent<TimerController> ();
-		imageController = GameObject.Find ("ImageController").GetComponent<ImageController> ();
 		sharedVariables = GameObject.Find ("sharedVariables").GetComponent<sharedVariables> ();
 
 		textLetter = GameObject.Find ("RI.Text.Letter").GetComponent<Text> ();
 		textAchievedScore = GameObject.Find ("RI.Text.AchievedScore").GetComponent<Text> ();
 		textActualScore = GameObject.Find ("RI.Text.ActualScore").GetComponent<Text> ();
 
-		resultInterface.SetActive (false);
 		returnPrev = false;
 	}
 	
@@ -48,7 +45,6 @@ public class ResultController : MonoBehaviour {
 			// Changing from Main Camera to AR Camera. 
 			ARCamera.SetActive (true);
 			mainCamera.SetActive (false);
-			imageController.setDefaultValues ();
 
 			returnPrev = false;
 		}

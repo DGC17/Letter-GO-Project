@@ -19,6 +19,8 @@ namespace Vuforia
 	/// </summary>
 	public class WebCamBehaviour : WebCamAbstractBehaviour
 	{
+		private UnityEngine.UI.Image selector;
+
 		//External References.
 		private CameraController cameraController;
 
@@ -28,8 +30,8 @@ namespace Vuforia
 
 		// Functions executed on the intilization of the application. 
 		void Start() {
-
 			// Assignations. 
+			selector = GameObject.Find ("GI.Selector").GetComponent<UnityEngine.UI.Image>();
 			cameraController = GameObject.Find ("CameraController").GetComponent<CameraController>();
 		}
 
@@ -54,14 +56,15 @@ namespace Vuforia
 
 			if (image != null) {
 
-				// Defintion of different Textures representing the different steps of the picture transformation.
-				Texture2D tex = new Texture2D (image.Width, image.Height, TextureFormat.RGB24, false);
-				Texture2D tex_rotated = new Texture2D (image.Height, image.Width, TextureFormat.RGB24, false);
-				Texture2D tex_inverted = new Texture2D (image.Height, image.Width, TextureFormat.RGB24, false);
-
 				// Auxiliar Variables. 
 				int w = image.Width;
 				int h = image.Height;
+
+				// Defintion of different Textures representing the different steps of the picture transformation.
+				Texture2D tex = new Texture2D (w, h, TextureFormat.RGB24, false);
+				Texture2D tex_rotated = new Texture2D (h, w, TextureFormat.RGB24, false);
+				Texture2D tex_inverted = new Texture2D (h, w, TextureFormat.RGB24, false);
+				Texture2D tex_final = new Texture2D (h, w, TextureFormat.RGB24, false);
 
 				// STEP 1: Original format of the picture taked by the AR Camera. 
 				image.CopyToTexture (tex);
@@ -83,14 +86,28 @@ namespace Vuforia
 				}
 				tex_inverted.Apply();
 
-				byte[] bytes = tex_inverted.EncodeToPNG ();
+				tex_final = Instantiate (tex_inverted);
+				TextureScale.Bilinear (tex_final, Screen.width, Screen.height);
+
+				float wCircle = selector.rectTransform.rect.width;
+				float hCircle = selector.rectTransform.rect.height;
+				Vector2 pos = selector.rectTransform.position;
+
+				Color[] pix = tex_final.GetPixels ((int)(pos.x - wCircle/2), (int)(pos.y - hCircle/2), (int)wCircle, (int)hCircle);
+				Texture2D tex_selected = new Texture2D ((int)wCircle, (int)hCircle);
+				tex_selected.SetPixels (pix);
+				tex_selected.Apply ();
+
+				byte[] bytes = tex_selected.EncodeToPNG ();
 
 				Destroy (tex);
 				Destroy (tex_rotated);
 				Destroy (tex_inverted);
+				Destroy (tex_final);
+				Destroy (tex_selected);
 
 				// We send the bit-stream to the Camera Controller. 
-				cameraController.PhotoTaked (bytes);
+				cameraController.PhotoTaked (bytes, Screen.width, Screen.height);
 
 				//File.WriteAllBytes (Application.persistentDataPath + "/screen.png", bytes);
 

@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -27,6 +28,8 @@ import javax.imageio.ImageIO;
 
 import java.util.Base64;
 import java.util.Random;
+
+import java.net.URLDecoder;
 
 /**
  * Class that define the functions of the API.
@@ -191,15 +194,26 @@ public final class Functions {
     	String username = request.split("&")[0].split("=")[1];
     	String letter = request.split("&")[1].split("=")[1];
     	String picture = request.split("&")[2].split("=")[1];
+    	String decodedPicture = "";
+    	
+    	try {
+			decodedPicture = URLDecoder.decode(picture, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error decoding the image!");
+			e1.printStackTrace();
+		}
     	
     	//If the username doesn't exist we send a custom exception. 
     	if (!Main.getGameData().isUsernameRegistered(username)) {
+    		System.out.println("Username not registered!");
     		throw new NotRegistered("This username doesn't exists").except();
     	}
     	
     	//If the letter isn't allowed in the application we 
     	//send a custom exception.
     	if (!Main.getGameData().isValidLetter(letter)) {
+    		System.out.println("Invalid Letter!");
     		throw new Invalid("This isn't a valid letter").except();
     	}
     		   	
@@ -211,12 +225,13 @@ public final class Functions {
     	
     	//Save Picture
     	try {
-			byte[] imageByte = Base64.getDecoder().decode(picture);
+			byte[] imageByte = Base64.getDecoder().decode(decodedPicture);
 			BufferedImage bi = createImageFromBytes(imageByte);
 	    	File outputfile = new File(Main.getDbPath() + "/Letters/"
 	    			+ letter + "/" + (int) letterCount + ".png");
 	    	ImageIO.write(bi, "png", outputfile);
 		} catch (IOException e) {
+			System.out.println("There was an error saving the image!");
 			e.printStackTrace();
 		}
     	
@@ -253,7 +268,7 @@ public final class Functions {
     	double actualScore = Main.getGameData().getUsers().get(i).getPoints();
     	double newScore = actualScore + score;
     	Main.getGameData().getUsers().get(i).setPoints(newScore);
-    	return newScore;
+    	return score;
     }
     
     /**

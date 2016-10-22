@@ -7,7 +7,7 @@ using System.Collections;
 public class UserController : MonoBehaviour {
 
 	// A default IP and Port if the user doesn't specifies it. 
-	private static readonly string DEFAULT_IPPORT = "localhost:8080";
+	private static readonly string DEFAULT_IPPORT = "http://158.109.8.93:8080";
 
 	// External References.
 	private APIController apiController;
