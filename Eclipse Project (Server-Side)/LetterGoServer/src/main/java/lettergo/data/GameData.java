@@ -220,4 +220,29 @@ public final class GameData {
 		return LETTERS;
 	}
 	
+	/**
+	 * Gets the top of the users with the best scores. 
+	 * @param n Number of positions of the top. 
+	 * @return The top.
+	 */
+	public ArrayList<User> getTop(final int n) {
+		ArrayList<User> temp = new ArrayList<User>(users);
+		ArrayList<User> top = new ArrayList<User>();
+		int i = 0;
+		int tempSize = temp.size();
+		while ((i < n) && (i < tempSize)) {
+			double max = temp.get(0).getPoints(); 
+			int pos = temp.indexOf(temp.get(0));
+			for (User u : temp) {
+				if (u.getPoints() > max) {
+					max = u.getPoints();
+					pos = temp.indexOf(u);
+				}
+			}
+			top.add(temp.get(pos));
+			temp.remove(pos);
+			i++;
+		}
+		return top;
+	}
 }

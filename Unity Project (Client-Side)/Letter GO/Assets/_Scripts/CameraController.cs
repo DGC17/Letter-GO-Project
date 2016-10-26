@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.IO;
@@ -21,6 +22,7 @@ public class CameraController : MonoBehaviour {
 	private GameObject cross;
 	private GameObject resultInterface;
 	private GameObject generalInterface;
+	private GameObject selector;
 	private Image image;
 	private Text userName;
 	private Text userScore;
@@ -45,6 +47,7 @@ public class CameraController : MonoBehaviour {
 		takePictureButton = GameObject.Find ("GI.TakePicture");
 		image = GameObject.Find ("RI.Image").GetComponent<Image>();
 		cross = GameObject.Find ("GI.EnableCamera.Cross");
+		selector = GameObject.Find ("GI.Selector");
 		userName = GameObject.Find ("GI.UserName").GetComponent<Text>();
 		userScore = GameObject.Find ("GI.UserScore").GetComponent<Text>();
 
@@ -53,6 +56,7 @@ public class CameraController : MonoBehaviour {
 		changeInterface = false;
 		ARCamera.SetActive (false);
 		cross.SetActive (false);
+		selector.SetActive (false);
 		takePictureButton.SetActive (false);
 
 		userName.text = "Welcome " + sharedVariables.getUsername ();
@@ -93,11 +97,13 @@ public class CameraController : MonoBehaviour {
 			mainCamera.SetActive (true);
 			ARCamera.SetActive (false);
 			cross.SetActive (false);
+			selector.SetActive (false);
 			takePictureButton.SetActive (false);
 		} else {
 			ARCamera.SetActive (true);
 			mainCamera.SetActive (false);
 			cross.SetActive (true);
+			selector.SetActive (true);
 			takePictureButton.SetActive (true);
 		}
 
@@ -129,5 +135,9 @@ public class CameraController : MonoBehaviour {
 
 		// Launch Event 1. 
 		changeInterface = true;
+	}
+
+	public void openRanking() {
+		SceneManager.LoadScene (2);
 	}
 }

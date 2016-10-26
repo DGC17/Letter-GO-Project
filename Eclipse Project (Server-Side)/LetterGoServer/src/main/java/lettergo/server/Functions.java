@@ -6,6 +6,7 @@ import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
 import lettergo.data.GameData;
+import lettergo.data.User;
 import lettergo.responses.Invalid;
 import lettergo.responses.NotRegistered;
 
@@ -23,9 +24,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.imageio.ImageIO;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 
@@ -203,7 +207,7 @@ public final class Functions {
 			System.out.println("There was an error decoding the image!");
 			e1.printStackTrace();
 		}
-    	
+
     	//If the username doesn't exist we send a custom exception. 
     	if (!Main.getGameData().isUsernameRegistered(username)) {
     		System.out.println("Username not registered!");
@@ -221,11 +225,11 @@ public final class Functions {
     	double score = updateScore(username);
     	
     	//Update Letter Count.
-    	double letterCount = updateLetterCount(letter);
-    	
+    	double letterCount = updateLetterCount(letter); 	
     	//Save Picture
+    	
     	try {
-			byte[] imageByte = Base64.getDecoder().decode(decodedPicture);
+    		byte[] imageByte = Base64.getDecoder().decode(decodedPicture);
 			BufferedImage bi = createImageFromBytes(imageByte);
 	    	File outputfile = new File(Main.getDbPath() + "/Letters/"
 	    			+ letter + "/" + (int) letterCount + ".png");
@@ -233,15 +237,43 @@ public final class Functions {
 		} catch (IOException e) {
 			System.out.println("There was an error saving the image!");
 			e.printStackTrace();
-		}
-    	
+		} 	
     	//Builds the JSON with the new score. 
     	JsonObject response = Json.createObjectBuilder()
     	           .add("score", score)
     	           .build();
+
     	
     	return Response.status(R200).entity(response).build();
     }  
+    
+    /**
+     * Get Top 10 (GET). 
+     * Returns a list with 10 users with the best score. 
+     * 
+     * @return Response.
+     */
+    @GET
+    @Path("/getTop10")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "returns a list with 10 users with the best score")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getTop10() { 
+    	
+        JsonArrayBuilder builder = Json.createArrayBuilder();	
+        ArrayList<User> top = Main.getGameData().getTop(10);
+        
+        for (User u: top) {
+            builder.add(Json.createObjectBuilder()
+                    .add("username", u.getUsername())
+                    .add("score", u.getPoints()));
+        }
+
+        JsonArray topFinal = builder.build();
+	  	
+	   return Response.status(R200).entity(topFinal).build();
+    }
     
     /**
      * Transform the picture from an array of bytes to a Buffered Image.

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.IO;
+using SimpleJSON;
 
 // Class that implements all the necessary methods to acess the API of the server. 
 public class APIController : MonoBehaviour {
@@ -103,6 +104,32 @@ public class APIController : MonoBehaviour {
 		// If there was some mistake we always send 100d. 
 		} else {
 			return 100d;
+		}
+	}
+
+	// Gets the TOP 10 for the users with best score.
+	// User in:
+	// - Ranking Controller.
+	public string[] getTop10() {
+		// Build the URL and make the API call. 
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "getTop10";
+		string response = "";
+		WWW www = new WWW(url);
+		// Waits until the API responds.
+		while (!www.isDone) {}
+		// Build the JSON of the response and get the letter. 
+		if (www.error == null) {
+			response = www.text;
+			JSONNode items = JSONArray.Parse (response);
+			string[] responses = new string[items.Count];
+			int i;
+			for (i = 0; i < items.Count; i++) {
+				responses[i] = "[" + (i+1) + "] " + items[i]["username"] + " : " + items[i]["score"];
+			}
+			return responses;
+			// If there was some error, we send always an A. 
+		} else {
+			return null;
 		}
 	}
 

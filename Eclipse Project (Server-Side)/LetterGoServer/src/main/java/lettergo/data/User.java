@@ -39,6 +39,20 @@ public final class User  implements Serializable {
 	}
 	
 	/**
+	 * Constructor (Just for test purposes).
+	 * @param username0 Username.
+	 * @param password0 Password.
+	 * @param points0 Points (Score).
+	 */
+	public User(final String username0, final String password0, 
+			final double points0) {
+		super();
+		this.username = username0;
+		this.password = password0;
+		this.points = points0;
+	}
+	
+	/**
 	 * Gets the Username.
 	 * @return The Username to get.
 	 */
