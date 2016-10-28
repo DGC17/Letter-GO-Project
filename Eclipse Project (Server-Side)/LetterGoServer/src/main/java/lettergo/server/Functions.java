@@ -5,6 +5,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
+import lettergo.data.AlbumElement;
 import lettergo.data.GameData;
 import lettergo.data.User;
 import lettergo.responses.Invalid;
@@ -46,6 +47,11 @@ import java.net.URLDecoder;
 public final class Functions {
 	
     /**
+     * TOP 10. 
+     */
+    static final int T10 = 10;
+	
+	/**
      * Response 200. 
      */
     static final int R200 = 200;
@@ -59,12 +65,6 @@ public final class Functions {
      * Response 406.
      */
     static final int R406 = 406;
-    
-    /**
-     * Temporal Fix Score. 
-     * TODO: Calculate this with some internal process. 
-     */
-    private static final double FIXSCORE = 100d;
     
     /**
      * Generate Letter (GET). 
@@ -203,11 +203,10 @@ public final class Functions {
     	try {
 			decodedPicture = URLDecoder.decode(picture, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			System.out.println("There was an error decoding the image!");
 			e1.printStackTrace();
 		}
-
+		
     	//If the username doesn't exist we send a custom exception. 
     	if (!Main.getGameData().isUsernameRegistered(username)) {
     		System.out.println("Username not registered!");
@@ -220,12 +219,16 @@ public final class Functions {
     		System.out.println("Invalid Letter!");
     		throw new Invalid("This isn't a valid letter").except();
     	}
-    		   	
+    	
+    	//Update Letters of User. 
+    	Main.getGameData().addLetterToUser(letter, username);
+    	
     	//Update User Score. 
-    	double score = updateScore(username);
+    	double score = Main.getGameData().updateScore(username);
     	
     	//Update Letter Count.
-    	double letterCount = updateLetterCount(letter); 	
+    	double letterCount = Main.getGameData().updateLetterCount(letter); 
+    	
     	//Save Picture
     	
     	try {
@@ -262,7 +265,7 @@ public final class Functions {
     public Response getTop10() { 
     	
         JsonArrayBuilder builder = Json.createArrayBuilder();	
-        ArrayList<User> top = Main.getGameData().getTop(10);
+        ArrayList<User> top = Main.getGameData().getTop(T10);
         
         for (User u: top) {
             builder.add(Json.createObjectBuilder()
@@ -273,6 +276,152 @@ public final class Functions {
         JsonArray topFinal = builder.build();
 	  	
 	   return Response.status(R200).entity(topFinal).build();
+    }
+    
+    /**
+     * Get Album (POST). 
+     * Gets the Album of an User.
+     * 
+     * @return Response.
+     * @param request Request.
+     */
+    @POST
+    @Path("/getAlbum")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "get the Album of an User")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getAlbum(final String request) { 
+    	
+    	//Extract the values from the data of the request. 
+    	//The format of the data is: "label1=value1&label2=value2&...".
+    	String username = request.split("=")[1];
+    	
+		JsonArrayBuilder builder = Json.createArrayBuilder();	
+        ArrayList<AlbumElement> album = 
+        		Main.getGameData().getAlbumOfUser(username);
+        
+        for (AlbumElement ae: album) {
+            builder.add(Json.createObjectBuilder()
+                    .add("title", ae.getTitle())
+                    .add("author", ae.getAuthor())
+                    .add("rate", ae.getCompletionRate()));
+        }
+
+        JsonArray albumFinal = builder.build();
+	  	
+	   return Response.status(R200).entity(albumFinal).build();
+    }
+    
+    /**
+     * Get Album Element (POST). 
+     * Gets an Album Element from an Album of an User.
+     * 
+     * @return Response.
+     * @param request Request.
+     */
+    @POST
+    @Path("/getAlbumElement")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "get an Album Element of an Album of an User")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getAlbumElement(final String request) { 
+    	
+    	//Extract the values from the data of the request. 
+    	//The format of the data is: "label1=value1&label2=value2&...".
+    	String username = request.split("&")[0].split("=")[1];
+    	String title = request.split("&")[1].split("=")[1];
+
+    	AlbumElement ae = Main.getGameData().
+    			getAlbumElementFromAlbumOfUser(title, username);
+    	
+    	JsonObject response = Json.createObjectBuilder()
+	  	           .add("title", ae.getTitle())
+	  	           .add("author", ae.getAuthor())
+	  	           .add("text", ae.getIncompleteText())
+	  	           .add("type", ae.getType())
+	  	           .add("rate", ae.getCompletionRate())
+	  	           .build();
+	  	
+	   return Response.status(R200).entity(response).build();
+    }
+    
+    /**
+     * Get Letters (POST). 
+     * Gets the letters of an user.
+     * 
+     * @return Response.
+     * @param request Request.
+     */
+    @POST
+    @Path("/getLetters")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "get the Letters of an User")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getLetters(final String request) { 
+    	
+    	//Extract the values from the data of the request. 
+    	//The format of the data is: "label1=value1&label2=value2&...".
+    	String username = request.split("=")[1];
+    	
+		JsonArrayBuilder builder = Json.createArrayBuilder();	
+        ArrayList<String> letters = 
+        		Main.getGameData().getLettersOfUser(username);
+        
+        for (String l: letters) {
+            builder.add(l);
+        }
+        
+        JsonObject response = 
+        		Json.createObjectBuilder().add("letters", builder.build())
+        			.build();
+	  	
+	   return Response.status(R200).entity(response).build();
+    }
+    
+    /**
+     * Fill Letter Album Element (POST). 
+     * Tries to fill a letter in an album element.
+     * 
+     * @return Response.
+     * @param request Request.
+     */
+    @POST
+    @Path("/fillLetterAlbumElement")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "tries to fill a letter in an album element")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK"),
+        @ApiResponse(code = R400, 
+        	message = "This Letter isn't missing in the Album Element")})
+    public Response fillLetterAlbumElement(final String request) { 
+    	
+    	//Extract the values from the data of the request. 
+    	//The format of the data is: "label1=value1&label2=value2&...".
+    	String letter = request.split("&")[0].split("=")[1];
+    	String title = request.split("&")[1].split("=")[1];
+    	String username = request.split("&")[1].split("=")[1];
+    	
+    	boolean success = Main.getGameData().
+    			fillLetterInAlbumElementOfUser(letter, title, username);
+    	
+    	if (!success) {
+    		throw new Invalid("This Letter isn't missing in the Album Element")
+    			.except();
+    	} else {
+        	AlbumElement ae = Main.getGameData().
+        			getAlbumElementFromAlbumOfUser(title, username);
+        	JsonObject response = Json.createObjectBuilder()
+ 	  	           .add("title", ae.getTitle())
+ 	  	           .add("author", ae.getAuthor())
+ 	  	           .add("text", ae.getIncompleteText())
+ 	  	           .add("type", ae.getType())
+ 	  	           .add("rate", ae.getCompletionRate())
+ 	  	           .build();
+     	   return Response.status(R200).entity(response).build();
+    	}
     }
     
     /**
@@ -287,30 +436,5 @@ public final class Functions {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    
-    /**
-     * Updates the score of an user.
-     * @param username The username whose score we want to update. 
-     * @return The score assigned to that user.
-     */
-    private double updateScore(final String username) {
-    	double score = FIXSCORE;
-    	int i = Main.getGameData().getUserIndexWithName(username);
-    	double actualScore = Main.getGameData().getUsers().get(i).getPoints();
-    	double newScore = actualScore + score;
-    	Main.getGameData().getUsers().get(i).setPoints(newScore);
-    	return score;
-    }
-    
-    /**
-     * Updates the count of a letter.
-     * @param letter The letter whose count we want to update.
-     * @return The new count of the letter.
-     */
-    private double updateLetterCount(final String letter) {
-    	double newLetterCount = Main.getGameData().getLetterCount(letter) + 1d;
-    	Main.getGameData().setLetterCount(letter, newLetterCount);
-    	return newLetterCount;
     }
 }

@@ -1,0 +1,23 @@
+[
+{
+  "title":"Test",
+  "author":"David",
+  "type":"Poem",
+  "text":"The dog barks",
+  "incompletedtext":"_he _og bar__"
+},
+{
+  "title":"Test2",
+  "author":"David",
+  "type":"Poem",
+  "text":"The cat jumps",
+  "incompletedtext":"T_e c_t ju__s"
+},
+{
+  "title":"Test3",
+  "author":"David",
+  "type":"Poem",
+  "text":"The mouse runs",
+  "incompletedtext":"Th_ m_use ru__"
+}
+]
