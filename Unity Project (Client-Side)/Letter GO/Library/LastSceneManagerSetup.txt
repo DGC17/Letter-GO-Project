@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/Ranking Scene.unity
+- path: Assets/_Scenes/Album Element Scene.unity
   isLoaded: 1
   isActive: 1

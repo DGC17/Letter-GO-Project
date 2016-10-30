@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using SimpleJSON;
 
@@ -117,7 +118,6 @@ public class APIController : MonoBehaviour {
 		WWW www = new WWW(url);
 		// Waits until the API responds.
 		while (!www.isDone) {}
-		// Build the JSON of the response and get the letter. 
 		if (www.error == null) {
 			response = www.text;
 			JSONNode items = JSONArray.Parse (response);
@@ -127,9 +127,108 @@ public class APIController : MonoBehaviour {
 				responses[i] = "[" + (i+1) + "] " + items[i]["username"] + " : " + items[i]["score"];
 			}
 			return responses;
-			// If there was some error, we send always an A. 
 		} else {
 			return null;
+		}
+	}
+
+	// Gets the Album of the user registered.
+	// User in:
+	// - Album Controller.
+	public void getAlbum() {
+
+		sharedVariables.removeElementsInAlbumElementsInList ();
+
+		// Build the URL and make the API call. 
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "getAlbum";
+		string username = sharedVariables.getUsername ();
+		WWWForm form = new WWWForm ();
+		form.AddField ("username", username);
+		WWW www = new WWW (url, form);
+		string response = "";
+		// Waits until the API responds.
+		while (!www.isDone) {}
+		if (www.error == null) {
+			response = www.text;
+			JSONNode items = JSONArray.Parse (response);
+			int i;
+			for (i = 0; i < items.Count; i++) {
+				sharedVariables.addElementInAlbumElementsInList (
+					items [i] ["title"],
+					items [i] ["author"],
+					items [i] ["rate"].AsFloat);
+			}
+		}
+	}
+
+	// Get an Album Element knowing the user and the title.
+	// User in:
+	// - Element Controller.
+	public void getAlbumElement(string elementTitle) {
+		// Build the URL and make the API call. 
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "getAlbumElement";
+		string username = sharedVariables.getUsername ();
+		string title = elementTitle;
+		WWWForm form = new WWWForm ();
+		form.AddField ("username", username);
+		form.AddField ("title", title);
+		WWW www = new WWW (url, form);
+		// Waits until the API responds.
+		while (!www.isDone) {}
+		if (www.error == null) {
+			AlbumElement item = JsonUtility.FromJson<AlbumElement> (www.text);
+			sharedVariables.setAlbumElementSelected (
+				new sharedVariables.AlbumElementSelected (
+					item.title, item.author, item.text, item.type, item.rate));
+		}
+	}
+
+	// Gets the list of letters of the user.
+	// User in:
+	// - Album Element Controller.
+	public List<string> getLetters() {
+		List<string> list = new List<string> ();
+		// Build the URL and make the API call. 
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "getLetters";
+		string username = sharedVariables.getUsername ();
+		WWWForm form = new WWWForm ();
+		form.AddField ("username", username);
+		WWW www = new WWW (url, form);
+		// Waits until the API responds.
+		while (!www.isDone) {}
+		if (www.error == null) {
+			LetterList item = JsonUtility.FromJson<LetterList> (www.text);
+			for (int i = 0; i < item.letters.Length; i++) {
+				list.Add (item.letters [i]);
+			}
+		} 
+		return list;
+	}
+
+	// Tries to fill a Letter into an Album Element. 
+	// User in:
+	// - Album Element Controller. 
+	public bool fillLetterAlbumElement(string letterSelected) {
+		// Build the URL and make the API call. 
+		string url = sharedVariables.getIPPort() + COMMON_PATH + "fillLetterAlbumElement";
+		string username = sharedVariables.getUsername ();
+		string title = sharedVariables.getAlbumElementSelected ().title;
+		string letter = letterSelected;
+		WWWForm form = new WWWForm ();
+		form.AddField ("letter", letter);
+		form.AddField ("title", title);
+		form.AddField ("username", username);
+		WWW www = new WWW (url, form);
+		// Waits until the API responds.
+		while (!www.isDone) {}
+		if (www.error == null) {
+			AlbumElement item = JsonUtility.FromJson<AlbumElement> (www.text);
+			sharedVariables.setAlbumElementSelected (
+				new sharedVariables.AlbumElementSelected (
+					item.title, item.author, item.text, item.type, item.rate));
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -143,5 +242,19 @@ public class APIController : MonoBehaviour {
 	public class ScoreItem
 	{
 		public double score;
+	}
+
+	public class AlbumElement
+	{
+		public string title;
+		public string author;
+		public string text;
+		public string type;
+		public float rate;
+	}
+
+	public class LetterList
+	{
+		public string[] letters;
 	}
 }

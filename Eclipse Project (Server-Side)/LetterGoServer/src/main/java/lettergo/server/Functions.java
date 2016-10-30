@@ -402,7 +402,7 @@ public final class Functions {
     	//The format of the data is: "label1=value1&label2=value2&...".
     	String letter = request.split("&")[0].split("=")[1];
     	String title = request.split("&")[1].split("=")[1];
-    	String username = request.split("&")[1].split("=")[1];
+    	String username = request.split("&")[2].split("=")[1];
     	
     	boolean success = Main.getGameData().
     			fillLetterInAlbumElementOfUser(letter, title, username);

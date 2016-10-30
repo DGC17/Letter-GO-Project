@@ -140,4 +140,8 @@ public class CameraController : MonoBehaviour {
 	public void openRanking() {
 		SceneManager.LoadScene (2);
 	}
+
+	public void openAlbum() {
+		SceneManager.LoadScene (3);
+	}
 }
