@@ -23,6 +23,7 @@ namespace Vuforia
 
 		//External References.
 		private CameraController cameraController;
+		private soundPlayer soundPlayer;
 
 		// Variables for the AR Camera configuration. 
 		private Image.PIXEL_FORMAT m_PixelFormat = Image.PIXEL_FORMAT.RGB888;
@@ -30,6 +31,12 @@ namespace Vuforia
 
 		// Functions executed on the intilization of the application. 
 		void Start() {
+
+			CameraDevice.Instance.SetFocusMode( 
+				CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
+
+			soundPlayer = GameObject.Find ("soundPlayer").GetComponent<soundPlayer> ();
+
 			// Assignations. 
 			selector = GameObject.Find ("GI.Selector").GetComponent<UnityEngine.UI.Image>();
 			cameraController = GameObject.Find ("CameraController").GetComponent<CameraController>();
@@ -50,6 +57,8 @@ namespace Vuforia
 		// Captures the image shown by the AR Camera.
 		// Called when the user clicks on the Button "Take Picture". 
 		public void TakeScreenShot() {
+
+			soundPlayer.playSound ("select");
 
 			// We take an instance of the Camera and the image stored in that instance. 
 			Image image = CameraDevice.Instance.GetCameraImage (m_PixelFormat);

@@ -37,4 +37,8 @@
 <fullyQualifiedTypeName name="javax.json.JsonObject"/>
 <fullyQualifiedTypeName name="lettergo.data.User"/>
 <fullyQualifiedTypeName name="lettergo.data.AlbumElement"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="lettergo.server.Main"/>
+<fullyQualifiedTypeName name="java.lang.Boolean"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

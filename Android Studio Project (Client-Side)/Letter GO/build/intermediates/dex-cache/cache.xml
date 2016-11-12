@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3e1c7dec53bbee06823c3775fa62e54a121ecf83">
+        <dex dex="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_065ccec839a5e6580017f03b3797396cc4d70e8e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\libs\VuforiaUnityPlayer.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2fcc90620f71b291e5a25760091af316998b9b2a">
+        <dex dex="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\intermediates\transforms\dex\debug\folders\1000\2\VuforiaUnityPlayer_1221ae8496e6e6530c3c5b7dc70459302700ec5c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\libs\Vuforia.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9419379f995bfb5e731572d46c44c40b284322b5">
+        <dex dex="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\intermediates\transforms\dex\debug\folders\1000\2\Vuforia_3cd44495bb0af295277c170249a24552f7801c26\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="dd6e6ce35d7ae1105b84442a2f9614d00faaa628">
+        <dex dex="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_62f9d6a5321b822a9d0d5e4da16b9c6a2a1f6fa5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\libs\unity-classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6d457c913df52a4998fca4aa7acbdb201a813266">
+        <dex dex="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\intermediates\transforms\dex\debug\folders\1000\2\unity-classes_e6436d235ed1d2f51b009a6db03318be132a2ae9\classes.dex" />
+    </item>
+
+</items>

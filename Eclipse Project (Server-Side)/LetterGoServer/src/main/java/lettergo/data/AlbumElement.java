@@ -19,6 +19,11 @@ public final class AlbumElement implements Serializable {
 	private static final float P100 = 100.0f;
 	
 	/**
+	 * Score for completing an Album element. 
+	 */
+	private static final double S1000 = 1000d;
+	
+	/**
 	 * The title of the Album Element.
 	 */
 	private String title;
@@ -273,8 +278,9 @@ public final class AlbumElement implements Serializable {
 	/**
 	 * Introduces a letter in the incomplete text.
 	 * @param letter The letter to introduce. 
+	 * @return Score achieved. 
 	 */
-	public void fillLetterInText(final char letter) {
+	public double fillLetterInText(final char letter) {
 		boolean found = false;
 		int i = 0;
 		while (!found && i < this.missingLetters.size()) {
@@ -300,6 +306,12 @@ public final class AlbumElement implements Serializable {
 		this.incompleteText = newIncompleteText.toString();
 
 		this.completionRate = calculateCompletionRate();
+		
+		double score = 0d;
+		if (this.completionRate == P100) {
+			score = S1000;
+		}
+		return score;
 	}
 	
 	/**

@@ -83,12 +83,15 @@ public final class Functions {
  	
     	//Generates the letter.
     	String[] letters = GameData.getLetters();
+    	
+    	ArrayList<String> weightedLetters = getWeightedLetters(letters);
+    	
     	Random index = new Random();
-    	int n = index.nextInt(letters.length);
+    	int n = index.nextInt(weightedLetters.size());
     	
     	//Builds the JSON with the generated letter.
     	JsonObject response = Json.createObjectBuilder()
-	  	           .add("letter", letters[n])
+	  	           .add("letter", weightedLetters.get(n))
 	  	           .build();
 	  	
 	   return Response.status(R200).entity(response).build();
@@ -198,7 +201,12 @@ public final class Functions {
     	String username = request.split("&")[0].split("=")[1];
     	String letter = request.split("&")[1].split("=")[1];
     	String picture = request.split("&")[2].split("=")[1];
+    	String recognized = request.split("&")[3].split("=")[1];
     	String decodedPicture = "";
+    	boolean rec = true;
+    	if (recognized.equals("false")) {
+    		rec = false;
+    	}
     	
     	try {
 			decodedPicture = URLDecoder.decode(picture, "UTF-8");
@@ -206,7 +214,6 @@ public final class Functions {
 			System.out.println("There was an error decoding the image!");
 			e1.printStackTrace();
 		}
-		
     	//If the username doesn't exist we send a custom exception. 
     	if (!Main.getGameData().isUsernameRegistered(username)) {
     		System.out.println("Username not registered!");
@@ -224,7 +231,8 @@ public final class Functions {
     	Main.getGameData().addLetterToUser(letter, username);
     	
     	//Update User Score. 
-    	double score = Main.getGameData().updateScore(username);
+    	double score = Main.getGameData().updateScore(
+    			username, letter, rec);
     	
     	//Update Letter Count.
     	double letterCount = Main.getGameData().updateLetterCount(letter); 
@@ -382,6 +390,33 @@ public final class Functions {
     }
     
     /**
+     * Get Tip (GET). 
+     * Gets a random tip for the user. 
+     * 
+     * @return Response.
+     */
+    @GET
+    @Path("/getTip")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "gets a random tip for the user.")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getip() { 
+ 	
+    	//Generates the letter.
+    	ArrayList<String> tips = GameData.getTips();
+    	Random index = new Random();
+    	int n = index.nextInt(tips.size());
+    	
+    	//Builds the JSON with the generated letter.
+    	JsonObject response = Json.createObjectBuilder()
+	  	           .add("tip", tips.get(n))
+	  	           .build();
+	  	
+	   return Response.status(R200).entity(response).build();
+    }
+    
+    /**
      * Fill Letter Album Element (POST). 
      * Tries to fill a letter in an album element.
      * 
@@ -404,10 +439,10 @@ public final class Functions {
     	String title = request.split("&")[1].split("=")[1];
     	String username = request.split("&")[2].split("=")[1];
     	
-    	boolean success = Main.getGameData().
+    	double success = Main.getGameData().
     			fillLetterInAlbumElementOfUser(letter, title, username);
     	
-    	if (!success) {
+    	if (success == -1d) {
     		throw new Invalid("This Letter isn't missing in the Album Element")
     			.except();
     	} else {
@@ -419,6 +454,7 @@ public final class Functions {
  	  	           .add("text", ae.getIncompleteText())
  	  	           .add("type", ae.getType())
  	  	           .add("rate", ae.getCompletionRate())
+ 	  	           .add("success", success)
  	  	           .build();
      	   return Response.status(R200).entity(response).build();
     	}
@@ -436,5 +472,27 @@ public final class Functions {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    /**
+     * Get the list of letters taking into account the frequency of apparition 
+     * of this letters inside the English Language. 
+     * Source: https://en.wikipedia.org/wiki/Letter_frequency
+     * @param originalLetters Original Letters.
+     * @return Final Letters
+     */
+    private ArrayList<String> getWeightedLetters(
+    		final String[] originalLetters) {
+    	ArrayList<String> finalLetters = new ArrayList<String>();
+
+    	for (String l : originalLetters) {
+        	int count = GameData.getWeights().get(l);
+
+    		for (int i = 0; i < count; i++) {
+    			finalLetters.add(l);
+    		}
+    	}
+    	
+    	return finalLetters;
     }
 }

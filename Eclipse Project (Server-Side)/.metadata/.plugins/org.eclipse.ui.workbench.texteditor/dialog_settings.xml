@@ -2,16 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getLetterIndex" key="selection"/>
+		<item value="weights" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="Weights"/>
+			<item value="GameData"/>
+			<item value="LETTERS"/>
+			<item value="FIXSCORE"/>
 			<item value="getLetterIndex"/>
 			<item value="invalid"/>
 			<item value="&quot;"/>
-			<item value="LETTERS"/>
 		</list>
 		<list key="replacehistory">
 			<item value="&apos;"/>

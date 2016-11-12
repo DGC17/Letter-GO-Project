@@ -190,18 +190,18 @@ public final class User  implements Serializable {
 	 * @param albumElementTitle Title of the Album. 
 	 * @return True (Everything goes fine) / False (Letter isn't missing). 
 	 */
-	public boolean fillLetterInAlbumElement(
+	public double fillLetterInAlbumElement(
 			final String letter, final String albumElementTitle) {
 		char l = letter.toCharArray()[0];
 		int ai = getAlbumElementIndexWithTitle(albumElementTitle);
+		double score = -1d;
 		if (this.album.get(ai).isLetterMissing(l)) {
 			int li = getLetterIndex(letter);
 			this.letters.remove(li);
-			this.album.get(ai).fillLetterInText(l);
-			return true;
-		} else {
-			return false;
+			score = this.album.get(ai).fillLetterInText(l);
 		}
+		
+		return score;
 	}
 	
 	/**
