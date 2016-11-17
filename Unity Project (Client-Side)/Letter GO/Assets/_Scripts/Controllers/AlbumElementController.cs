@@ -18,8 +18,6 @@ public class AlbumElementController : MonoBehaviour {
 	private Dropdown Letters;
 	private Button FillLetter;
 
-	private Image Background;
-
 	private GameObject Dialog;
 
 	// Use this for initialization
@@ -36,13 +34,10 @@ public class AlbumElementController : MonoBehaviour {
 		Letters = GameObject.Find ("Letters").GetComponent<Dropdown> ();
 		FillLetter = GameObject.Find ("FillLetter").GetComponent<Button> ();
 
-		Background = GameObject.Find ("Background").GetComponent<Image> ();
-
 		Dialog = GameObject.Find ("Dialog");
-		Dialog.SetActive (false);
+		Dialog.GetComponentInChildren<Text> ().text = "You can add your stored letters in this text by selecting them and pushing the Add button!";
 
 		LoadInfo ();
-		Background.material.mainTexture = Texture2D.whiteTexture;
 	}
 	
 	// Update is called once per frame
@@ -60,14 +55,13 @@ public class AlbumElementController : MonoBehaviour {
 
 	public void AddLetter() {
 		soundPlayer.playSound ("select");
-		Dialog.SetActive (true);
 		string letter = Letters.captionText.text;
 		bool added = apiController.fillLetterAlbumElement (letter);
 		if (added) {
-			Dialog.GetComponentInChildren<Text> ().text = "Added Letter " + letter + " succesfully!";
+			Dialog.GetComponentInChildren<Text> ().text = "You added the letter " + letter + " succesfully!\nKeep working hard!";
 			LoadInfo ();
 		} else {
-			Dialog.GetComponentInChildren<Text> ().text = "The letter " + letter + " wasn't in the Album Element!";
+			Dialog.GetComponentInChildren<Text> ().text = "The letter " + letter + " doesn't fit here!\nTry another one...";
 		}
 	}
 
@@ -84,16 +78,14 @@ public class AlbumElementController : MonoBehaviour {
 		if (list.Count == 0) {
 			Letters.interactable = false;
 			FillLetter.interactable = false;
-			Dialog.SetActive (true);
-			Dialog.GetComponentInChildren<Text> ().text = "You don't have any letter!";
+			Dialog.GetComponentInChildren<Text> ().text = "You don't have any letter stored!\nIt's time to find more!";
 		} else {
 			Letters.ClearOptions ();
 			Letters.AddOptions (list);
 
 			if (rate == 100.0f) {
 				FillLetter.interactable = false;
-				Dialog.SetActive (true);
-				Dialog.GetComponentInChildren<Text> ().text = "COMPLETED! (+ 1000 Score)";
+				Dialog.GetComponentInChildren<Text> ().text = "Congratulations! This text is COMPLETED!\n(+ 1000 Score)";
 			}
 		}
 

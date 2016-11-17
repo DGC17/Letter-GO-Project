@@ -29,9 +29,9 @@ public class AlbumController : MonoBehaviour {
 	public void addButton(string title, string author, float rate) {
 		GameObject addElement = Instantiate (element, element.transform.position, element.transform.rotation) as GameObject;
 		addElement.GetComponent<ElementController> ().setTitle (title);
-		string printedtitle = title.ToUpper ();
-		addElement.GetComponentInChildren<Text> ().text = 
-			"[" + rate + " %] " + printedtitle + "\n" + author;
+		addElement.transform.Find ("Title").GetComponent<Text>().text = title.ToUpper ();
+		addElement.transform.Find ("Rate").GetComponent<Text> ().text = rate + " %";
+		addElement.transform.Find ("Author").GetComponent<Text> ().text = author;
 		addElement.transform.SetParent (grid.transform, false);
 	}
 

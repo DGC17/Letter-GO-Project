@@ -10,14 +10,9 @@ public class SelectorController : MonoBehaviour {
 	// I take the background just to not touch it. 
 	private Image background;
 
-	public float maxScale;
-	public float minScale;
-	public float ratio;
-
 	// Event Control Variables
 	private bool maintain;
 	private bool begin;
-	private bool increase;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +24,6 @@ public class SelectorController : MonoBehaviour {
 		// Defauls values. 
 		maintain = false;
 		begin = false;
-		increase = true;
 	}
 	
 	// Update is called once per frame
@@ -56,26 +50,12 @@ public class SelectorController : MonoBehaviour {
 		}
 
 		if (maintain) {
-
 			float h = background.rectTransform.rect.height;
 			if ((position.y >= h) && (position.y <= (Screen.height - h))) {	
 				selector.transform.position = position;
 			}
 				
 		}
-
-		float scale = selector.transform.localScale.x;
-		float newscale;
-		if (increase) {
-			newscale = scale + ratio;
-		}  else {
-			newscale = scale - ratio;
-		}
-		if (newscale >= maxScale)
-			increase = false;
-		if (newscale <= minScale)
-			increase = true;
-		selector.rectTransform.localScale = new Vector2 (newscale, newscale);
 	}
 
 }

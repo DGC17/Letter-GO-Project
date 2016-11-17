@@ -44,6 +44,10 @@ namespace Vuforia
 
 		// Update is called once per frame
 		void Update () {
+
+			CameraDevice.Instance.SetFocusMode( 
+				CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
+
 			if (!m_RegisteredFormat) {
 				CameraDevice.Instance.SetFrameFormat (m_PixelFormat, false);
 				if (CameraDevice.Instance.SetFrameFormat (m_PixelFormat, true)) m_RegisteredFormat = true;
@@ -116,7 +120,7 @@ namespace Vuforia
 				Destroy (tex_selected);
 
 				// We send the bit-stream to the Camera Controller. 
-				cameraController.PhotoTaked (bytes, Screen.width, Screen.height);
+				cameraController.PhotoTaked (bytes, (int)wCircle, (int)hCircle);
 
 				//File.WriteAllBytes (Application.persistentDataPath + "/screen.png", bytes);
 

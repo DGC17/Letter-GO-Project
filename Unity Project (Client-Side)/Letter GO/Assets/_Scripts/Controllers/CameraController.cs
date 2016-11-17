@@ -21,7 +21,8 @@ public class CameraController : MonoBehaviour {
 	private GameObject takePictureButton;
 
 	// UI Elements. 
-	private GameObject cross;
+	private GameObject PowerOn;
+	private GameObject PowerOff;
 	private GameObject resultInterface;
 	private GameObject generalInterface;
 	private GameObject selector;
@@ -32,6 +33,8 @@ public class CameraController : MonoBehaviour {
 	// Variables to Control Events.
 	private bool ARCameraActive;
 	private bool changeInterface;
+
+	private AndroidJavaObject classifier;
 
 	// Functions executed on the intilization of the application. 
 	void Start () {
@@ -49,7 +52,8 @@ public class CameraController : MonoBehaviour {
 
 		takePictureButton = GameObject.Find ("GI.TakePicture");
 		image = GameObject.Find ("RI.Image").GetComponent<Image>();
-		cross = GameObject.Find ("GI.EnableCamera.Cross");
+		PowerOn = GameObject.Find ("GI.PowerOn");
+		PowerOff = GameObject.Find ("GI.PowerOff");
 		selector = GameObject.Find ("GI.Selector");
 		userName = GameObject.Find ("GI.UserName").GetComponent<Text>();
 		userScore = GameObject.Find ("GI.UserScore").GetComponent<Text>();
@@ -58,9 +62,14 @@ public class CameraController : MonoBehaviour {
 		ARCameraActive = false;
 		changeInterface = false;
 		ARCamera.SetActive (false);
-		cross.SetActive (false);
+		PowerOn.SetActive (true);
+		PowerOff.SetActive (false);
 		selector.SetActive (false);
 		takePictureButton.SetActive (false);
+
+		//JAVA CLASSIFIER
+		classifier = new AndroidJavaObject ("wrappers.Classifier");
+		classifier.Call ("loadDefaultModel");
 
 		userName.text = "Welcome " + sharedVariables.getUsername ();
 		userScore.text = "Score: " + sharedVariables.getScore().ToString();
@@ -99,13 +108,15 @@ public class CameraController : MonoBehaviour {
 		if (ARCameraActive) {
 			mainCamera.SetActive (true);
 			ARCamera.SetActive (false);
-			cross.SetActive (false);
+			PowerOn.SetActive (true);
+			PowerOff.SetActive (false);
 			selector.SetActive (false);
 			takePictureButton.SetActive (false);
 		} else {
 			ARCamera.SetActive (true);
 			mainCamera.SetActive (false);
-			cross.SetActive (true);
+			PowerOn.SetActive (false);
+			PowerOff.SetActive (true);
 			selector.SetActive (true);
 			takePictureButton.SetActive (true);
 		}
@@ -120,10 +131,10 @@ public class CameraController : MonoBehaviour {
 		// Gets the letter. 
 		string letter = timerController.getLetter ();
 
+		string recognized = recognizeLetter(letter, picture, w, h);
+
 		// We convert the image to Base64, so we can send it through a JSON.
 		string imageb64 = Convert.ToBase64String (picture);
-
-		string recognized = recognizeLetter(letter, imageb64, w, h);
 
 		// We call the API method to send the results. 
 		double score = apiController.sendResults (letter, imageb64, recognized);
@@ -157,9 +168,8 @@ public class CameraController : MonoBehaviour {
 		SceneManager.LoadScene (5);
 	}
 
-	private string recognizeLetter(string letter, string imageb64, int w, int h) {
-		AndroidJavaClass recognitionFunctions = new AndroidJavaClass("com.uabproject.lettergo.recognitionFunctions"); 
-		bool response = recognitionFunctions.CallStatic<bool>("recognizeLetter", new object[] { letter, imageb64, w, h });
+	private string recognizeLetter(string letter, byte[] picture, int w, int h) {
+		bool response = classifier.Call<bool>("recognizeLetter", new object[] { letter, picture, w, h });
 		if (response) {
 			return "true";
 		} else {

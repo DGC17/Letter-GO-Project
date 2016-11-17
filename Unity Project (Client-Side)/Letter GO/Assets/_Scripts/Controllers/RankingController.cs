@@ -29,8 +29,14 @@ public class RankingController : MonoBehaviour {
 
 	public void addButton(string row) {
 		GameObject addElement = Instantiate (element, element.transform.position, element.transform.rotation) as GameObject;
-		addElement.GetComponentInChildren<Text> ().text = row;
-		addElement.GetComponent<Image> ().material.mainTexture = Texture2D.whiteTexture;
+		row = row.Trim ();
+		string[] Partnumber = row.Split (']');
+		char number = Partnumber [0] [1];
+		string username = Partnumber [1].Split (':') [0];
+		string points = Partnumber [1].Split (':') [1];
+		addElement.transform.Find ("Number").GetComponent<Text>().text = number.ToString();
+		addElement.transform.Find ("UserName").GetComponent<Text>().text = username.ToUpper();
+		addElement.transform.Find ("Points").GetComponent<Text> ().text = points;
 		addElement.transform.SetParent (grid.transform, false);
 	}
 
