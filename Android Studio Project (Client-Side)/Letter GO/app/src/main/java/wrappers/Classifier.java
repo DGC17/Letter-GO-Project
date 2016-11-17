@@ -41,7 +41,7 @@ public class Classifier extends UnityPlayerActivity {
     private static int w_step = 1;
 
     //CNN parameters.
-    private static int max_recognitions = 1; //Maximum number of returned recognitons
+    private static int max_recognitions = 10; //Maximum number of returned recognitons
     private static double prob_TH = 0.9; //Only recognitions with a class prob over prob_TH are considered.
 
     private long swigCPtr;
