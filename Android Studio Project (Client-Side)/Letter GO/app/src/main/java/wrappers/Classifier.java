@@ -8,6 +8,7 @@
 
 package wrappers;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,10 +22,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Random;
 import wrappers.FileUtils;
 
+import android.content.res.*;
 
 public class Classifier extends UnityPlayerActivity {
 
@@ -88,12 +91,74 @@ public class Classifier extends UnityPlayerActivity {
 
     public void loadDefaultModel() {
         Log.i("CLASSIFIER", "LOADING MODEL...");
+
         String proto_file_name = "/sdcard/letter_recognition/deploy.prototxt";
         String caffe_model_file_name = "/sdcard/letter_recognition/model.caffemodel";
         String synset_words_file_name = "/sdcard/letter_recognition/synset_words.txt";
         String mean_file = "/sdcard/letter_recognition/mean.binaryproto";
 
+        //We check if they exists in the device using only one of the files...
+        File f = new File(proto_file_name);
+
+        if (!f.exists()) {
+            Log.i("CLASSIFIER", "LOADING NECESSARY FILES INTO DEVICE...");
+
+            File directory = new File("/sdcard/letter_recognition");
+            directory.mkdir();
+
+            Context context = com.uabproject.lettergo.UnityPlayerActivity.getContext();
+            AssetManager assetManager = context.getAssets();
+            String[] files = null;
+
+            try {
+                files = assetManager.list("letter_recognition");
+            } catch (IOException e) {
+                Log.i("CLASSIFIER", "CANNOT LIST THE FILES IN ASSETS...");
+            }
+
+            if (files != null) for (String filename : files) {
+
+                InputStream in = null;
+                OutputStream out = null;
+                try {
+                    in = assetManager.open("letter_recognition/" + filename);
+                    File output = new File(directory, filename);
+                    out = new FileOutputStream(output, true);
+                    copyFile(in, out);
+                } catch(IOException e) {
+                    Log.i("CLASSIFIER", "CANNOT SAVE THE FILE INTO THE DEVICE..");
+                    Log.i("CLASSIFIER", e.toString());
+                } finally {
+                    if (in != null) {
+                        try {
+                            in.close();
+                        } catch (IOException e) {
+                            // NOOP
+                        }
+                    }
+                    if (out != null) {
+                        try {
+                            out.close();
+                        } catch (IOException e) {
+                            // NOOP
+                        }
+                    }
+                }
+            }
+
+        } else {
+            Log.i("CLASSIFIER", "FILES ALREADY EXISTS IN THE DEVICE...");
+        }
+
         loadModel(proto_file_name, caffe_model_file_name, mean_file, synset_words_file_name, 2);
+    }
+
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while((read = in.read(buffer)) != -1){
+            out.write(buffer, 0, read);
+        }
     }
 
     public boolean recognizeLetter(String letter, byte[] data, int width, int height) throws FileNotFoundException {

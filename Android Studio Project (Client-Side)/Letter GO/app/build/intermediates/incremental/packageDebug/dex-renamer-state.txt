@@ -1,4 +1,4 @@
-#Thu Nov 17 22:45:11 CET 2016
+#Mon Nov 21 20:44:40 CET 2016
 base.0=C\:\\Users\\usuario\\Desktop\\Letter GO Project\\Android Studio Project (Client-Side)\\Letter GO\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_62f9d6a5321b822a9d0d5e4da16b9c6a2a1f6fa5
 renamed.1=classes.dex
 renamed.0=classes2.dex

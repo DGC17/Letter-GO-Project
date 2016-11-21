@@ -2,6 +2,7 @@ package com.uabproject.lettergo;
 
 import com.unity3d.player.*;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -14,10 +15,14 @@ import android.view.WindowManager;
 public class UnityPlayerActivity extends Activity
 {
 	protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
+	private static Context context;
 
 	// Setup activity layout
 	@Override protected void onCreate (Bundle savedInstanceState)
 	{
+
+		context = getApplicationContext();
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 
@@ -77,4 +82,8 @@ public class UnityPlayerActivity extends Activity
 	@Override public boolean onKeyDown(int keyCode, KeyEvent event)   { return mUnityPlayer.injectEvent(event); }
 	@Override public boolean onTouchEvent(MotionEvent event)          { return mUnityPlayer.injectEvent(event); }
 	/*API12*/ public boolean onGenericMotionEvent(MotionEvent event)  { return mUnityPlayer.injectEvent(event); }
+
+	public static Context getContext () {
+		return context;
+	}
 }
