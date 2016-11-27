@@ -81,6 +81,8 @@ public final class Functions {
         @ApiResponse(code = R200, message = "OK")})
     public Response generateLetter() { 
  	
+    	System.out.println("GET [Generate Letter Call]");
+    	
     	//Generates the letter.
     	String[] letters = GameData.getLetters();
     	
@@ -113,11 +115,23 @@ public final class Functions {
         @ApiResponse(code = R400, 
         	message = "This username is already registered")})
     public Response addUser(final String request) { 
- 	
+    	
     	//Extract the values from the data of the request. 
     	//The format of the data is: "label1=value1&label2=value2&...".
     	String username = request.split("&")[0].split("=")[1];
     	String password = request.split("&")[1].split("=")[1];
+    	
+    	try {
+    		username = URLDecoder.decode(username, "UTF-8");
+    		password = URLDecoder.decode(password, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	
+    	System.out.println("POST [Login User Call] (User Name: " + username 
+    			+ ", Password: " + password + ")");
     	
     	//If the username used arealdy exists, we send a custom exception.
     	if (Main.getGameData().isUsernameRegistered(username)) {
@@ -150,6 +164,17 @@ public final class Functions {
     	//The format of the data is: "label1=value1&label2=value2&...".
     	String username = request.split("&")[0].split("=")[1];
     	String password = request.split("&")[1].split("=")[1];
+    	
+    	try {
+    		username = URLDecoder.decode(username, "UTF-8");
+    		password = URLDecoder.decode(password, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	System.out.println("POST [Login User Call] (User Name: " + username 
+    			+ ", Password: " + password + ")");
     	
     	//If the username is registered in the DB...
     	if (Main.getGameData().isUsernameRegistered(username)) {
@@ -202,18 +227,20 @@ public final class Functions {
     	String letter = request.split("&")[1].split("=")[1];
     	String picture = request.split("&")[2].split("=")[1];
     	String recognized = request.split("&")[3].split("=")[1];
-    	String decodedPicture = "";
-    	boolean rec = true;
-    	if (recognized.equals("false")) {
-    		rec = false;
-    	}
     	
     	try {
-			decodedPicture = URLDecoder.decode(picture, "UTF-8");
+    		username = URLDecoder.decode(username, "UTF-8");
+    		letter = URLDecoder.decode(letter, "UTF-8");
+    		picture = URLDecoder.decode(picture, "UTF-8");
+    		recognized = URLDecoder.decode(recognized, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
-			System.out.println("There was an error decoding the image!");
+			System.out.println("There was an error decoding the input!");
 			e1.printStackTrace();
 		}
+    	
+    	System.out.println("POST [Send Results Call] (User Name: " + username 
+    			+ ", Letter: " + letter + ", Result: " + recognized + ")");
+
     	//If the username doesn't exist we send a custom exception. 
     	if (!Main.getGameData().isUsernameRegistered(username)) {
     		System.out.println("Username not registered!");
@@ -227,28 +254,34 @@ public final class Functions {
     		throw new Invalid("This isn't a valid letter").except();
     	}
     	
-    	//Update Letters of User. 
-    	Main.getGameData().addLetterToUser(letter, username);
-    	
     	//Update User Score. 
     	double score = Main.getGameData().updateScore(
-    			username, letter, rec);
+    			username, letter, recognized);
     	
-    	//Update Letter Count.
-    	double letterCount = Main.getGameData().updateLetterCount(letter); 
+    	if (!recognized.equals("NoLetter")) {
+    		
+    		if (!recognized.equals("AnotherLetter")) {
+    			//Update Letters of User. 
+    	    	Main.getGameData().addLetterToUser(letter, username);
+    		}
+	    	
+	    	//Update Letter Count.
+	    	double letterCount = Main.getGameData().updateLetterCount(letter); 
+	    	
+	    	//Save Picture
+	    	
+	    	try {
+	    		byte[] imageByte = Base64.getDecoder().decode(picture);
+				BufferedImage bi = createImageFromBytes(imageByte);
+		    	File outputfile = new File(Main.getDbPath() + "/Letters/"
+		    			+ letter + "/" + (int) letterCount + ".png");
+		    	ImageIO.write(bi, "png", outputfile);
+			} catch (IOException e) {
+				System.out.println("There was an error saving the image!");
+				e.printStackTrace();
+			}     	
+    	}
     	
-    	//Save Picture
-    	
-    	try {
-    		byte[] imageByte = Base64.getDecoder().decode(decodedPicture);
-			BufferedImage bi = createImageFromBytes(imageByte);
-	    	File outputfile = new File(Main.getDbPath() + "/Letters/"
-	    			+ letter + "/" + (int) letterCount + ".png");
-	    	ImageIO.write(bi, "png", outputfile);
-		} catch (IOException e) {
-			System.out.println("There was an error saving the image!");
-			e.printStackTrace();
-		} 	
     	//Builds the JSON with the new score. 
     	JsonObject response = Json.createObjectBuilder()
     	           .add("score", score)
@@ -271,6 +304,8 @@ public final class Functions {
     @ApiResponses(value = {
         @ApiResponse(code = R200, message = "OK")})
     public Response getTop10() { 
+    	
+    	System.out.println("GET [Get Top 10 Call]");
     	
         JsonArrayBuilder builder = Json.createArrayBuilder();	
         ArrayList<User> top = Main.getGameData().getTop(T10);
@@ -305,9 +340,51 @@ public final class Functions {
     	//The format of the data is: "label1=value1&label2=value2&...".
     	String username = request.split("=")[1];
     	
+    	try {
+    		username = URLDecoder.decode(username, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	System.out.println("POST [Get Album Call] (User Name: " 
+    			+ username + ")");
+    	
 		JsonArrayBuilder builder = Json.createArrayBuilder();	
         ArrayList<AlbumElement> album = 
         		Main.getGameData().getAlbumOfUser(username);
+        
+        for (AlbumElement ae: album) {
+            builder.add(Json.createObjectBuilder()
+                    .add("title", ae.getTitle())
+                    .add("author", ae.getAuthor())
+                    .add("rate", ae.getCompletionRate()));
+        }
+
+        JsonArray albumFinal = builder.build();
+	  	
+	   return Response.status(R200).entity(albumFinal).build();
+    }
+    
+    /**
+     * Get Global Album (GET). 
+     * Gets the Global Album.
+     * 
+     * @return Response.
+     */
+    @GET
+    @Path("/getGlobalAlbum")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "gets the Global Album")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getGlobalAlbum() { 
+
+    	System.out.println("GET [Get Global Album Call]");
+    	
+		JsonArrayBuilder builder = Json.createArrayBuilder();	
+        ArrayList<AlbumElement> album = 
+        		GameData.getGlobalAlbum();
         
         for (AlbumElement ae: album) {
             builder.add(Json.createObjectBuilder()
@@ -341,8 +418,63 @@ public final class Functions {
     	String username = request.split("&")[0].split("=")[1];
     	String title = request.split("&")[1].split("=")[1];
 
+    	try {
+    		username = URLDecoder.decode(username, "UTF-8");
+    		title = URLDecoder.decode(title, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	System.out.println("POST [Get Album Element Call] (User Name: " 
+    			+ username + ", Title: " + title + ")");
+    	
     	AlbumElement ae = Main.getGameData().
     			getAlbumElementFromAlbumOfUser(title, username);
+    	
+    	JsonObject response = Json.createObjectBuilder()
+	  	           .add("title", ae.getTitle())
+	  	           .add("author", ae.getAuthor())
+	  	           .add("text", ae.getIncompleteText())
+	  	           .add("type", ae.getType())
+	  	           .add("rate", ae.getCompletionRate())
+	  	           .build();
+	  	
+	   return Response.status(R200).entity(response).build();
+    }
+    
+    /**
+     * Get Global Album Element (POST). 
+     * Gets an Album Element from the Global Album.
+     * 
+     * @return Response.
+     * @param request Request.
+     */
+    @POST
+    @Path("/getGlobalAlbumElement")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "get an Album Element of the Global Album")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getGlobalAlbumElement(final String request) { 
+    	
+    	//Extract the values from the data of the request. 
+    	//The format of the data is: "label1=value1&label2=value2&...".
+    	String title = request.split("=")[1];
+    	
+    	try {
+    		title = URLDecoder.decode(title, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	System.out.println("POST [Get Global Album Element Call] (Title: " 
+    			+ title + ")");
+    	
+    	
+    	AlbumElement ae = Main.getGameData().
+    			getAlbumElementFromGlobalAlbum(title);
     	
     	JsonObject response = Json.createObjectBuilder()
 	  	           .add("title", ae.getTitle())
@@ -374,6 +506,16 @@ public final class Functions {
     	//The format of the data is: "label1=value1&label2=value2&...".
     	String username = request.split("=")[1];
     	
+    	try {
+    		username = URLDecoder.decode(username, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	System.out.println("POST [Get Letters Call] (User Name: " 
+    			+ username + ")");
+    	
 		JsonArrayBuilder builder = Json.createArrayBuilder();	
         ArrayList<String> letters = 
         		Main.getGameData().getLettersOfUser(username);
@@ -403,6 +545,8 @@ public final class Functions {
         @ApiResponse(code = R200, message = "OK")})
     public Response getip() { 
  	
+    	System.out.println("GET [Get Tips Call]");
+    	
     	//Generates the letter.
     	ArrayList<String> tips = GameData.getTips();
     	Random index = new Random();
@@ -439,6 +583,19 @@ public final class Functions {
     	String title = request.split("&")[1].split("=")[1];
     	String username = request.split("&")[2].split("=")[1];
     	
+    	try {
+    		letter = URLDecoder.decode(letter, "UTF-8");
+    		title = URLDecoder.decode(title, "UTF-8");
+    		username = URLDecoder.decode(username, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	System.out.println("POST [Fill Letter Album Element Call] (Letter: " 
+    			+ letter + ", Title: " + title + ", User Name: " 
+    			+ username + ")");
+    	
     	double success = Main.getGameData().
     			fillLetterInAlbumElementOfUser(letter, title, username);
     	
@@ -448,6 +605,64 @@ public final class Functions {
     	} else {
         	AlbumElement ae = Main.getGameData().
         			getAlbumElementFromAlbumOfUser(title, username);
+        	JsonObject response = Json.createObjectBuilder()
+ 	  	           .add("title", ae.getTitle())
+ 	  	           .add("author", ae.getAuthor())
+ 	  	           .add("text", ae.getIncompleteText())
+ 	  	           .add("type", ae.getType())
+ 	  	           .add("rate", ae.getCompletionRate())
+ 	  	           .add("success", success)
+ 	  	           .build();
+     	   return Response.status(R200).entity(response).build();
+    	}
+    }
+    
+    /**
+     * Fill Letter Global Album Element (POST). 
+     * Tries to fill a letter in an album element in the global album.
+     * 
+     * @return Response.
+     * @param request Request.
+     */
+    @POST
+    @Path("/fillGlobalLetterAlbumElement")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "tries to fill a letter in an "
+    		+ "album element in the global album")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK"),
+        @ApiResponse(code = R400, 
+        	message = "This Letter isn't missing in the Album Element")})
+    public Response fillLetterGlobalAlbumElement(final String request) { 
+    	
+    	//Extract the values from the data of the request. 
+    	//The format of the data is: "label1=value1&label2=value2&...".
+    	String letter = request.split("&")[0].split("=")[1];
+    	String title = request.split("&")[1].split("=")[1];
+    	String username = request.split("&")[2].split("=")[1];
+    	
+    	try {
+    		letter = URLDecoder.decode(letter, "UTF-8");
+    		title = URLDecoder.decode(title, "UTF-8");
+    		username = URLDecoder.decode(username, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			System.out.println("There was an error decoding the input!");
+			e1.printStackTrace();
+		}
+    	
+    	System.out.println("POST [Fill Letter Global Album Element Call] "
+    			+ "(Letter: " + letter + ", Title: " + title + ", "
+    			+ "User Name: " + username + ")");
+    	
+    	double success = Main.getGameData().
+    			fillLetterInGlobalAlbumElement(letter, title, username);
+    	
+    	if (success == -1d) {
+    		throw new Invalid("This Letter isn't missing in the Album Element")
+    			.except();
+    	} else {
+        	AlbumElement ae = Main.getGameData().
+        			getAlbumElementFromGlobalAlbum(title);
         	JsonObject response = Json.createObjectBuilder()
  	  	           .add("title", ae.getTitle())
  	  	           .add("author", ae.getAuthor())

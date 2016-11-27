@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,17 +12,23 @@ public class AlbumController : MonoBehaviour {
 	public GameObject element;
 	public GameObject grid;
 
+	public Button Individual;
+	public Button Global;
+
 	// Use this for initialization
 	void Start () {
 
 		apiController = GameObject.Find ("APIController").GetComponent<APIController> ();
 		sharedVariables = GameObject.Find ("sharedVariables").GetComponent<sharedVariables> ();
 		soundPlayer = GameObject.Find ("soundPlayer").GetComponent<soundPlayer> ();
-		apiController.getAlbum();
 
-		foreach (sharedVariables.AlbumElementInList a in sharedVariables.getAlbumElementsInList()) {
-			addButton (a.title, a.author, a.rate);
-		}
+		Individual = GameObject.Find ("Individual").GetComponent<Button> ();
+		Global = GameObject.Find ("Global").GetComponent<Button> ();
+
+		Individual.interactable = sharedVariables.isShowGlobalAlbum ();
+		Global.interactable = !sharedVariables.isShowGlobalAlbum ();
+
+		refreshAlbum (true);
 	}
 
 	public void addButton(string title, string author, float rate) {
@@ -37,6 +42,31 @@ public class AlbumController : MonoBehaviour {
 
 	public void returnGame() {
 		soundPlayer.playSound ("select");
-		SceneManager.LoadScene (1);
+		sharedVariables.openScene (1);
+	}
+
+	private void refreshAlbum(bool start) {
+
+		if (!start) {
+			int child = 0;
+			foreach (sharedVariables.AlbumElementInList a in sharedVariables.getAlbumElementsInList()) {
+				Destroy (grid.transform.GetChild (child).gameObject);
+				child++;
+			}
+		}
+
+		apiController.getAlbum();
+
+		foreach (sharedVariables.AlbumElementInList a in sharedVariables.getAlbumElementsInList()) {
+			addButton (a.title, a.author, a.rate);
+		}
+	}
+
+	public void switchView () {
+		sharedVariables.setShowGlobalAlbum (!sharedVariables.isShowGlobalAlbum ());
+		Individual.interactable = sharedVariables.isShowGlobalAlbum ();
+		Global.interactable = !sharedVariables.isShowGlobalAlbum ();
+
+		refreshAlbum (false);
 	}
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class TutorialController : MonoBehaviour {
 
 	private soundPlayer soundPlayer;
+	private sharedVariables sharedVariables;
 
 	private Text DialogText;
 
@@ -18,6 +19,7 @@ public class TutorialController : MonoBehaviour {
 	void Start () {
 
 		soundPlayer = GameObject.Find ("soundPlayer").GetComponent<soundPlayer> ();
+		sharedVariables = GameObject.Find ("sharedVariables").GetComponent<sharedVariables> ();
 
 		DialogText = GameObject.Find ("DialogText").GetComponent<Text> ();
 		dialogs = new List<DialogItem> ();
@@ -52,7 +54,7 @@ public class TutorialController : MonoBehaviour {
 
 	public void finishTutorial() {
 		soundPlayer.playSound ("select");
-		SceneManager.LoadScene (1);
+		sharedVariables.openScene (1);
 	}
 
 	public class DialogItem {

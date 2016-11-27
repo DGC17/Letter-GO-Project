@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.IO;
 using System;
+using System.Threading;
+
+using Vuforia;
+using com.youvisio;
 
 public class CameraController : MonoBehaviour {
+
+	//Available Cameras
+	public GameObject mainCamera;
+	public GameObject ARCamera;
 
 	//External References.
 	private sharedVariables sharedVariables;
@@ -14,27 +21,30 @@ public class CameraController : MonoBehaviour {
 	private ResultController resultController;
 	private APIController apiController;
 	private TipController tipController;
-	public GameObject mainCamera;
-	public GameObject ARCamera;
 
-	// Button: Take Picture. 
-	private GameObject takePictureButton;
-
-	// UI Elements. 
-	private GameObject PowerOn;
-	private GameObject PowerOff;
+	// Views.
 	private GameObject resultInterface;
 	private GameObject generalInterface;
+
+	//IU Elements.
+	private GameObject ScanOnInterface;
+	private GameObject ScanOffInterface;
 	private GameObject selector;
-	private Image image;
+	private UnityEngine.UI.Image image;
 	private Text userName;
 	private Text userScore;
+
+	private Button letterTimerButton;
+	private Button takePictureButton;
 
 	// Variables to Control Events.
 	private bool ARCameraActive;
 	private bool changeInterface;
 
+	// External Objects
 	private AndroidJavaObject classifier;
+
+	private BackgroundWorker _backgroundWorker;
 
 	// Functions executed on the intilization of the application. 
 	void Start () {
@@ -45,36 +55,35 @@ public class CameraController : MonoBehaviour {
 		timerController = GameObject.Find ("TimerController").GetComponent<TimerController> ();
 		resultController = GameObject.Find ("ResultController").GetComponent<ResultController> ();
 		apiController = GameObject.Find ("APIController").GetComponent<APIController> ();
-		tipController = GameObject.Find ("TipController").GetComponent<TipController> ();
 
 		generalInterface = GameObject.Find ("GeneralInterface");
 		resultInterface = GameObject.Find ("ResultInterface");
 
-		takePictureButton = GameObject.Find ("GI.TakePicture");
-		image = GameObject.Find ("RI.Image").GetComponent<Image>();
-		PowerOn = GameObject.Find ("GI.PowerOn");
-		PowerOff = GameObject.Find ("GI.PowerOff");
+		ScanOnInterface = GameObject.Find ("ScanOnInterface");
+		ScanOffInterface = GameObject.Find ("ScanOffInterface");
 		selector = GameObject.Find ("GI.Selector");
+		image = GameObject.Find ("RI.Image").GetComponent<UnityEngine.UI.Image>();
 		userName = GameObject.Find ("GI.UserName").GetComponent<Text>();
 		userScore = GameObject.Find ("GI.UserScore").GetComponent<Text>();
+		letterTimerButton = GameObject.Find ("GI.LT.Button").GetComponent<Button> ();
+		takePictureButton = GameObject.Find ("GI.TakePicture").GetComponent<Button> ();
 
 		// Default Values.
 		ARCameraActive = false;
 		changeInterface = false;
 		ARCamera.SetActive (false);
-		PowerOn.SetActive (true);
-		PowerOff.SetActive (false);
-		selector.SetActive (false);
-		takePictureButton.SetActive (false);
-
-		//JAVA CLASSIFIER
-		classifier = new AndroidJavaObject ("wrappers.Classifier");
-		classifier.Call ("loadDefaultModel");
+		ScanOffInterface.SetActive (true);
+		ScanOnInterface.SetActive (false);
+		letterTimerButton.interactable = false;
 
 		userName.text = "Welcome " + sharedVariables.getUsername ();
 		userScore.text = "Score: " + sharedVariables.getScore().ToString();
 
 		resultInterface.SetActive (false);
+
+		//JAVA CLASSIFIER INITIALIZATION
+		classifier = new AndroidJavaObject ("wrappers.Classifier");
+		classifier.Call ("loadDefaultModel");
 	}
 
 	// Update is called once per frame.
@@ -82,14 +91,18 @@ public class CameraController : MonoBehaviour {
 
 		userScore.text = "Score: " + sharedVariables.getScore().ToString();
 
+		if (_backgroundWorker != null) _backgroundWorker.Update();
+
 		// Event 1: When we want to change to the Image Interface. 
 		if (changeInterface) {
+
+			sharedVariables.setScanning (false);
 
 			// Changing Interfaces. 
 			resultInterface.SetActive (true);
 			generalInterface.SetActive (false);
 
-			// Interruptin the timer because we already captured the Letter. 
+			// Interrupting the timer because we already captured the Letter. 
 			timerController.interruptTimer (true);
 
 			// Changing from AR Camera to Main Camera. 
@@ -104,76 +117,165 @@ public class CameraController : MonoBehaviour {
 	// Switches the Cameras and controls the visibility of the Take Picture Button. 
 	// Called when the user clicks on the button "(EnableDisableCamera)". 
 	public void EnableDisableCamera() {
+
+		GameObject g = GameObject.Find ("ScanTip");
+		GameObject g2 = GameObject.Find ("ScanTip2");
+		if (g != null) g.SetActive (false);
+		if (g2 != null) g2.SetActive (false);
+
 		soundPlayer.playSound ("select");
 		if (ARCameraActive) {
+			letterTimerButton.interactable = false;
+			timerController.interruptTimer (true);
 			mainCamera.SetActive (true);
 			ARCamera.SetActive (false);
-			PowerOn.SetActive (true);
-			PowerOff.SetActive (false);
-			selector.SetActive (false);
-			takePictureButton.SetActive (false);
+			ScanOnInterface.SetActive (false);
+			ScanOffInterface.SetActive (true);
 		} else {
+			letterTimerButton.interactable = true;
 			ARCamera.SetActive (true);
 			mainCamera.SetActive (false);
-			PowerOn.SetActive (false);
-			PowerOff.SetActive (true);
-			selector.SetActive (true);
-			takePictureButton.SetActive (true);
+			ScanOffInterface.SetActive (false);
+			ScanOnInterface.SetActive (true);
 		}
-		tipController.showTip (ARCameraActive);	
+
 		ARCameraActive = !ARCameraActive;
-	}
-
-	// Assigns the value of the Captured picture.
-	// Called when the user takes the photo (See WebCam Behaviour). 
-	public void PhotoTaked(byte[] picture, int w, int h) {
-
-		// Gets the letter. 
-		string letter = timerController.getLetter ();
-
-		string recognized = recognizeLetter(letter, picture, w, h);
-
-		// We convert the image to Base64, so we can send it through a JSON.
-		string imageb64 = Convert.ToBase64String (picture);
-
-		// We call the API method to send the results. 
-		double score = apiController.sendResults (letter, imageb64, recognized);
-
-		// When we have the results, we set them. 
-		resultController.setTextandScore (letter, score, recognized);
-
-		// We create a new texture to load our image in the Result Interface. 
-		Texture2D texture = new Texture2D (w, h);
-		texture.LoadImage (picture);
-		texture.Apply ();
-
-		image.material.mainTexture = texture;
-
-		// Launch Event 1. 
-		changeInterface = true;
 	}
 
 	public void openRanking() {
 		soundPlayer.playSound ("select");
-		SceneManager.LoadScene (2);
+		sharedVariables.openScene (2);
 	}
 
 	public void openAlbum() {
 		soundPlayer.playSound ("select");
-		SceneManager.LoadScene (3);
+		sharedVariables.openScene (3);
 	}
 
 	public void openConfiguration() {
-		soundPlayer.playSound ("select");
-		SceneManager.LoadScene (5);
+		soundPlayer.playSound ("select"); 
+		sharedVariables.openScene (5);
 	}
 
 	private string recognizeLetter(string letter, byte[] picture, int w, int h) {
-		bool response = classifier.Call<bool>("recognizeLetter", new object[] { letter, picture, w, h });
-		if (response) {
-			return "true";
-		} else {
-			return "false";
+		
+		string response;
+		try {
+			response = classifier.Call<string>("recognizeLetter", new object[] { letter, picture, w, h });
+		} catch (Exception e) {
+			Debug.Log ("CLASSIFIER ERROR: " + e.Message);
+			response = "Recognized";
 		}
+
+		return response;
+	}
+
+	private BytesArrays applyTransformations(Vuforia.Image img, float wCircle, float hCircle, Vector2 pos) {
+
+		BytesArrays results = new BytesArrays();
+
+		// Size of the image taked by Vuforia. 
+		int w = img.Width;
+		int h = img.Height;
+
+		// Defintion of different Textures representing the different steps of the picture transformation.
+		Texture2D tex = new Texture2D (w, h, TextureFormat.RGB24, false);
+		Texture2D tex_rotated = new Texture2D (h, w, TextureFormat.RGB24, false);
+		Texture2D tex_inverted = new Texture2D (h, w, TextureFormat.RGB24, false);
+		Texture2D tex_final = new Texture2D (h, w, TextureFormat.RGB24, false);
+
+		// STEP 1: Original format of the picture taked by the AR Camera. 
+		img.CopyToTexture (tex);
+		tex.Apply();
+
+		// STEP 2: Rotation of the picture. 
+		for (int j = 0; j < h; j++) for (int i = 0; i < w; i++) tex_rotated.SetPixel (j, i, tex.GetPixel(i,j));
+		tex_rotated.Apply();
+
+		// STEP 3: Apply mirror effect to the picture. 
+		for (int j = 0; j < w; j++) for (int i = 0; i < h; i++) tex_inverted.SetPixel ((h - 1 - i), (w - 1 - j), tex_rotated.GetPixel(i,j));
+		tex_inverted.Apply();
+
+		// STEP 4: Reescaling the image. 
+		tex_final = Instantiate (tex_inverted);
+		TextureScale.Bilinear (tex_final, Screen.width, Screen.height);
+
+		// STEP 5: Cropping the image.
+		Color[] pix = tex_final.GetPixels ((int)(pos.x - wCircle/2), (int)(pos.y - hCircle/2), (int)wCircle, (int)hCircle);
+		Texture2D tex_selected = new Texture2D ((int)wCircle, (int)hCircle);
+		tex_selected.SetPixels (pix);
+		tex_selected.Apply ();
+
+		byte[] bytesUnselected = tex_final.EncodeToPNG();
+		byte[] bytes = tex_selected.EncodeToPNG ();
+
+		Destroy (tex);
+		Destroy (tex_rotated);
+		Destroy (tex_inverted);
+		Destroy (tex_final);
+		Destroy (tex_selected);
+
+		results.complete = bytesUnselected;
+		results.selected = bytes;
+
+		return results;
+	}
+
+	public void scanActualImage(Vuforia.Image img) {
+
+		soundPlayer.playSound ("select");
+
+		sharedVariables.setScanning (true);
+
+		//Selector parameters
+		float wCircle = selector.GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
+		float hCircle = selector.GetComponent<UnityEngine.UI.Image>().rectTransform.rect.height;
+		Vector2 pos = selector.GetComponent<UnityEngine.UI.Image>().rectTransform.position;
+
+		BytesArrays results = applyTransformations(img, wCircle, hCircle, pos);
+		byte[] bytesUnselected = results.complete;
+		byte[] bytes = results.selected;
+
+		// We create a new texture to load our image in the Result Interface. 
+		Texture2D texture = new Texture2D ((int)wCircle, (int)hCircle);
+		texture.LoadImage (bytes);
+		texture.Apply ();
+
+		image.material.mainTexture = texture;
+
+		// Gets the letter. 
+		string letter = timerController.getLetter ();
+		// Launch Event 1.
+		changeInterface = true;
+
+		string recognitionResult = recognizeLetter(letter, bytes, (int)wCircle, (int)hCircle);
+
+		//BACKGROUND PROCESSING
+
+		if (_backgroundWorker != null) _backgroundWorker.CancelAsync();
+		_backgroundWorker = new BackgroundWorker();
+
+		_backgroundWorker.DoWork += (o, a) =>
+		{
+			string imageb64;
+			// We convert the image to Base64, so we can send it through a JSON.
+			if (recognitionResult.Contains ("NoLetter")) {
+				imageb64 = "null";
+			} else {
+				imageb64 = Convert.ToBase64String (bytesUnselected);
+			}
+			// We call the API method to send the results. 
+			double score = apiController.sendResults (letter, imageb64, recognitionResult);
+			// When we have the results, we set them. 
+			resultController.setTextandScore (letter, score, recognitionResult);
+		};
+
+		_backgroundWorker.RunWorkerCompleted += (o, a) => {};
+		_backgroundWorker.RunWorkerAsync("A1");
+	}
+
+	public class BytesArrays {
+		public byte[] selected;
+		public byte[] complete;
 	}
 }

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
 public class RankingController : MonoBehaviour {
 
 	private APIController apiController;
+	private sharedVariables sharedVariables;
 	private soundPlayer soundPlayer;
 	public GameObject element;
 	public GameObject grid;
@@ -13,6 +13,7 @@ public class RankingController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		apiController = GameObject.Find ("APIController").GetComponent<APIController> ();
+		sharedVariables = GameObject.Find ("sharedVariables").GetComponent<sharedVariables> ();
 		soundPlayer = GameObject.Find ("soundPlayer").GetComponent<soundPlayer> ();
 		string[] userTop = apiController.getTop10();
 		if (userTop != null) {
@@ -42,6 +43,6 @@ public class RankingController : MonoBehaviour {
 
 	public void returnGame() {
 		soundPlayer.playSound ("select");
-		SceneManager.LoadScene (1);
+		sharedVariables.openScene (1);
 	}
 }

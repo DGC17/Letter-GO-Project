@@ -20,6 +20,9 @@ public class ResultController : MonoBehaviour {
 	// Variables to Control Events.
 	private bool returnPrev = false;
 
+	private GameObject returnButton;
+	private GameObject scanningInterface;
+
 	// Functions executed on the intilization of the application. 
 	void Start () {
 
@@ -32,13 +35,29 @@ public class ResultController : MonoBehaviour {
 		textAchievedScore = GameObject.Find ("RI.Text.AchievedScore").GetComponent<Text> ();
 		textActualScore = GameObject.Find ("RI.Text.ActualScore").GetComponent<Text> ();
 
+		returnButton = GameObject.Find ("RI.Return");
+		scanningInterface = GameObject.Find ("RI.Scanning");
+
+		returnButton.SetActive (false);
 		returnPrev = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		scanningInterface.GetComponentInChildren<Text>().color = new Color(
+			scanningInterface.GetComponentInChildren<Text>().color.r, 
+			scanningInterface.GetComponentInChildren<Text>().color.g, 
+			scanningInterface.GetComponentInChildren<Text>().color.b, 
+			Mathf.PingPong(Time.time, 1));
+
 		if (returnPrev) {
+
+			scanningInterface.SetActive (true);
+			returnButton.SetActive (false);
+			textLetter.text = "";
+			textAchievedScore.text = "";
+			textActualScore.text = "";
 
 			generalInterface.SetActive (true);
 			resultInterface.SetActive (false);
@@ -57,18 +76,29 @@ public class ResultController : MonoBehaviour {
 		returnPrev = true;
 	}
 
-	public void setTextandScore(string letter, double score, string recognized) {
+	public void setTextandScore(string letter, double score, string recognitionResult) {
+
+		scanningInterface.SetActive (false);
+		returnButton.SetActive (true);
 
 		double newScore = (sharedVariables.getScore () + score);
 		sharedVariables.setScore (newScore);
 
-		if (recognized.Contains("true")) {
-			textLetter.text = ("You scanned correctly the letter " + letter);
+		if (recognitionResult.Contains ("Recognized")) {
+			textLetter.text = ("You scanned correctly the letter " + letter + "!");
 			textAchievedScore.text = ("Score: " + score);
 			textActualScore.text = ("Total Score: " + newScore);
-		} else {
-			textLetter.text = ("The letter " + letter + "\nwasn't correctly scanned...\nMaybe next time...");
-			textAchievedScore.text = ("Score (Half): " + score);
+		}
+
+		if (recognitionResult.Contains ("NoLetter")) {
+			textLetter.text = ("The scanner doesn't found any letter!");
+			textAchievedScore.text = ("Score: " + score);
+			textActualScore.text = ("Total Score: " + newScore);
+		}
+
+		if (recognitionResult.Contains ("AnotherLetter")) {
+			textLetter.text = ("The scanner doesn't found the letter " + letter + ", but it knows that there's a letter there. Maybe next time!");
+			textAchievedScore.text = ("Score: " + score);
 			textActualScore.text = ("Total Score: " + newScore);
 		}		
 	}

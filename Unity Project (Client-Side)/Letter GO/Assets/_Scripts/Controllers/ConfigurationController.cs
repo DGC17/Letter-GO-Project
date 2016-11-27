@@ -10,6 +10,8 @@ public class ConfigurationController : MonoBehaviour {
 
 	private Button ReturnGame;
 	private Button RepeatTutorial;
+	private GameObject SoundON;
+	private GameObject SoundOFF;
 
 	private InputField IPPort_Input;
 
@@ -19,7 +21,12 @@ public class ConfigurationController : MonoBehaviour {
 		soundPlayer = GameObject.Find ("soundPlayer").GetComponent<soundPlayer> ();
 		ReturnGame = GameObject.Find ("ReturnGame").GetComponent<Button> ();
 		RepeatTutorial = GameObject.Find ("RepeatTutorial").GetComponent<Button> ();
+		SoundON = GameObject.Find ("Sound ON");
+		SoundOFF = GameObject.Find ("Sound OFF");
 		IPPort_Input = GameObject.Find ("IPPort_Input").GetComponent<InputField> ();
+
+		SoundOFF.SetActive (!soundPlayer.switchBackgroundMusic (false));
+		SoundON.SetActive (soundPlayer.switchBackgroundMusic (false));
 
 		if (sharedVariables.getUsername ().Length == 0) {
 			ReturnGame.interactable = false;
@@ -35,7 +42,7 @@ public class ConfigurationController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	public void applyChanges() {
@@ -43,22 +50,38 @@ public class ConfigurationController : MonoBehaviour {
 	}
 
 	public void returnToLogin() {
-		soundPlayer.playSound ("select");
 		sharedVariables.setUsername ("");
 		sharedVariables.setScore (0d);
-		applyChanges ();
-		SceneManager.LoadScene (0);
+		exitConfiguration (0);
 	}
 
 	public void returnToGame() {
-		soundPlayer.playSound ("select");
-		applyChanges ();
-		SceneManager.LoadScene (1);
+		exitConfiguration (1);
 	}
 
 	public void repeatTutorial() {
+		exitConfiguration(6);
+	}
+
+	public void switchBackgroundMusic() {
+		bool isPlaying = soundPlayer.switchBackgroundMusic (true);
+		if (isPlaying) {
+			SoundON.SetActive (true);
+			SoundOFF.SetActive (false);
+		} else {
+			SoundOFF.SetActive (true);
+			SoundON.SetActive (false);
+		}
+	}
+
+	private void exitConfiguration(int scene) {
 		soundPlayer.playSound ("select");
 		applyChanges ();
-		SceneManager.LoadScene (6);
+		sharedVariables.openScene (scene);
+	}
+
+	public void openDetails() {
+		soundPlayer.playSound ("select");
+		SceneManager.LoadScene (7);
 	}
 }

@@ -35,7 +35,7 @@ public class AlbumElementController : MonoBehaviour {
 		FillLetter = GameObject.Find ("FillLetter").GetComponent<Button> ();
 
 		Dialog = GameObject.Find ("Dialog");
-		Dialog.GetComponentInChildren<Text> ().text = "You can add your stored letters in this text by selecting them and pushing the Add button!";
+		Dialog.GetComponentInChildren<Text> ().text = "You can add your stored letters in this text by selecting them and pushing the Add button!\nBe careful, you will lose the letter if it isn't in the text!";
 
 		LoadInfo ();
 	}
@@ -58,7 +58,12 @@ public class AlbumElementController : MonoBehaviour {
 		string letter = Letters.captionText.text;
 		bool added = apiController.fillLetterAlbumElement (letter);
 		if (added) {
-			Dialog.GetComponentInChildren<Text> ().text = "You added the letter " + letter + " succesfully!\nKeep working hard!";
+			if (sharedVariables.isShowGlobalAlbum ()) {
+				Dialog.GetComponentInChildren<Text> ().text = "You added the letter " + letter + " succesfully!\n (+150 Score)";
+			} else {
+				Dialog.GetComponentInChildren<Text> ().text = "You added the letter " + letter + " succesfully!\nKeep working hard!";
+			}
+
 			LoadInfo ();
 		} else {
 			Dialog.GetComponentInChildren<Text> ().text = "The letter " + letter + " doesn't fit here!\nTry another one...";

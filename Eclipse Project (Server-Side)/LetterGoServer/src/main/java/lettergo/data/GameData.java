@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import lettergo.server.Main;
@@ -30,9 +31,19 @@ public final class GameData {
 	private static final String JSON_FILE = "tips.json";
 	
 	/**
+	 * Path to JSON File. 
+	 */
+	private static final String JSON_FILE2 = "globalalbum.json";
+	
+	/**
 	 * Max Score.
 	 */
 	private static final double MAX_SCORE = 150d;
+	
+	/**
+	 * Min Score.
+	 */
+	private static final double MIN_SCORE = 10d;
 	
 	/**
 	 * Allowed letters inside the game.
@@ -76,6 +87,11 @@ public final class GameData {
 	private static ArrayList<String> tips;
 	
 	/**
+	 * List of Album Elements. 
+	 */
+	private static ArrayList<AlbumElement> globalalbum;
+	
+	/**
 	 * Constructor. 
 	 */
 	public GameData() {	
@@ -94,6 +110,8 @@ public final class GameData {
 		}
 		tips = new ArrayList<String>();
 		loadTips();
+		globalalbum = new ArrayList<AlbumElement>();
+		loadGlobalAlbum();
 	}
 	
 	/**
@@ -127,6 +145,13 @@ public final class GameData {
 	 */
 	public static ArrayList<String> getTips() {
 		return tips;
+	}
+	
+	/**
+	 * @return the global album.
+	 */
+	public static ArrayList<AlbumElement> getGlobalAlbum() {
+		return globalalbum;
 	}
 	
 	/**
@@ -212,6 +237,21 @@ public final class GameData {
 	}
 	
 	/**
+	 * Gets an Album Element by his title, from the global album. 
+	 * @param title Title of the Album Element. 
+	 * @return Album Element. 
+	 */
+	public AlbumElement getAlbumElementFromGlobalAlbum(final String title) {
+		
+		int i = 0;
+		while (!globalalbum.get(i).getTitle().equals(title)) {
+			i++;
+		}
+		
+		return globalalbum.get(i);
+	}
+	
+	/**
 	 * Gets the available letters of an user. 
 	 * @param username User.
 	 * @return List of available letters. 
@@ -239,12 +279,19 @@ public final class GameData {
      * @return The score assigned to that user.
      */
     public double updateScore(final String username, 
-    		final String letter, final boolean recognized) {
+    		final String letter, final String recognized) {
     	int weight = WEIGHTS.get(letter);
+    	
     	double score = MAX_SCORE - (weight * 10d);
-    	if (!recognized) {
-    		score = score / 2;
+    	
+    	if (recognized.equals("NoLetter")) {
+    		score = MIN_SCORE;
     	}
+    		
+    	if (recognized.equals("AnotherLetter")) {
+    		score = score / 2;
+    	}	
+    	
     	int i = Main.getGameData().getUserIndexWithName(username);
     	double actualScore = Main.getGameData().getUsers().get(i).getPoints();
     	double newScore = actualScore + score;
@@ -276,6 +323,38 @@ public final class GameData {
 		int ui = getUserIndexWithName(username);
 		return this.users.get(ui).
 				fillLetterInAlbumElement(letter, albumElementTitle);
+	}
+	
+    /** 
+     * Tries to fill a letter in an album element the global album. 
+     * @param letter Letter. 
+     * @param albumElementTitle Title of the Album Element. 
+     * @param username User. 
+     * @return True (Everything goes fine) / False (That letter isn't missing). 
+     */
+	public double fillLetterInGlobalAlbumElement(
+			final String letter, final String albumElementTitle,
+			final String username) {
+		
+		int ui = getUserIndexWithName(username);
+		char l = letter.toCharArray()[0];
+		int i = 0;
+		while (!globalalbum.get(i).getTitle().equals(albumElementTitle)) {
+			i++;
+		}
+		double score = -1d;	
+		
+		if (globalalbum.get(i).isLetterMissing(l)) {
+			score = globalalbum.get(i).fillLetterInText(l);
+			score = MAX_SCORE;
+			this.users.get(ui).setPoints(
+					this.users.get(ui).getPoints() + score);
+		}
+
+		int li = this.users.get(ui).getLetterIndex(letter);
+		this.users.get(ui).getLetters().remove(li);
+		
+		return score;
 	}
 
 	/**
@@ -402,6 +481,33 @@ public final class GameData {
 			fis.close();			
 			for (int i = 0; i < array.size(); i++) {				
 				tips.add(array.getString(i));	
+			}		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Loads the list of tips from the file "tips.json". 
+	 */
+	private void loadGlobalAlbum() {		
+		try {
+			InputStream fis = new FileInputStream(JSON_FILE2);
+			JsonReader jsonReader = Json.createReader(fis);
+			JsonArray array = jsonReader.readArray();
+			jsonReader.close();
+			fis.close();			
+			for (int i = 0; i < array.size(); i++) {
+				JsonObject obj = array.getJsonObject(i);
+				String title = obj.getString("title");
+				String author = obj.getString("author");
+				String type = obj.getString("type");
+				String text = obj.getString("text");
+				String incompletedtext = obj.getString("incompletedtext");
+				GameData.globalalbum.add(new AlbumElement(
+						title, text, incompletedtext, author, type));
 			}		
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

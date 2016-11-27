@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -24,6 +23,9 @@ public class UserController : MonoBehaviour {
 
 	// Button: Send/Register. 
 	private Button sendButton;
+	private Image Panel;
+
+	private bool isLogin;
 
 	// Use this for initialization
 	void Start () {
@@ -39,13 +41,13 @@ public class UserController : MonoBehaviour {
 		errorDialog = GameObject.Find ("Error_Dialog");
 		errorMessage = GameObject.Find ("Error_Message").GetComponent<Text> ();
 
-		newUser = GameObject.Find ("NewUser").GetComponent<Toggle> ();
-
 		sendButton = GameObject.Find ("Send").GetComponent<Button> ();
+		Panel = GameObject.Find ("Panel").GetComponent<Image> ();
 
 		// Defaults values. 
 		errorDialog.SetActive (false);
 		sendButton.interactable = false;
+		isLogin = true;
 	}
 
 	// Update is called once per frame.
@@ -54,9 +56,25 @@ public class UserController : MonoBehaviour {
 		// the user interact with the send button. 
 		if ((username_Input.text.Length < 1) || (password_Input.text.Length < 1)) {
 			sendButton.interactable = false;
+			sendButton.GetComponentInChildren<Text> ().color = Color.gray;
 		} else {
 			sendButton.interactable = true;
+			sendButton.GetComponentInChildren<Text> ().color = Color.black;
 		}
+	}
+
+	public void changeToLogin() {
+		Color32 c = new Color32 (0, 90, 140, 100);
+		Panel.color = c;
+		sendButton.GetComponentInChildren<Text> ().text = "LOGIN";
+		isLogin = true;
+	}
+
+	public void changeToRegister() {
+		Color32 c = new Color32 (140, 100, 0, 100);
+		Panel.color = c;
+		sendButton.GetComponentInChildren<Text> ().text = "REGISTER";
+		isLogin = false;
 	}
 
 	// Method called when the user clicks in the Send/Register button. 
@@ -66,29 +84,36 @@ public class UserController : MonoBehaviour {
 
 		string username = username_Input.text;
 		string password = password_Input.text;
+		int scene = 0;
+		bool success = false;
 
 		// We control if it's a login or a register. 
-		if (!newUser.isOn) {
+		if (isLogin) {
 			if (!apiController.login (username, password)) {
 				errorDialog.SetActive (true);
 				errorMessage.text = "Username or Password are incorrect!";
 			} else {
-				sharedVariables.setUsername (username);
-				SceneManager.LoadScene (1);
+				scene = 1;
+				success = true;
 			}
 		} else {
 			if (!apiController.register (username, password)) {
 				errorDialog.SetActive (true);
 				errorMessage.text = "Username already exists!";
 			} else {
-				sharedVariables.setUsername (username);
-				SceneManager.LoadScene (6);
+				scene = 6;
+				success = true;
 			}
+		}
+
+		if (success) {
+			sharedVariables.setUsername (username);
+			sharedVariables.openScene (scene);
 		}
 	}
 
 	public void openConfiguration() {
 		soundPlayer.playSound ("select");
-		SceneManager.LoadScene (5);
+		sharedVariables.openScene (5);
 	}
 }

@@ -41,4 +41,5 @@
 <fullyQualifiedTypeName name="lettergo.server.Main"/>
 <fullyQualifiedTypeName name="java.lang.Boolean"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="org.glassfish.grizzly.http.util.URLDecoder"/>
 </qualifiedTypeNameHistroy>

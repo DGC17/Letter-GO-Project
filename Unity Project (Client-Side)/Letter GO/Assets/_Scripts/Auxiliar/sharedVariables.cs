@@ -22,6 +22,11 @@ public class sharedVariables : MonoBehaviour {
 
 	private AlbumElementSelected albumElementSelected;
 
+	private GameObject loadingController;
+
+	private bool showGlobalAlbum;
+	private bool scanning;
+
 	// Method called on the awake phase of the GameObject related to this script. 
 	void Awake() {
 		//We ensure that this script isn't destroyed when we load other scenes.
@@ -37,6 +42,11 @@ public class sharedVariables : MonoBehaviour {
 		score = 0d;
 		IPPort = DEFAULT_IPPORT;
 		albumElementsInList = new List<AlbumElementInList> ();
+		showGlobalAlbum = false;
+		scanning = false;
+
+		loadingController = GameObject.Find ("Loading Screen");
+		loadingController.SetActive (false);
 	}
 
 	// Gets the Username.
@@ -89,6 +99,22 @@ public class sharedVariables : MonoBehaviour {
 		albumElementSelected = a;
 	}
 
+	public bool isShowGlobalAlbum() {
+		return showGlobalAlbum;
+	}
+
+	public void setShowGlobalAlbum(bool s) {
+		showGlobalAlbum = s;
+	}
+
+	public bool isScanning() {
+		return scanning;
+	}
+
+	public void setScanning(bool s) {
+		scanning = s;
+	}
+
 	//Add an elements to the AlbumElementsInList
 	public void addElementInAlbumElementsInList(string title, string author, float rate) {
 		albumElementsInList.Add(new AlbumElementInList(title, author, rate));
@@ -97,6 +123,10 @@ public class sharedVariables : MonoBehaviour {
 	//Remove all the elements of the AlbumElementsInList
 	public void removeElementsInAlbumElementsInList() {
 		albumElementsInList.Clear ();
+	}
+
+	public void openScene(int scene) {
+		loadingController.GetComponent<LoadingController> ().openScene (scene);
 	}
 
 	public class AlbumElementInList {

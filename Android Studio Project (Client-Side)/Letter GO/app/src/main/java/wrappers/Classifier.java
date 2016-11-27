@@ -161,18 +161,21 @@ public class Classifier extends UnityPlayerActivity {
         }
     }
 
-    public boolean recognizeLetter(String letter, byte[] data, int width, int height) throws FileNotFoundException {
-/*
+    public String recognizeLetter(String letter, byte[] data, int width, int height) throws FileNotFoundException {
+
+        Log.i("CLASSIFIER", "RECOGNIZING LETTER...");
+
+        /*
         Log.i("CLASSIFIER", "SAVING IMAGE...");
         Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length);
         OutputStream stream = new FileOutputStream("/sdcard/test.jpg");
         bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-*/
+    */
         //Convert the byte array to OpenCV compatible format
         Bitmap bitmap = BitmapFactory.decodeByteArray(data.clone(), 0, data.length, new BitmapFactory.Options());
         byte[] yuvData = FileUtils.GetNV21(bitmap.getWidth(), bitmap.getHeight(), bitmap);
 
-        Log.i("CLASSIFIER", "RECOGNIZING LETTER...");
+
 
         double aspect_ratio = (double) width / height;
         rescale_width = (int) (aspect_ratio * rescale_height);
@@ -183,6 +186,7 @@ public class Classifier extends UnityPlayerActivity {
 
         boolean found = false;
         int count = 0;
+
         while (count < results.size()) {
             Pair pairValues = results.get(count);
             String firstValue = pairValues.getFirst();
@@ -192,7 +196,15 @@ public class Classifier extends UnityPlayerActivity {
             if (firstValue.equals(letter)) found = true;
         }
 
-        return found;
+        if (!found) {
+            if (count > 0) {
+                return "AnotherLetter";
+            } else {
+                return "NoLetter";
+            }
+        } else {
+            return "Recognized";
+        }
     }
 
 

@@ -1,0 +1,9 @@
+[
+{
+  "title":"Test Global",
+  "author":"David",
+  "type":"Book",
+  "text":"This is a very large text, just to make it more entertaining. It could be a bit difficult to resolve, but that's part of the plan",
+  "incompletedtext":"T_is _s a v__y lar_e _ex_, ju_t to m_ke _t m_re _nt_rt_ini_g. I_ co_ld be _ bit di_ficu_t to _esol_e, b_t tha_ is pa_t o_ t_e p_an"
+}
+]

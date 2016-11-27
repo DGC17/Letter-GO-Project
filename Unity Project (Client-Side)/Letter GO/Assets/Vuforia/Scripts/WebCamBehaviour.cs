@@ -19,11 +19,8 @@ namespace Vuforia
 	/// </summary>
 	public class WebCamBehaviour : WebCamAbstractBehaviour
 	{
-		private UnityEngine.UI.Image selector;
 
-		//External References.
 		private CameraController cameraController;
-		private soundPlayer soundPlayer;
 
 		// Variables for the AR Camera configuration. 
 		private Image.PIXEL_FORMAT m_PixelFormat = Image.PIXEL_FORMAT.RGB888;
@@ -35,10 +32,6 @@ namespace Vuforia
 			CameraDevice.Instance.SetFocusMode( 
 				CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
 
-			soundPlayer = GameObject.Find ("soundPlayer").GetComponent<soundPlayer> ();
-
-			// Assignations. 
-			selector = GameObject.Find ("GI.Selector").GetComponent<UnityEngine.UI.Image>();
 			cameraController = GameObject.Find ("CameraController").GetComponent<CameraController>();
 		}
 
@@ -62,70 +55,13 @@ namespace Vuforia
 		// Called when the user clicks on the Button "Take Picture". 
 		public void TakeScreenShot() {
 
-			soundPlayer.playSound ("select");
-
 			// We take an instance of the Camera and the image stored in that instance. 
 			Image image = CameraDevice.Instance.GetCameraImage (m_PixelFormat);
 
-			if (image != null) {
+			// We send the bit-stream to the Camera Controller. 
+			cameraController.scanActualImage(image);
 
-				// Auxiliar Variables. 
-				int w = image.Width;
-				int h = image.Height;
-
-				// Defintion of different Textures representing the different steps of the picture transformation.
-				Texture2D tex = new Texture2D (w, h, TextureFormat.RGB24, false);
-				Texture2D tex_rotated = new Texture2D (h, w, TextureFormat.RGB24, false);
-				Texture2D tex_inverted = new Texture2D (h, w, TextureFormat.RGB24, false);
-				Texture2D tex_final = new Texture2D (h, w, TextureFormat.RGB24, false);
-
-				// STEP 1: Original format of the picture taked by the AR Camera. 
-				image.CopyToTexture (tex);
-				tex.Apply();
-
-				// STEP 2: Rotation of the picture. 
-				for (int j = 0; j < h; j++) {
-					for (int i = 0; i < w; i++) {
-						tex_rotated.SetPixel (j, i, tex.GetPixel(i,j));
-					}
-				}
-				tex_rotated.Apply();
-
-				// STEP 3: Apply mirror effect to the picture. 
-				for (int j = 0; j < w; j++) {
-					for (int i = 0; i < h; i++) {
-						tex_inverted.SetPixel ((h - 1 - i), (w - 1 - j), tex_rotated.GetPixel(i,j));
-					}
-				}
-				tex_inverted.Apply();
-
-				tex_final = Instantiate (tex_inverted);
-				TextureScale.Bilinear (tex_final, Screen.width, Screen.height);
-
-				float wCircle = selector.rectTransform.rect.width;
-				float hCircle = selector.rectTransform.rect.height;
-				Vector2 pos = selector.rectTransform.position;
-
-				Color[] pix = tex_final.GetPixels ((int)(pos.x - wCircle/2), (int)(pos.y - hCircle/2), (int)wCircle, (int)hCircle);
-				Texture2D tex_selected = new Texture2D ((int)wCircle, (int)hCircle);
-				tex_selected.SetPixels (pix);
-				tex_selected.Apply ();
-
-				byte[] bytes = tex_selected.EncodeToPNG ();
-
-				Destroy (tex);
-				Destroy (tex_rotated);
-				Destroy (tex_inverted);
-				Destroy (tex_final);
-				Destroy (tex_selected);
-
-				// We send the bit-stream to the Camera Controller. 
-				cameraController.PhotoTaked (bytes, (int)wCircle, (int)hCircle);
-
-				//File.WriteAllBytes (Application.persistentDataPath + "/screen.png", bytes);
-
-				m_RegisteredFormat = false;
-			}
+			m_RegisteredFormat = false;
 		}
 	}
 }

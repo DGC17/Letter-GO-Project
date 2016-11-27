@@ -136,7 +136,7 @@ public class APIController : MonoBehaviour {
 		}
 	}
 
-	// Gets the Album of the user registered.
+	// Gets the Album of the user registered or the Global Album.
 	// User in:
 	// - Album Controller.
 	public void getAlbum() {
@@ -144,11 +144,20 @@ public class APIController : MonoBehaviour {
 		sharedVariables.removeElementsInAlbumElementsInList ();
 
 		// Build the URL and make the API call. 
-		string url = sharedVariables.getIPPort() + COMMON_PATH + "getAlbum";
-		string username = sharedVariables.getUsername ();
-		WWWForm form = new WWWForm ();
-		form.AddField ("username", username);
-		WWW www = new WWW (url, form);
+		string url = sharedVariables.getIPPort() + COMMON_PATH;
+		WWW www;
+
+		if (sharedVariables.isShowGlobalAlbum ()) {
+			url += "getGlobalAlbum";
+			www = new WWW (url);
+		} else {
+			url += "getAlbum";
+			string username = sharedVariables.getUsername ();
+			WWWForm form = new WWWForm ();
+			form.AddField ("username", username);
+			www = new WWW (url, form);
+		}
+
 		string response = "";
 		// Waits until the API responds.
 		while (!www.isDone) {}
@@ -165,18 +174,31 @@ public class APIController : MonoBehaviour {
 		}
 	}
 
-	// Get an Album Element knowing the user and the title.
+	// Get an Album Element knowing the user and the title or just the title.
 	// User in:
 	// - Element Controller.
 	public void getAlbumElement(string elementTitle) {
 		// Build the URL and make the API call. 
-		string url = sharedVariables.getIPPort() + COMMON_PATH + "getAlbumElement";
-		string username = sharedVariables.getUsername ();
-		string title = elementTitle;
-		WWWForm form = new WWWForm ();
-		form.AddField ("username", username);
-		form.AddField ("title", title);
-		WWW www = new WWW (url, form);
+		string url = sharedVariables.getIPPort() + COMMON_PATH;
+		WWWForm form;
+		WWW www;
+
+		if (sharedVariables.isShowGlobalAlbum ()) {
+			url += "getGlobalAlbumElement";
+			string title = elementTitle;
+			form = new WWWForm ();
+			form.AddField ("title", title);
+			www = new WWW (url, form);
+		} else {
+			url += "getAlbumElement";
+			string username = sharedVariables.getUsername ();
+			string title = elementTitle;
+			form = new WWWForm ();
+			form.AddField ("username", username);
+			form.AddField ("title", title);
+			www = new WWW (url, form);
+		}
+
 		// Waits until the API responds.
 		while (!www.isDone) {}
 		if (www.error == null) {
@@ -214,7 +236,14 @@ public class APIController : MonoBehaviour {
 	// - Album Element Controller. 
 	public bool fillLetterAlbumElement(string letterSelected) {
 		// Build the URL and make the API call. 
-		string url = sharedVariables.getIPPort() + COMMON_PATH + "fillLetterAlbumElement";
+
+		string url = sharedVariables.getIPPort () + COMMON_PATH;
+		if (sharedVariables.isShowGlobalAlbum ()) {
+			url += "fillGlobalLetterAlbumElement";
+		} else {
+			url += "fillLetterAlbumElement";
+		}
+
 		string username = sharedVariables.getUsername ();
 		string title = sharedVariables.getAlbumElementSelected ().title;
 		string letter = letterSelected;
