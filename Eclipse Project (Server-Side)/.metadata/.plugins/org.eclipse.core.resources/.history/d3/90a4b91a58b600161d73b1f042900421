@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package lettergo.data;
+
+/**
+ * @author Karzix
+ *
+ */
+public class HistoryElement {
+
+}

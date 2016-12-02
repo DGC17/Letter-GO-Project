@@ -1,0 +1,146 @@
+package lettergo.data;
+
+import java.util.Date;
+
+/**
+ * Class that contains information interesting for doing statistics 
+ * of the game. An object of this class will be created any time that 
+ * the user sends results to the server.  
+ */
+public final class HistoryElement {
+
+	/**
+	 * User.
+	 */
+	private String username;
+	
+	/**
+	 * Letter.
+	 */
+	private String letter;
+	
+	/**
+	 * Letter Count corresponding to that letter. 
+	 */
+	private String base64Image;
+	
+	/**
+	 * Was the letter recognized?
+	 */
+	private boolean recognized;
+	
+	/**
+	 * Date on the recognition.
+	 */
+	private Date dateRecognition;
+	
+	/**
+	 * Location of the recognition.
+	 * TODO: This should be implemented in the mobile... 
+	 */
+	private String locationGPS;
+
+	/**
+	 * @param username
+	 * @param letter
+	 * @param base64Image
+	 * @param recognized
+	 * @param dateRecognition
+	 * @param locationGPS
+	 */
+	public HistoryElement(String username, String letter, String base64Image, boolean recognized, Date dateRecognition,
+			String locationGPS) {
+		super();
+		this.username = username;
+		this.letter = letter;
+		this.base64Image = base64Image;
+		this.recognized = recognized;
+		this.dateRecognition = dateRecognition;
+		this.locationGPS = locationGPS;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the letter
+	 */
+	public String getLetter() {
+		return letter;
+	}
+
+	/**
+	 * @param letter the letter to set
+	 */
+	public void setLetter(String letter) {
+		this.letter = letter;
+	}
+
+	/**
+	 * @return the base64Image
+	 */
+	public String getBase64Image() {
+		return base64Image;
+	}
+
+	/**
+	 * @param base64Image the base64Image to set
+	 */
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
+	}
+
+	/**
+	 * @return the recognized
+	 */
+	public boolean isRecognized() {
+		return recognized;
+	}
+
+	/**
+	 * @param recognized the recognized to set
+	 */
+	public void setRecognized(boolean recognized) {
+		this.recognized = recognized;
+	}
+
+	/**
+	 * @return the dateRecognition
+	 */
+	public Date getDateRecognition() {
+		return dateRecognition;
+	}
+
+	/**
+	 * @param dateRecognition the dateRecognition to set
+	 */
+	public void setDateRecognition(Date dateRecognition) {
+		this.dateRecognition = dateRecognition;
+	}
+
+	/**
+	 * @return the locationGPS
+	 */
+	public String getLocationGPS() {
+		return locationGPS;
+	}
+
+	/**
+	 * @param locationGPS the locationGPS to set
+	 */
+	public void setLocationGPS(String locationGPS) {
+		this.locationGPS = locationGPS;
+	}
+	
+}

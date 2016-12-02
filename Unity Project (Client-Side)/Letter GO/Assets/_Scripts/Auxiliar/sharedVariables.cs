@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class sharedVariables : MonoBehaviour {
 
 	// A default IP and Port if the user doesn't specifies it. 
-	private static readonly string DEFAULT_IPPORT = "http://158.109.8.93:8080";
+	private static readonly string DEFAULT_IPPORT = "http://158.109.8.80:8080";
 
 	// Username of the acutal User.
 	private string username;
@@ -35,7 +35,7 @@ public class sharedVariables : MonoBehaviour {
 		if ((FindObjectsOfType (GetType ())).Length > 1)
 			Destroy (gameObject);
 	}
-
+		
 	// Use this for initialization
 	void Start () {
 		username = "";

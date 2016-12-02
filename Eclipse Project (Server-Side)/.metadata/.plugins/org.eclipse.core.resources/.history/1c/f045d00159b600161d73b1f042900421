@@ -1,0 +1,10 @@
+package lettergo.data;
+
+/**
+ * Class that contains information interesting for doing statistics 
+ * of the game. An object of this class will be created any time that 
+ * the user sends results to the server.  
+ */
+public class HistoryElement {
+
+}

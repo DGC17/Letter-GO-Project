@@ -3166,3 +3166,222 @@
 2016-11-24 19:18:25,101 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
 2016-11-24 19:18:25,104 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2016-11-24 19:18:25,104 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:08:50,362 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2016-11-29 18:19:29,225 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:19:29,226 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:19:29,228 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:19:29,229 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:20:20,592 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:20:20,592 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:20:20,595 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:20:20,595 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:21:22,035 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:21:22,036 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:21:22,037 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:21:22,038 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:21:30,289 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:21:30,290 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:21:30,291 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:21:30,322 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:26:48,384 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:26:48,385 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:26:48,386 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:26:48,394 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:26:57,157 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:26:57,162 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:26:57,169 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:26:57,173 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:28:20,431 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:28:20,432 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:28:20,434 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:28:20,476 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:31:42,328 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:31:42,441 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:31:42,456 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:31:42,462 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:31:57,096 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:31:57,104 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:31:57,118 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:31:57,124 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:33:34,591 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:33:34,591 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:33:34,593 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:33:34,599 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:33:55,301 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:33:55,306 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:33:55,312 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:33:55,317 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:34:27,570 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:34:27,573 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:34:27,578 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:34:27,607 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:34:51,977 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:34:52,001 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:34:52,009 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:34:52,018 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:38:47,748 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:38:47,749 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:38:47,751 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:38:47,759 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:39:03,684 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:39:03,694 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:39:03,704 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:39:03,721 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:41:15,663 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:41:15,664 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:41:15,666 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:41:15,678 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:41:23,566 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:41:23,609 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:41:23,616 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:41:23,621 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:42:33,373 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:42:33,374 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:42:33,375 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:42:33,397 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:44:48,175 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:44:48,182 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:44:48,191 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:44:48,196 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:45:01,546 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:45:01,546 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:45:01,547 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:45:01,568 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:45:14,583 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:45:14,589 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:45:14,594 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:45:14,599 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:46:07,489 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:46:07,489 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:46:07,491 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:46:07,515 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:48:41,631 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:48:41,637 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:48:41,644 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:48:41,655 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:48:48,991 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:48:48,991 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:48:48,995 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:48:49,021 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:48:57,407 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:48:57,412 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:48:57,419 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:48:57,424 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:49:07,078 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:49:07,079 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:49:07,080 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:49:07,090 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:49:18,588 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:49:18,605 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:49:18,614 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:49:18,620 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:50:50,056 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:50:50,056 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:50:50,060 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:50:50,066 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:50:56,351 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:50:56,357 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:50:56,363 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:50:56,368 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:56:48,041 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:56:48,041 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:56:48,042 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:56:48,049 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 18:56:52,151 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:56:52,162 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 18:56:52,171 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 18:56:52,177 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:00:07,635 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:00:07,635 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:00:07,637 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:00:07,649 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:01:06,455 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:01:06,461 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:01:06,467 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:01:06,472 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:03:34,942 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:03:34,942 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:03:34,943 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:03:34,954 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:03:38,593 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:03:38,658 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:03:38,664 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:03:38,669 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:04:27,883 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:04:27,884 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:04:27,888 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:04:27,901 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:05:54,658 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:05:54,663 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:05:54,670 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:05:54,674 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:06:12,112 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:12,112 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:06:12,113 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:12,212 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:06:19,211 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:19,227 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:06:19,236 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:19,246 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:06:40,117 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:40,117 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:06:40,118 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:40,124 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:06:54,631 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:54,644 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:06:54,650 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:06:54,656 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:07:02,284 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:07:02,284 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:07:02,285 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:07:02,290 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:07:20,824 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:07:20,829 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:07:20,834 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:07:20,840 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:07:26,856 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:07:26,856 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:07:26,857 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:07:26,868 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:08:10,468 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:08:10,474 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:08:10,480 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:08:10,485 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:08:30,801 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:08:30,801 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:08:30,802 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:08:30,812 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:08:35,162 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:08:35,166 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:08:35,172 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:08:35,178 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:10:26,961 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:10:26,961 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:10:26,966 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:10:26,988 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:15:10,435 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:15:10,436 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:15:10,443 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:15:10,449 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:16:56,600 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:16:56,600 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:16:56,601 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:16:56,608 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:17:17,989 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:17:17,996 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:17:18,004 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:17:18,013 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-11-29 19:22:20,052 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-29 19:34:50,527 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:34:50,527 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-11-29 19:34:50,531 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-11-29 19:34:50,531 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-12-02 18:11:55,248 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2016-12-02 18:14:56,743 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-12-02 18:14:56,743 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-12-02 18:14:56,746 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-12-02 18:14:56,747 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-12-02 18:15:01,392 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-12-02 18:15:01,392 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
+2016-12-02 18:15:01,393 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-12-02 18:15:01,393 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources

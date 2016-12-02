@@ -1,0 +1,150 @@
+package lettergo.data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * Class that contains information interesting for doing statistics 
+ * of the game. An object of this class will be created any time that 
+ * the user sends results to the server.  
+ */
+public final class HistoryElement implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * User.
+	 */
+	private String username;
+	
+	/**
+	 * Letter.
+	 */
+	private String letter;
+	
+	/**
+	 * Letter Count corresponding to that letter. 
+	 */
+	private String base64Image;
+	
+	/**
+	 * Was the letter recognized?
+	 */
+	private boolean recognized;
+	
+	/**
+	 * Date on the recognition.
+	 */
+	private Date dateRecognition;
+	
+	/**
+	 * Location of the recognition.
+	 * TODO: This should be implemented in the mobile... 
+	 */
+	private String locationGPS;
+
+	/**
+	 * @param username0 
+	 * @param letter0 
+	 * @param base64Image0 
+	 * @param recognized0 
+	 * @param dateRecognition0 
+	 * @param locationGPS0 
+	 */
+	public HistoryElement(final String username0, final String letter0, 
+			final String base64Image0, final boolean recognized0, 
+			final Date dateRecognition0, final String locationGPS0) {
+		super();
+		this.username = username0;
+		this.letter = letter0;
+		this.base64Image = base64Image0;
+		this.recognized = recognized0;
+		this.dateRecognition = dateRecognition0;
+		this.locationGPS = locationGPS0;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param usernameNew the username to set
+	 */
+	public void setUsername(final String usernameNew) {
+		this.username = usernameNew;
+	}
+
+	/**
+	 * @return the letter
+	 */
+	public String getLetter() {
+		return letter;
+	}
+
+	/**
+	 * @param letterNew the letter to set
+	 */
+	public void setLetter(final String letterNew) {
+		this.letter = letterNew;
+	}
+
+	/**
+	 * @return the base64Image
+	 */
+	public String getBase64Image() {
+		return base64Image;
+	}
+
+	/**
+	 * @param base64ImageNew the base64Image to set
+	 */
+	public void setBase64Image(final String base64ImageNew) {
+		this.base64Image = base64ImageNew;
+	}
+
+	/**
+	 * @return the recognized
+	 */
+	public boolean isRecognized() {
+		return recognized;
+	}
+
+	/**
+	 * @param recognizedNew the recognized to set
+	 */
+	public void setRecognized(final boolean recognizedNew) {
+		this.recognized = recognizedNew;
+	}
+
+	/**
+	 * @return the dateRecognition
+	 */
+	public Date getDateRecognition() {
+		return dateRecognition;
+	}
+
+	/**
+	 * @param dateRecognitionNew the dateRecognition to set
+	 */
+	public void setDateRecognition(final Date dateRecognitionNew) {
+		this.dateRecognition = dateRecognitionNew;
+	}
+
+	/**
+	 * @return the locationGPS
+	 */
+	public String getLocationGPS() {
+		return locationGPS;
+	}
+
+	/**
+	 * @param locationGPSNew the locationGPS to set
+	 */
+	public void setLocationGPS(final String locationGPSNew) {
+		this.locationGPS = locationGPSNew;
+	}
+	
+}

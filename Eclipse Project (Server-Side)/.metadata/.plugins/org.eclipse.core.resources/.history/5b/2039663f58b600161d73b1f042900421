@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package lettergo.data;
+
+/**
+ * Class that contains information interesting for doing stadistics inside and ourside the game. 
+ *
+ */
+public class HistoryElement {
+
+}

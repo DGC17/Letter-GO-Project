@@ -7,6 +7,7 @@ import com.wordnik.swagger.annotations.ApiResponses;
 
 import lettergo.data.AlbumElement;
 import lettergo.data.GameData;
+import lettergo.data.HistoryElement;
 import lettergo.data.User;
 import lettergo.responses.Invalid;
 import lettergo.responses.NotRegistered;
@@ -32,6 +33,7 @@ import javax.imageio.ImageIO;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Random;
 
 import java.net.URLDecoder;
@@ -227,20 +229,22 @@ public final class Functions {
     	String letter = request.split("&")[1].split("=")[1];
     	String picture = request.split("&")[2].split("=")[1];
     	String recognized = request.split("&")[3].split("=")[1];
-    	
+    	String location = request.split("&")[4].split("=")[1];
+
     	try {
     		username = URLDecoder.decode(username, "UTF-8");
     		letter = URLDecoder.decode(letter, "UTF-8");
     		picture = URLDecoder.decode(picture, "UTF-8");
     		recognized = URLDecoder.decode(recognized, "UTF-8");
+    		location = URLDecoder.decode(location, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			System.out.println("There was an error decoding the input!");
 			e1.printStackTrace();
 		}
-    	
+	
     	System.out.println("POST [Send Results Call] (User Name: " + username 
     			+ ", Letter: " + letter + ", Result: " + recognized + ")");
-
+    	
     	//If the username doesn't exist we send a custom exception. 
     	if (!Main.getGameData().isUsernameRegistered(username)) {
     		System.out.println("Username not registered!");
@@ -270,23 +274,28 @@ public final class Functions {
 	    	
 	    	//Save Picture
 	    	
+	    	String imagePath = Main.getDbPath() + "/Letters/"
+	    			+ letter + "/" + (int) letterCount + ".png";
+	    	
 	    	try {
 	    		byte[] imageByte = Base64.getDecoder().decode(picture);
 				BufferedImage bi = createImageFromBytes(imageByte);
-		    	File outputfile = new File(Main.getDbPath() + "/Letters/"
-		    			+ letter + "/" + (int) letterCount + ".png");
+		    	File outputfile = new File(imagePath);
 		    	ImageIO.write(bi, "png", outputfile);
 			} catch (IOException e) {
 				System.out.println("There was an error saving the image!");
 				e.printStackTrace();
-			}     	
+			} 
+	    	
+	    	Date d = new Date();
+	    	Main.getGameData().addHistoryElement(
+	    			username, letter, imagePath, recognized, d, location);
     	}
     	
     	//Builds the JSON with the new score. 
     	JsonObject response = Json.createObjectBuilder()
     	           .add("score", score)
     	           .build();
-
     	
     	return Response.status(R200).entity(response).build();
     }  
@@ -676,38 +685,79 @@ public final class Functions {
     }
     
     /**
-     * Transform the picture from an array of bytes to a Buffered Image.
-     * @param imageData Picture in an array of bytes.
-     * @return Picture in Buffered Image.
-     */
-    private BufferedImage createImageFromBytes(final byte[] imageData) {
-        ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
-        try {
-            return ImageIO.read(bais);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    * Transform the picture from an array of bytes to a Buffered Image.
+    * @param imageData Picture in an array of bytes.
+    * @return Picture in Buffered Image.
+    */
+   private BufferedImage createImageFromBytes(final byte[] imageData) {
+       ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+       try {
+           return ImageIO.read(bais);
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
+   }
+   
+   /**
+    * Get the list of letters taking into account the frequency of apparition 
+    * of this letters inside the English Language. 
+    * Source: https://en.wikipedia.org/wiki/Letter_frequency
+    * @param originalLetters Original Letters.
+    * @return Final Letters
+    */
+   private ArrayList<String> getWeightedLetters(
+   		final String[] originalLetters) {
+   	ArrayList<String> finalLetters = new ArrayList<String>();
+
+   	for (String l : originalLetters) {
+       	int count = GameData.getWeights().get(l);
+
+   		for (int i = 0; i < count; i++) {
+   			finalLetters.add(l);
+   		}
+   	}
+   	
+   	return finalLetters;
+   }
+     
+	/****************************************************/
+	/************** STADISTICS CALLS ********************/
+	/****************************************************/ 
     
     /**
-     * Get the list of letters taking into account the frequency of apparition 
-     * of this letters inside the English Language. 
-     * Source: https://en.wikipedia.org/wiki/Letter_frequency
-     * @param originalLetters Original Letters.
-     * @return Final Letters
+     * Get Tip (GET). 
+     * Gets a random tip for the user. 
+     * 
+     * @return Response.
      */
-    private ArrayList<String> getWeightedLetters(
-    		final String[] originalLetters) {
-    	ArrayList<String> finalLetters = new ArrayList<String>();
-
-    	for (String l : originalLetters) {
-        	int count = GameData.getWeights().get(l);
-
-    		for (int i = 0; i < count; i++) {
-    			finalLetters.add(l);
-    		}
-    	}
+    @GET
+    @Path("/getHistory")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "gets the history.")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getHistory() { 
+ 	
+    	System.out.println("GET [Get History]");
     	
-    	return finalLetters;
+    	JsonArrayBuilder builder = Json.createArrayBuilder();	
+        ArrayList<HistoryElement> history = 
+        		Main.getGameData().getHistory();
+        
+        for (HistoryElement he: history) {
+            builder.add(Json.createObjectBuilder()
+                    .add("username", he.getUsername())
+                    .add("letter", he.getLetter())
+                    .add("imagepath", he.getImagePath())
+                    .add("date", he.getDateRecognition().toString())
+                    .add("location", he.getLocationGPS())
+                    .add("recognized", he.isRecognized()));
+        }
+        
+        JsonObject response = 
+        		Json.createObjectBuilder().add("history", builder.build())
+        			.build();
+	  	
+	   return Response.status(R200).entity(response).build();
     }
 }

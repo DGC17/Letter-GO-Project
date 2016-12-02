@@ -99,6 +99,7 @@ public class APIController : MonoBehaviour {
 		form.AddField ("letter", letter);
 		form.AddField ("image", image);
 		form.AddField ("recognized", recognized);
+		form.AddField ("location", "Not Implemented");
 		WWW www = new WWW (url, form);
 		// Waits until the API responds.
 		while (!www.isDone) {}

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.json.Json;
@@ -82,6 +83,11 @@ public final class GameData {
 	private HashMap<String, Double> letterCount;
 	
 	/**
+	 * History.
+	 */
+	private ArrayList<HistoryElement> history;
+	
+	/**
 	 * List of tips for the user. 
 	 */
 	private static ArrayList<String> tips;
@@ -104,6 +110,7 @@ public final class GameData {
 	 */
 	private void initiliazeGameData() {
 		users = new ArrayList<User>();
+		history = new ArrayList<HistoryElement>();
 		letterCount = new HashMap<String, Double>();
 		for (String letter : LETTERS) {
 			letterCount.put(letter, 0d);
@@ -141,6 +148,20 @@ public final class GameData {
 	}
 	
 	/**
+	 * @return the history
+	 */
+	public ArrayList<HistoryElement> getHistory() {
+		return history;
+	}
+
+	/**
+	 * @param historyNew the history to set
+	 */
+	public void setHistory(final ArrayList<HistoryElement> historyNew) {
+		this.history = historyNew;
+	}
+
+	/**
 	 * @return the tips.
 	 */
 	public static ArrayList<String> getTips() {
@@ -162,6 +183,23 @@ public final class GameData {
 	public void addUser(final String username, final String password) {
 		User user = new User(username, password);
 		users.add(user);
+	}
+	
+	/**
+	 * Add History Element.
+	 * @param username0 
+	 * @param letter0 
+	 * @param imagePath0 
+	 * @param recognized0 
+	 * @param dateRecognition0 
+	 * @param locationGPS0 
+	 */
+	public void addHistoryElement(final String username0, final String letter0, 
+			final String imagePath0, final String recognized0, 
+			final Date dateRecognition0, final String locationGPS0) {
+		HistoryElement he = new HistoryElement(username0, letter0, 
+				imagePath0, recognized0, dateRecognition0, locationGPS0);
+		history.add(he);
 	}
 
 	/**
@@ -429,6 +467,19 @@ public final class GameData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//HISTORY DATA
+		try {
+			FileOutputStream fos3 = new FileOutputStream(
+					Main.getDbPath() + "/History", false);
+			ObjectOutputStream oos3 = new ObjectOutputStream(fos3);
+			oos3.writeObject(history);
+			oos3.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -459,6 +510,20 @@ public final class GameData {
 			ObjectInputStream ois2 = new ObjectInputStream(fis2);
 			letterCount = (HashMap<String, Double>) ois2.readObject();
 			ois2.close();
+		} catch (FileNotFoundException e) {
+			exists = false;
+		} catch (IOException e) {
+		} catch (ClassNotFoundException e) {
+			
+		}
+		
+		//HISTORY DATA
+		try {
+			FileInputStream fis3 = new FileInputStream(
+					Main.getDbPath() + "/History");
+			ObjectInputStream ois3 = new ObjectInputStream(fis3);
+			history = (ArrayList<HistoryElement>) ois3.readObject();
+			ois3.close();
 		} catch (FileNotFoundException e) {
 			exists = false;
 		} catch (IOException e) {
