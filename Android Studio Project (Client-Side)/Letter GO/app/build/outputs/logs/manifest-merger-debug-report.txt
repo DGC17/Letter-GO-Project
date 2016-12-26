@@ -66,15 +66,15 @@ ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Cl
 	android:label
 		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:50-82
 	android:debuggable
-		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:142-168
+		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:142-167
 	android:icon
 		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:16-49
 	android:banner
-		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:191-228
+		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:190-227
 	android:theme
 		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:83-141
 	android:isGame
-		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:169-190
+		ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:10:168-189
 activity#com.uabproject.lettergo.UnityPlayerNativeActivity
 ADDED from C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\src\main\AndroidManifest.xml:11:5-18:16
 	android:screenOrientation

@@ -3385,3 +3385,4 @@
 2016-12-02 18:15:01,392 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\main\resources
 2016-12-02 18:15:01,393 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2016-12-02 18:15:01,393 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\usuario\Desktop\Letter GO Project\Eclipse Project (Server-Side)\LetterGoServer\src\test\resources
+2016-12-11 13:45:21,161 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.

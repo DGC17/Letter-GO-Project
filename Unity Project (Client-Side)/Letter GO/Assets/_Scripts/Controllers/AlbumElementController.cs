@@ -63,11 +63,11 @@ public class AlbumElementController : MonoBehaviour {
 			} else {
 				Dialog.GetComponentInChildren<Text> ().text = "You added the letter " + letter + " succesfully!\nKeep working hard!";
 			}
-
-			LoadInfo ();
 		} else {
 			Dialog.GetComponentInChildren<Text> ().text = "The letter " + letter + " doesn't fit here!\nTry another one...";
 		}
+			
+		LoadInfo ();
 	}
 
 	private void LoadInfo() {

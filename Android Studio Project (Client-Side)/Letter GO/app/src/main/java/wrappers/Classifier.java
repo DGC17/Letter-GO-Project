@@ -102,12 +102,14 @@ public class Classifier extends UnityPlayerActivity {
 
         if (!f.exists()) {
             Log.i("CLASSIFIER", "LOADING NECESSARY FILES INTO DEVICE...");
-
             File directory = new File("/sdcard/letter_recognition");
+            Log.i("CLASSIFIER", "CREATING NEW DIRECTORY...");
             directory.mkdir();
-
+            Log.i("CLASSIFIER", "NEW DIRECTORY CREATED!");
             Context context = com.uabproject.lettergo.UnityPlayerActivity.getContext();
+            Log.i("CLASSIFIER", "CONTEXT RETRIEVED!");
             AssetManager assetManager = context.getAssets();
+            Log.i("CLASSIFIER", "ASSETS RETRIEVED!");
             String[] files = null;
 
             try {

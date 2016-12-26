@@ -32,9 +32,17 @@ public class TutorialController : MonoBehaviour {
 	}
 
 	private void initiliazeDialogs() {
-		dialogs.Add (new DialogItem ("Hello there!"));
-		dialogs.Add (new DialogItem ("This is only a provisional text..."));
-		dialogs.Add (new DialogItem ("In the future here will be included the tutorial and the story..."));
+		dialogs.Add (new DialogItem ("Hello there, my new friend!"));
+		dialogs.Add (new DialogItem ("My name is Proffesor Alphabet and this is a direct transmission from the future!"));
+		dialogs.Add (new DialogItem ("If you are watching this, it means that you have in your hands a packet containg a tool that could save your future."));
+		dialogs.Add (new DialogItem ("But before opening it, let me explain you what is happening here."));
+		dialogs.Add (new DialogItem ("In the future a malicious magic have appeared that is taking away all the letters from the world."));
+		dialogs.Add (new DialogItem ("That means that years and years of knowledge are dissapering from ancient texts."));
+		dialogs.Add (new DialogItem ("It is your task to recover this letters so we can recover this texts!"));
+		dialogs.Add (new DialogItem ("To do it, you will use the tool in that packet, the Alphabet Scanner!"));
+		dialogs.Add (new DialogItem ("Use it is very simple, you must activate it, then generate a letter and then search this letter in your world."));
+		dialogs.Add (new DialogItem ("The letters will be scanned and stored inside the device and you will use them to fill your album of ancient texts."));
+		dialogs.Add (new DialogItem ("Don't lose any more time, let's begin your journey. And don't forget..."));
 		dialogs.Add (new DialogItem ("Have fun!"));
 	}
 
