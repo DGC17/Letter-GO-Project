@@ -44,4 +44,5 @@
 <fullyQualifiedTypeName name="org.glassfish.grizzly.http.util.URLDecoder"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="lettergo.data.HistoryElement"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
 </qualifiedTypeNameHistroy>

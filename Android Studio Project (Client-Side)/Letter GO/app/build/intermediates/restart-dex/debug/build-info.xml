@@ -5,29 +5,29 @@
     density="xhdpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="946977240729907"
+    timestamp="990329676510956"
     token="-5739546712505988017"
     verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="5680" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="9609" />
     <task
         name="verifier"
-        duration="0" />
+        duration="102" />
 
     <artifact
         location="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\outputs\apk\app-debug.apk"
         type="MAIN" />
 
     <build
-        timestamp="1746408873653836"
+        timestamp="990329676510956"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\usuario\Desktop\Letter GO Project\Android Studio Project (Client-Side)\Letter GO\app\build\outputs\apk\app-debug.apk"

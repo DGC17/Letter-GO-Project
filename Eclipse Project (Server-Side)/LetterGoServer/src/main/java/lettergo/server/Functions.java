@@ -34,6 +34,8 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import java.net.URLDecoder;
@@ -230,13 +232,21 @@ public final class Functions {
     	String picture = request.split("&")[2].split("=")[1];
     	String recognized = request.split("&")[3].split("=")[1];
     	String location = request.split("&")[4].split("=")[1];
-
+    	double score = Double.parseDouble(request.split("&")[5].split("=")[1]);
+    	double time = Double.parseDouble(request.split("&")[6].split("=")[1]);
+    	String letters = request.split("&")[7].split("=")[1];
+    	String letterPosition = request.split("&")[8].split("=")[1];
+    	int imageLetterSize = 
+    			Integer.parseInt(request.split("&")[9].split("=")[1]);
+ 
     	try {
     		username = URLDecoder.decode(username, "UTF-8");
     		letter = URLDecoder.decode(letter, "UTF-8");
     		picture = URLDecoder.decode(picture, "UTF-8");
     		recognized = URLDecoder.decode(recognized, "UTF-8");
     		location = URLDecoder.decode(location, "UTF-8");
+    		letters = URLDecoder.decode(letters, "UTF-8");
+    		letterPosition = URLDecoder.decode(letterPosition, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			System.out.println("There was an error decoding the input!");
 			e1.printStackTrace();
@@ -259,8 +269,10 @@ public final class Functions {
     	}
     	
     	//Update User Score. 
-    	double score = Main.getGameData().updateScore(
-    			username, letter, recognized);
+    	Main.getGameData().updateScore(username, score);
+    	
+    	//Save Picture
+    	String imagePath = "Not Saved";
     	
     	if (!recognized.equals("NoLetter")) {
     		
@@ -272,9 +284,7 @@ public final class Functions {
 	    	//Update Letter Count.
 	    	double letterCount = Main.getGameData().updateLetterCount(letter); 
 	    	
-	    	//Save Picture
-	    	
-	    	String imagePath = Main.getDbPath() + "/Letters/"
+	    	imagePath = Main.getDbPath() + "/Letters/"
 	    			+ letter + "/" + (int) letterCount + ".png";
 	    	
 	    	try {
@@ -286,18 +296,15 @@ public final class Functions {
 				System.out.println("There was an error saving the image!");
 				e.printStackTrace();
 			} 
-	    	
-	    	Date d = new Date();
-	    	Main.getGameData().addHistoryElement(
-	    			username, letter, imagePath, recognized, d, location);
     	}
     	
-    	//Builds the JSON with the new score. 
-    	JsonObject response = Json.createObjectBuilder()
-    	           .add("score", score)
-    	           .build();
+    	Date d = new Date();
+    	Main.getGameData().addHistoryElement(
+    			username, letter, imagePath, recognized, d, 
+    			location, score, time, letters, 
+    			letterPosition, imageLetterSize);
     	
-    	return Response.status(R200).entity(response).build();
+    	return Response.status(R200).build();
     }  
     
     /**
@@ -724,12 +731,6 @@ public final class Functions {
 	/************** STADISTICS CALLS ********************/
 	/****************************************************/ 
     
-    /**
-     * Get Tip (GET). 
-     * Gets a random tip for the user. 
-     * 
-     * @return Response.
-     */
     @GET
     @Path("/getHistory")
     @Produces(MediaType.APPLICATION_JSON)
@@ -739,25 +740,133 @@ public final class Functions {
     public Response getHistory() { 
  	
     	System.out.println("GET [Get History]");
-    	
-    	JsonArrayBuilder builder = Json.createArrayBuilder();	
+    		
         ArrayList<HistoryElement> history = 
         		Main.getGameData().getHistory();
         
-        for (HistoryElement he: history) {
-            builder.add(Json.createObjectBuilder()
-                    .add("username", he.getUsername())
-                    .add("letter", he.getLetter())
-                    .add("imagepath", he.getImagePath())
-                    .add("date", he.getDateRecognition().toString())
-                    .add("location", he.getLocationGPS())
-                    .add("recognized", he.isRecognized()));
-        }
+        String his = "[HISTORY]\n\n";
+        int count = 1;
         
-        JsonObject response = 
-        		Json.createObjectBuilder().add("history", builder.build())
-        			.build();
+        for (HistoryElement he: history) {
+
+        	his += "[" + count + "]\t";
+        	his += "Username: " + he.getUsername() + "\t";
+        	his += "Result: " + he.isRecognized() + "\t";
+        	his += "Date: " + he.getDateRecognition() + "\n\t";
+        	his += "Letter Searched: " + he.getLetter() + "\t";
+        	his += "Letters Recognized: " + he.getLetters() + "\n\t";
+        	his += "Recognition Time: " + he.getTime() + "\t";
+        	his += "Image Path: " + he.getImagePath() + "\n\t"; 
+        	
+        	if (he.isRecognized() != "NoLetter") {
+        		his += "Letter Coordinates on Image: " 
+        				+ he.getLetterPosition() + "\t";
+        		his += "Letter Image Size: " + he.getImageLetterSize();
+        	}
+        	
+        	his += "\n\n";
+
+        	count ++;
+        }
 	  	
-	   return Response.status(R200).entity(response).build();
+	   return Response.status(R200).entity(his).build();
+    }
+    
+    @GET
+    @Path("/getStatistics")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "returns a list with 10 users with the best score")
+    @ApiResponses(value = {
+        @ApiResponse(code = R200, message = "OK")})
+    public Response getStatistics() { 
+    	
+    	System.out.println("GET [Get Statistics]");
+	  	
+    	String statistics = "[STATISTICS]\n\n";
+    	
+    	statistics += getStatisticsLetters("Recognized", "RECOGNIZED LETTERS");
+    	statistics += getStatisticsLetters("AnotherLetter", "MISS-RECOGNIZED LETTERS");
+    	statistics += getStatisticsLetters("NoLetter", "NOT RECOGNIZED LETTERS");
+    	statistics += getRatios();
+    	
+	   return Response.status(R200).entity(statistics).build();
+    }
+    
+    private String getRatios() {
+    	
+    	String ratios = "[RATIOS]\n";
+    	
+    	ArrayList<HistoryElement> history = 
+        		Main.getGameData().getHistory();
+    	
+    	float recognized = 0;
+    	float anotherletter = 0;
+    	float noletter = 0;
+    	
+    	for (HistoryElement he: history) {		
+    		if (he.isRecognized().equals("Recognized")) recognized++;
+    		if (he.isRecognized().equals("AnotherLetter")) anotherletter++;
+    		if (he.isRecognized().equals("NoLetter")) noletter++;
+        }
+    	
+    	ratios += "[Totals]\t\tRecognized: " + recognized + " - MissRecognized: " + anotherletter + " - NotRecognized: " + noletter + "\n";
+    	ratios += "[Recognition Accuracy]\t" + (recognized/history.size() * 100) + "%\n";
+    	ratios += "[Detection Accuracy]\t" + ((recognized + anotherletter)/history.size() * 100) + "%\n";
+    	
+    	ratios += "\n";
+    	return ratios;
+    	
+    }
+    
+    private String getStatisticsLetters(String filter, String title) {
+    	
+    	HashMap<String, Integer> results = new HashMap<String, Integer>() {{
+			put("A", 0); put("B", 0); put("C", 0); put("D", 0);
+			put("E", 0); put("F", 0); put("G", 0); put("H", 0);
+			put("I", 0); put("J", 0); put("K", 0); put("L", 0);
+			put("M", 0); put("N", 0); put("O", 0); put("P", 0);
+			put("Q", 0); put("R", 0); put("S", 0); put("T", 0);
+			put("U", 0); put("V", 0); put("W", 0); put("X", 0);
+			put("Y", 0); put("Z", 0);
+    	}};
+    	
+    	ArrayList<HistoryElement> history = 
+        		Main.getGameData().getHistory();
+    	
+    	for (HistoryElement he: history) {		
+    		if (he.isRecognized().equals(filter)) {
+    			results.put(he.getLetter(), results.get(he.getLetter()) + 1);
+    		}
+        }
+    	
+    	return printResults(results, title);
+    }
+    
+    private String printResults(HashMap<String, Integer> results, String title) {
+    	
+    	String s = "[" + title + " (Letter - Number of Recognitions)]\n";
+    	
+    	int i = 0;
+    	
+    	String most = "None";
+    	int mostvalue = 0;
+    	
+    	for(Map.Entry<String, Integer> entry : results.entrySet()) {  	    
+    		String key = entry.getKey();
+    	    int value = entry.getValue();	    
+    	    
+    	    s+= key + " - " + value + "\t";  
+    	    i++;
+    	    if (i == 13) { s += "\n"; i = 0; } 
+    	    
+    	    if (value >= mostvalue) {
+    	    	mostvalue = value;
+    	    	most = key;
+    	    }
+    	}
+    	
+    	s += "Greater: " + most  + " (" + mostvalue + ") \n\n";
+    	
+    	return s;
     }
 }

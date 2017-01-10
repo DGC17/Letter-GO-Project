@@ -40,12 +40,7 @@ public final class GameData {
 	 * Max Score.
 	 */
 	private static final double MAX_SCORE = 150d;
-	
-	/**
-	 * Min Score.
-	 */
-	private static final double MIN_SCORE = 10d;
-	
+
 	/**
 	 * Allowed letters inside the game.
 	 */
@@ -193,12 +188,20 @@ public final class GameData {
 	 * @param recognized0 
 	 * @param dateRecognition0 
 	 * @param locationGPS0 
+	 * @param score0 
+	 * @param time0 
+	 * @param letters0 
+	 * @param letterPosition0 
+	 * @param imageLetterSize0 
 	 */
 	public void addHistoryElement(final String username0, final String letter0, 
 			final String imagePath0, final String recognized0, 
-			final Date dateRecognition0, final String locationGPS0) {
+			final Date dateRecognition0, final String locationGPS0, 
+			final double score0, final double time0, final String letters0,
+			final String letterPosition0, final int imageLetterSize0) {
 		HistoryElement he = new HistoryElement(username0, letter0, 
-				imagePath0, recognized0, dateRecognition0, locationGPS0);
+				imagePath0, recognized0, dateRecognition0, locationGPS0,
+				score0, time0, letters0, letterPosition0, imageLetterSize0);
 		history.add(he);
 	}
 
@@ -312,29 +315,14 @@ public final class GameData {
 	/**
      * Updates the score of an user.
      * @param username The username whose score we want to update. 
-     * @param letter Letter captured. 
-     * @param recognized True if the letter was recognized in the application. 
-     * @return The score assigned to that user.
+     * @param score Score achieved from the recognition 
      */
-    public double updateScore(final String username, 
-    		final String letter, final String recognized) {
-    	int weight = WEIGHTS.get(letter);
-    	
-    	double score = MAX_SCORE - (weight * 10d);
-    	
-    	if (recognized.equals("NoLetter")) {
-    		score = MIN_SCORE;
-    	}
-    		
-    	if (recognized.equals("AnotherLetter")) {
-    		score = score / 2;
-    	}	
+    public void updateScore(final String username, final double score) {
     	
     	int i = Main.getGameData().getUserIndexWithName(username);
     	double actualScore = Main.getGameData().getUsers().get(i).getPoints();
     	double newScore = actualScore + score;
     	Main.getGameData().getUsers().get(i).setPoints(newScore);
-    	return score;
     }
     
     /**

@@ -1,4 +1,7 @@
-#Mon Dec 26 16:01:03 CET 2016
-base.0=C\:\\Users\\usuario\\Desktop\\Letter GO Project\\Android Studio Project (Client-Side)\\Letter GO\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
-renamed.0=classes.dex
-file.0=C\:\\Users\\usuario\\Desktop\\Letter GO Project\\Android Studio Project (Client-Side)\\Letter GO\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
+#Tue Jan 10 21:28:09 CET 2017
+base.0=C\:\\Users\\usuario\\Desktop\\Letter GO Project\\Android Studio Project (Client-Side)\\Letter GO\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_62f9d6a5321b822a9d0d5e4da16b9c6a2a1f6fa5
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=C\:\\Users\\usuario\\Desktop\\Letter GO Project\\Android Studio Project (Client-Side)\\Letter GO\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_065ccec839a5e6580017f03b3797396cc4d70e8e\\classes.dex
+base.1=C\:\\Users\\usuario\\Desktop\\Letter GO Project\\Android Studio Project (Client-Side)\\Letter GO\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_065ccec839a5e6580017f03b3797396cc4d70e8e
+file.0=C\:\\Users\\usuario\\Desktop\\Letter GO Project\\Android Studio Project (Client-Side)\\Letter GO\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_62f9d6a5321b822a9d0d5e4da16b9c6a2a1f6fa5\\classes.dex

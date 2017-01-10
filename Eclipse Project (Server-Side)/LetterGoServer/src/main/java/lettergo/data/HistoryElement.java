@@ -44,16 +44,48 @@ public final class HistoryElement implements Serializable {
 	private String locationGPS;
 
 	/**
+	 * Score from this recognition. 
+	 */
+	private double score;
+	
+	/**
+	 * Recognition Process Time.
+	 */
+	private double time;
+	
+	/**
+	 * Letters.
+	 */
+	private String letters;
+	
+	/**
+	 * Position of the letter in the image. 
+	 */
+	private String letterPosition;
+	
+	/**
+	 * Size of the image. 
+	 */
+	private int imageLetterSize;
+	
+	/**
 	 * @param username0 
 	 * @param letter0 
 	 * @param imagePath0 
 	 * @param recognized0 
 	 * @param dateRecognition0 
 	 * @param locationGPS0 
+	 * @param score0 
+	 * @param time0 
+	 * @param letters0 
+	 * @param letterPosition0 
+	 * @param imageLetterSize0 
 	 */
 	public HistoryElement(final String username0, final String letter0, 
 			final String imagePath0, final String recognized0, 
-			final Date dateRecognition0, final String locationGPS0) {
+			final Date dateRecognition0, final String locationGPS0,
+			final double score0, final double time0, final String letters0,
+			final String letterPosition0, final int imageLetterSize0) {
 		super();
 		this.username = username0;
 		this.letter = letter0;
@@ -61,6 +93,11 @@ public final class HistoryElement implements Serializable {
 		this.recognized = recognized0;
 		this.dateRecognition = dateRecognition0;
 		this.locationGPS = locationGPS0;
+		this.score = score0;
+		this.time = time0;
+		this.letters = letters0;
+		this.letterPosition = letterPosition0;
+		this.imageLetterSize = imageLetterSize0;
 	}
 
 	/**
@@ -146,5 +183,75 @@ public final class HistoryElement implements Serializable {
 	public void setLocationGPS(final String locationGPSNew) {
 		this.locationGPS = locationGPSNew;
 	}
-	
+
+	/**
+	 * @return the score
+	 */
+	public double getScore() {
+		return score;
+	}
+
+	/**
+	 * @param scoreNew the score to set
+	 */
+	public void setScore(final double scoreNew) {
+		this.score = scoreNew;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public double getTime() {
+		return time;
+	}
+
+	/**
+	 * @param timeNew the time to set
+	 */
+	public void setTime(final double timeNew) {
+		this.time = timeNew;
+	}
+
+	/**
+	 * @return the letters
+	 */
+	public String getLetters() {
+		return letters;
+	}
+
+	/**
+	 * @param lettersNew the letters to set
+	 */
+	public void setLetters(final String lettersNew) {
+		this.letters = lettersNew;
+	}
+
+	/**
+	 * @return the letterPosition
+	 */
+	public String getLetterPosition() {
+		return letterPosition;
+	}
+
+	/**
+	 * @param letterPositionNew the letterPosition to set
+	 */
+	public void setLetterPosition(final String letterPositionNew) {
+		this.letterPosition = letterPositionNew;
+	}
+
+	/**
+	 * @return the imageLetterSize
+	 */
+	public int getImageLetterSize() {
+		return imageLetterSize;
+	}
+
+	/**
+	 * @param imageLetterSizeNew the imageLetterSize to set
+	 */
+	public void setImageLetterSize(final int imageLetterSizeNew) {
+		this.imageLetterSize = imageLetterSizeNew;
+	}
+
 }

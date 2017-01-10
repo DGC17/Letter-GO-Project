@@ -89,9 +89,11 @@ public class APIController : MonoBehaviour {
 
 	// Send Results from the client to the server, 
 	// including the username, the letter and the image.
+	// ASYNCHRONOUS
 	// Used in:
 	// - Image Controller. 
-	public double sendResults(string letter, string image, string recognized) {
+	public void sendResults(
+		string letter, string image, string recognized, string location, double score, double time, string letters, string position, int size) {
 		// Build the URL and make the API call. 
 		string url = sharedVariables.getIPPort() + COMMON_PATH + "sendResults";
 		WWWForm form = new WWWForm ();
@@ -99,18 +101,13 @@ public class APIController : MonoBehaviour {
 		form.AddField ("letter", letter);
 		form.AddField ("image", image);
 		form.AddField ("recognized", recognized);
-		form.AddField ("location", "Not Implemented");
+		form.AddField ("location", location);
+		form.AddField ("score", score.ToString());
+		form.AddField ("time", time.ToString ());
+		form.AddField ("letters", letters);
+		form.AddField ("position", position);
+		form.AddField ("size", size);
 		WWW www = new WWW (url, form);
-		// Waits until the API responds.
-		while (!www.isDone) {}
-		// Results the score calculated by the server. 
-		if (www.error == null) {
-			ScoreItem item = JsonUtility.FromJson<ScoreItem> (www.text);
-			return item.score;
-		// If there was some mistake we always send 100d. 
-		} else {
-			return 100d;
-		}
 	}
 
 	// Gets the TOP 10 for the users with best score.

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Threading;
@@ -80,6 +81,9 @@ public class CameraController : MonoBehaviour {
 		userScore.text = "Score: " + sharedVariables.getScore().ToString();
 
 		resultInterface.SetActive (false);
+
+		// Start service before querying location
+		Input.location.Start();
 
 		//JAVA CLASSIFIER INITIALIZATION
 		classifier = new AndroidJavaObject ("wrappers.Classifier");
@@ -170,7 +174,7 @@ public class CameraController : MonoBehaviour {
 		return response;
 	}
 
-	private BytesArrays applyTransformations(Vuforia.Image img, float wCircle, float hCircle, Vector2 pos) {
+	private BytesArrays applyTransformations(Vuforia.Image img, float radiusCircle, Vector2 pos) {
 
 		BytesArrays results = new BytesArrays();
 
@@ -201,8 +205,8 @@ public class CameraController : MonoBehaviour {
 		TextureScale.Bilinear (tex_final, Screen.width, Screen.height);
 
 		// STEP 5: Cropping the image.
-		Color[] pix = tex_final.GetPixels ((int)(pos.x - wCircle/2), (int)(pos.y - hCircle/2), (int)wCircle, (int)hCircle);
-		Texture2D tex_selected = new Texture2D ((int)wCircle, (int)hCircle);
+		Color[] pix = tex_final.GetPixels ((int)(pos.x - radiusCircle/2), (int)(pos.y - radiusCircle/2), (int)radiusCircle, (int)radiusCircle);
+		Texture2D tex_selected = new Texture2D ((int)radiusCircle, (int)radiusCircle);
 		tex_selected.SetPixels (pix);
 		tex_selected.Apply ();
 
@@ -221,23 +225,38 @@ public class CameraController : MonoBehaviour {
 		return results;
 	}
 
+	private string getDeviceLocation() {
+
+		// Connection has failed
+		if (Input.location.status == LocationServiceStatus.Failed)
+		{
+			return "Location Not Found or Hidden";
+		}
+		else
+		{
+			// Access granted and location value could be retrieved
+			return (Input.location.lastData.latitude + "-" + Input.location.lastData.longitude + "-" + Input.location.lastData.altitude + "-" + Input.location.lastData.horizontalAccuracy + "-" + Input.location.lastData.timestamp);
+		}
+	}
+
 	public void scanActualImage(Vuforia.Image img) {
 
 		soundPlayer.playSound ("select");
 
 		sharedVariables.setScanning (true);
 
+		DateTime datestart = DateTime.Now;
+
 		//Selector parameters
-		float wCircle = selector.GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
-		float hCircle = selector.GetComponent<UnityEngine.UI.Image>().rectTransform.rect.height;
+		float radiusCircle = selector.GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
 		Vector2 pos = selector.GetComponent<UnityEngine.UI.Image>().rectTransform.position;
 
-		BytesArrays results = applyTransformations(img, wCircle, hCircle, pos);
+		BytesArrays results = applyTransformations(img, radiusCircle, pos);
 		byte[] bytesUnselected = results.complete;
 		byte[] bytes = results.selected;
 
 		// We create a new texture to load our image in the Result Interface. 
-		Texture2D texture = new Texture2D ((int)wCircle, (int)hCircle);
+		Texture2D texture = new Texture2D ((int)radiusCircle, (int)radiusCircle);
 		texture.LoadImage (bytes);
 		texture.Apply ();
 
@@ -248,7 +267,7 @@ public class CameraController : MonoBehaviour {
 		// Launch Event 1.
 		changeInterface = true;
 
-		string recognitionResult = recognizeLetter(letter, bytes, (int)wCircle, (int)hCircle);
+		string output = recognizeLetter(letter, bytes, (int)radiusCircle, (int)radiusCircle);
 
 		//BACKGROUND PROCESSING
 
@@ -257,6 +276,15 @@ public class CameraController : MonoBehaviour {
 
 		_backgroundWorker.DoWork += (o, a) =>
 		{
+			string recognitionResult = "";
+			if (output.Length == 0) {
+				recognitionResult = "NoLetter";
+				output = "...";
+			} else {
+				recognitionResult = "AnotherLetter";
+				if (output.Contains(letter)) recognitionResult = "Recognized";
+			}
+
 			string imageb64;
 			// We convert the image to Base64, so we can send it through a JSON.
 			if (recognitionResult.Contains ("NoLetter")) {
@@ -264,10 +292,21 @@ public class CameraController : MonoBehaviour {
 			} else {
 				imageb64 = Convert.ToBase64String (bytesUnselected);
 			}
-			// We call the API method to send the results. 
-			double score = apiController.sendResults (letter, imageb64, recognitionResult);
+
+			string location = getDeviceLocation();
+
+			double score = getScore(letter, recognitionResult);
+
+			DateTime dateend = DateTime.Now;
+			double time = (dateend - datestart).TotalMilliseconds;
+
+			string position = "(" + pos.x + "," + pos.y + ")";
+
 			// When we have the results, we set them. 
 			resultController.setTextandScore (letter, score, recognitionResult);
+
+			// We call the API method to send the results. (ASYNCHRONOUS!)
+			apiController.sendResults (letter, imageb64, recognitionResult, location, score, time, output, position, (int)radiusCircle);
 		};
 
 		_backgroundWorker.RunWorkerCompleted += (o, a) => {};
@@ -277,5 +316,27 @@ public class CameraController : MonoBehaviour {
 	public class BytesArrays {
 		public byte[] selected;
 		public byte[] complete;
+	}
+
+	private double getScore(string letter, string recResult) {
+
+		Dictionary<string, int> weights = new Dictionary<string, int>
+		{
+			{ "A", 9 }, { "B", 2 }, { "C", 3 }, { "D", 5 },
+			{ "E", 13 }, { "F", 3 }, { "G", 3 }, { "H", 7 },
+			{ "I", 7 }, { "J", 1 }, { "K", 1 }, { "L", 5 },
+			{ "M", 3 }, { "N", 7 }, { "O", 8 }, { "P", 2 },
+			{ "Q", 1 }, { "R", 6 }, { "S", 7 }, { "T", 10 },
+			{ "U", 3 }, { "V", 1 }, { "W", 3 }, { "X", 1 },
+			{ "Y", 2 }, { "Z", 1 }
+		};
+
+		int weight = weights [letter];
+
+		double score = 150d - (weight*10);
+		if (recResult == "NoLetter") score = 10d; 
+		if (recResult == "AnotherLetter") score = score/2; 
+
+		return score;
 	}
 }

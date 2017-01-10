@@ -165,14 +165,14 @@ public class Classifier extends UnityPlayerActivity {
 
     public String recognizeLetter(String letter, byte[] data, int width, int height) throws FileNotFoundException {
 
-        Log.i("CLASSIFIER", "RECOGNIZING LETTER...");
+        Log.i("CLASSIFIER", "RECOGNIZING LETTER... Width: " + width + " Height: " + height);
 
         /*
         Log.i("CLASSIFIER", "SAVING IMAGE...");
         Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length);
         OutputStream stream = new FileOutputStream("/sdcard/test.jpg");
         bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-    */
+        */
         //Convert the byte array to OpenCV compatible format
         Bitmap bitmap = BitmapFactory.decodeByteArray(data.clone(), 0, data.length, new BitmapFactory.Options());
         byte[] yuvData = FileUtils.GetNV21(bitmap.getWidth(), bitmap.getHeight(), bitmap);
@@ -186,27 +186,26 @@ public class Classifier extends UnityPlayerActivity {
         PairVector results = predictImageSlidingWindow(yuvData, bitmap.getWidth(), bitmap.getHeight(), max_recognitions, w_width, w_height, w_step, rescale_width, rescale_height, w_scales, prob_TH);
         Log.i("CLASSIFIER", "Finishing sliding window..");
 
-        boolean found = false;
+        String output = "";
         int count = 0;
 
         while (count < results.size()) {
+
             Pair pairValues = results.get(count);
             String firstValue = pairValues.getFirst();
             float secondValue = pairValues.getSecond();
+
+            output += firstValue + ":" + secondValue + "&";
+
             Log.i("CLASSIFIER", firstValue + ":" + secondValue);
             count++;
-            if (firstValue.equals(letter)) found = true;
         }
 
-        if (!found) {
-            if (count > 0) {
-                return "AnotherLetter";
-            } else {
-                return "NoLetter";
-            }
-        } else {
-            return "Recognized";
-        }
+        if (count > 0) output = output.substring(0, output.length() - 1);
+
+        Log.i("CLASSIFIER", output);
+
+        return output;
     }
 
 

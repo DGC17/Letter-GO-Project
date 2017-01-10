@@ -12,8 +12,8 @@ public class SelectorController : MonoBehaviour {
 	// I take the background just to not touch it. 
 	private Image background;
 
-	public int maxSize;
-	public int minSize;
+	private int maxSize = 500;
+	private int minSize = 100;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +22,8 @@ public class SelectorController : MonoBehaviour {
 		background = GameObject.Find ("GI.Background").GetComponent<Image>();
 		selector = GameObject.Find ("GI.Selector").GetComponent<UnityEngine.UI.Image>();
 		sharedVariables = GameObject.Find ("sharedVariables").GetComponent<sharedVariables> ();
+
+		selector.rectTransform.sizeDelta = new Vector2 (300, 300);
 	}
 	
 	// Update is called once per frame
@@ -31,7 +33,10 @@ public class SelectorController : MonoBehaviour {
 				Touch touch = Input.GetTouch (0);
 				Vector2 position = touch.position;
 				float h = background.rectTransform.rect.height;
-				if ((position.y >= h) && (position.y <= (Screen.height - h)) && (position.x >= (selector.rectTransform.sizeDelta.x/2)) && (position.x <= (Screen.width - (selector.rectTransform.sizeDelta.x/2)))) {	
+				if (		(position.y >= (h + selector.rectTransform.sizeDelta.x/4)) 
+						&& 	(position.y <= (Screen.height - h - selector.rectTransform.sizeDelta.x/4)) 
+						&& 	(position.x >= (selector.rectTransform.sizeDelta.x/3)) 
+						&& 	(position.x <= (Screen.width - (selector.rectTransform.sizeDelta.x/3)))) {	
 					selector.transform.position = position;
 				}
 
@@ -46,7 +51,11 @@ public class SelectorController : MonoBehaviour {
 				float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
 				float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-				float newsize = selector.rectTransform.sizeDelta.x - deltaMagnitudeDiff;
+				int newsize = (int)(selector.rectTransform.sizeDelta.x - deltaMagnitudeDiff);
+
+				//FIX to have only multiples of 2. 
+				if (newsize % 2 != 0) newsize--;
+
 				if (newsize > maxSize)	newsize = maxSize;
 				if (newsize < minSize)	newsize = minSize;
 				selector.rectTransform.sizeDelta = new Vector2 (newsize, newsize);

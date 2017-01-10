@@ -1,0 +1,257 @@
+package lettergo.data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * Class that contains information interesting for doing statistics 
+ * of the game. An object of this class will be created any time that 
+ * the user sends results to the server.  
+ */
+public final class HistoryElement implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * User.
+	 */
+	private String username;
+	
+	/**
+	 * Letter.
+	 */
+	private String letter;
+	
+	/**
+	 * Image Path corresponding to that letter. 
+	 */
+	private String imagePath;
+	
+	/**
+	 * Was the letter recognized?
+	 */
+	private String recognized;
+	
+	/**
+	 * Date on the recognition.
+	 */
+	private Date dateRecognition;
+	
+	/**
+	 * Location of the recognition.
+	 * TODO: This should be implemented in the mobile... 
+	 */
+	private String locationGPS;
+
+	/**
+	 * Score from this recognition. 
+	 */
+	private double score;
+	
+	/**
+	 * Recognition Process Time.
+	 */
+	private double time;
+	
+	/**
+	 * Letters.
+	 */
+	private String letters;
+	
+	/**
+	 * Position of the letter in the image. 
+	 */
+	private String letterPosition;
+	
+	/**
+	 * Size of the image. 
+	 */
+	private int imageLetterSize;
+	
+	/**
+	 * @param username0 
+	 * @param letter0 
+	 * @param imagePath0 
+	 * @param recognized0 
+	 * @param dateRecognition0 
+	 * @param locationGPS0 
+	 * @param score0 
+	 * @param time0 
+	 * @param letters0 
+	 * @param letterPosition0 
+	 * @param imageLetterSize0 
+	 */
+	public HistoryElement(final String username0, final String letter0, 
+			final String imagePath0, final String recognized0, 
+			final Date dateRecognition0, final String locationGPS0,
+			final double score0, final double time0, final String letters0,
+			final String letterPosition0, final int imageLetterSize0) {
+		super();
+		this.username = username0;
+		this.letter = letter0;
+		this.imagePath = imagePath0;
+		this.recognized = recognized0;
+		this.dateRecognition = dateRecognition0;
+		this.locationGPS = locationGPS0;
+		this.score = score0;
+		this.time = time0;
+		this.letters = letters0;
+		this.letterPosition = letterPosition0;
+		this.imageLetterSize = imageLetterSize0;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param usernameNew the username to set
+	 */
+	public void setUsername(final String usernameNew) {
+		this.username = usernameNew;
+	}
+
+	/**
+	 * @return the letter
+	 */
+	public String getLetter() {
+		return letter;
+	}
+
+	/**
+	 * @param letterNew the letter to set
+	 */
+	public void setLetter(final String letterNew) {
+		this.letter = letterNew;
+	}
+
+	/**
+	 * @return the imagePath
+	 */
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	/**
+	 * @param imagePathNew the base64Image to set
+	 */
+	public void setImagePath(final String imagePathNew) {
+		this.imagePath = imagePathNew;
+	}
+
+	/**
+	 * @return the recognized
+	 */
+	public String isRecognized() {
+		return recognized;
+	}
+
+	/**
+	 * @param recognizedNew the recognized to set
+	 */
+	public void setRecognized(final String recognizedNew) {
+		this.recognized = recognizedNew;
+	}
+
+	/**
+	 * @return the dateRecognition
+	 */
+	public Date getDateRecognition() {
+		return dateRecognition;
+	}
+
+	/**
+	 * @param dateRecognitionNew the dateRecognition to set
+	 */
+	public void setDateRecognition(final Date dateRecognitionNew) {
+		this.dateRecognition = dateRecognitionNew;
+	}
+
+	/**
+	 * @return the locationGPS
+	 */
+	public String getLocationGPS() {
+		return locationGPS;
+	}
+
+	/**
+	 * @param locationGPSNew the locationGPS to set
+	 */
+	public void setLocationGPS(final String locationGPSNew) {
+		this.locationGPS = locationGPSNew;
+	}
+
+	/**
+	 * @return the score
+	 */
+	public double getScore() {
+		return score;
+	}
+
+	/**
+	 * @param scoreNew the score to set
+	 */
+	public void setScore(final double scoreNew) {
+		this.score = scoreNew;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public double getTime() {
+		return time;
+	}
+
+	/**
+	 * @param timeNew the time to set
+	 */
+	public void setTime(final double timeNew) {
+		this.time = timeNew;
+	}
+
+	/**
+	 * @return the letters
+	 */
+	public String getLetters() {
+		return letters;
+	}
+
+	/**
+	 * @param lettersNew the letters to set
+	 */
+	public void setLetters(final String lettersNew) {
+		this.letters = lettersNew;
+	}
+
+	/**
+	 * @return the letterPosition
+	 */
+	public String getLetterPosition() {
+		return letterPosition;
+	}
+
+	/**
+	 * @param letterPositioNew the letterPosition to set
+	 */
+	public void setLetterPosition(final String letterPositionNew) {
+		this.letterPosition = letterPositionNew;
+	}
+
+	/**
+	 * @return the imageLetterSize
+	 */
+	public int getImageLetterSize() {
+		return imageLetterSize;
+	}
+
+	/**
+	 * @param imageLetterSizeNew the imageLetterSize to set
+	 */
+	public void setImageLetterSize(final int imageLetterSizeNew) {
+		this.imageLetterSize = imageLetterSizeNew;
+	}
+
+}
